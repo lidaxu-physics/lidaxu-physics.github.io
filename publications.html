@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Publications — Lida Xu</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --warm-bg:     #fbf6ed;
+    --warm-bg-2:   #f5ecda;
+    --cream:       #fffaf0;
+    --ink:         #1c1814;
+    --ink-soft:    #45382c;
+    --ink-mute:    #7a6a55;
+    --gold:        #d4953a;
+    --gold-deep:   #a86d1a;
+    --gold-glow:   #f5c97a;
+    --rose:        #c54f3f;
+    --teal:        #2d6e6a;
+    --line:        #e8dcc4;
+    --accent:      var(--gold);
+    --accent-deep: var(--gold-deep);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    background-image:
+      radial-gradient(ellipse 1200px 800px at 80% -100px, rgba(245,201,122,0.35), transparent 60%),
+      radial-gradient(ellipse 900px 600px at -10% 600px, rgba(212,149,58,0.10), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 1;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.30  0 0 0 0 0.10  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* nav */
+  nav.top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 22px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    background: linear-gradient(to bottom, rgba(251,246,237,0.92), rgba(251,246,237,0));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  nav.top .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  nav.top .logo .sun {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--gold-glow), var(--gold) 60%, var(--gold-deep));
+    box-shadow: 0 0 16px var(--gold-glow);
+  }
+  nav.top .links { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  nav.top .links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color .2s ease;
+  }
+  nav.top .links a:hover { color: var(--gold-deep); }
+
+  /* breadcrumb */
+  .breadcrumb {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 120px 56px 0;
+    position: relative;
+    z-index: 4;
+  }
+  .breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-mute);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 14px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    transition: all .25s ease;
+  }
+  .breadcrumb a:hover {
+    border-color: var(--gold);
+    color: var(--gold-deep);
+    transform: translateX(-3px);
+  }
+
+  /* page header */
+  header.page-header {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 56px 40px;
+    position: relative;
+    z-index: 4;
+  }
+  .page-header .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 18px;
+  }
+  .page-header .eyebrow::before {
+    content: "";
+    width: 24px; height: 1.5px;
+    background: var(--gold);
+  }
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(48px, 7vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .page-header h1 em {
+    font-style: italic;
+    color: var(--gold-deep);
+  }
+  .page-header .lede {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 640px;
+  }
+  .page-header .external-links {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .page-header .external-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all .25s ease;
+  }
+  .page-header .external-links a:hover {
+    color: var(--gold-deep);
+    border-color: var(--gold);
+  }
+
+  /* main listing */
+  main.publications {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 56px 80px;
+    position: relative;
+    z-index: 4;
+  }
+  .pub-section {
+    margin-bottom: 60px;
+  }
+  .pub-section h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 6px;
+    padding-top: 8px;
+  }
+  .pub-section h2 em { font-style: italic; color: var(--gold-deep); }
+  .pub-section .section-note {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-mute);
+    margin-bottom: 24px;
+  }
+
+  .pub-item {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 24px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+    transition: padding .25s ease;
+  }
+  .pub-section .pub-item:last-child { border-bottom: 1px solid var(--line); }
+  .pub-item:hover { padding-left: 12px; }
+
+  .pub-year {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--gold-deep);
+    font-weight: 500;
+  }
+  .pub-body h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .pub-body h3 a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    transition: border-color .2s ease;
+  }
+  .pub-body h3 a:hover { border-bottom-color: var(--gold); }
+  .pub-body .authors {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .pub-body .authors strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .pub-body .meta-line {
+    font-size: 13.5px;
+    color: var(--ink-mute);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .pub-body .venue {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--gold-deep);
+    font-size: 14.5px;
+  }
+  .pub-body .role {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink-mute);
+    font-size: 13px;
+  }
+  .pub-body .role::before { content: "·"; margin-right: 10px; color: var(--line); }
+  .pub-body .role.no-sep::before { content: ""; margin-right: 0; }
+
+  .pub-body .my-role {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .pub-body .my-role::before {
+    content: "→ ";
+    color: var(--gold-deep);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .pub-body .media-row {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .pub-body .media-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-right: 4px;
+  }
+  .pub-body .media-row a {
+    font-size: 12px;
+    color: var(--ink-mute);
+    background: rgba(0,0,0,0.03);
+    padding: 3px 9px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all .2s ease;
+  }
+  .pub-body .media-row a:hover {
+    color: var(--gold-deep);
+    background: rgba(245,201,122,0.18);
+  }
+
+  /* equal-contribution dagger marker */
+  .dagger { color: var(--gold-deep); font-weight: 600; }
+
+  footer {
+    padding: 40px 56px 60px;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 13px;
+    position: relative; z-index: 4;
+    border-top: 1px solid var(--line);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  footer a {
+    color: var(--ink-mute);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (max-width: 760px) {
+    nav.top { padding: 16px 20px; }
+    nav.top .links { gap: 14px; }
+    nav.top .links a { font-size: 13px; }
+    .breadcrumb { padding: 100px 24px 0; }
+    header.page-header { padding: 32px 24px 30px; }
+    main.publications { padding: 0 24px 60px; }
+    .pub-item { grid-template-columns: 60px 1fr; gap: 14px; }
+    .pub-year { font-size: 15px; }
+    .pub-body h3 { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="index.html" class="logo">
+    <span class="sun"></span>
+    <span>Lida Xu</span>
+  </a>
+  <div class="links">
+    <a href="index.html#about">About</a>
+    <a href="index.html#research">Research</a>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#contact">Say hi</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html#work">← Featured work</a>
+</div>
+
+<header class="page-header">
+  <div class="eyebrow">All publications</div>
+  <h1>Papers <em>and preprints.</em></h1>
+  <p class="lede">A complete list of my published, submitted, and in-progress work — with notes on what I contributed and where the press picked it up.</p>
+  <div class="external-links">
+    <a href="https://scholar.google.com/citations?hl=en&user=9r61kskAAAAJ" target="_blank">📚 Google Scholar</a>
+    <a href="https://orcid.org/0009-0005-3655-7868" target="_blank">🔬 ORCID</a>
+  </div>
+</header>
+
+<main class="publications">
+
+  <!-- ============================================================
+       PUBLISHED / IN PRESS
+       ============================================================ -->
+  <section class="pub-section">
+    <h2>Published <em>& in press.</em></h2>
+    <p class="section-note">Peer-reviewed papers, in reverse chronological order.</p>
+
+    <article class="pub-item">
+      <div class="pub-year">2025</div>
+      <div class="pub-body">
+        <h3><a href="https://www.science.org/doi/abs/10.1126/science.adu6368" target="_blank">Multi-timescale frequency-phase matching for high-yield nonlinear photonics</a></h3>
+        <p class="authors">M. J. Mehrabad<sup class="dagger">†</sup>, <strong>L. Xu</strong><sup class="dagger">†</sup>, G. Moille, C. J. Flower, S. Sarkar, A. Padhye, S. C. Ou, D. G. S. Forero, M. Ghafariasl, Y. K. Chembo, K. Srinivasan, M. Hafezi</p>
+        <div class="meta-line">
+          <span class="venue">Science</span>
+          <span>390 (6773), 612–616</span>
+          <span class="role no-sep">co-first author</span>
+        </div>
+        <p class="my-role">Led the experimental demonstration of nested frequency-phase-matching.</p>
+        <div class="media-row">
+          <span class="media-label">media</span>
+          <a href="https://phys.org/news/2025-11-precision-laser-tech-photonic-chip.html" target="_blank">Phys.org</a>
+          <a href="https://www.mittrchina.com/news/detail/16004" target="_blank">MIT Technology Review China</a>
+          <a href="https://optics.org/news/16/11/15" target="_blank">Optics.org</a>
+          <a href="https://scitechdaily.com/breakthrough-photonic-chip-could-replace-bulky-laser-systems-in-real-world-tech/" target="_blank">SciTechDaily</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="pub-item">
+      <div class="pub-year">2025</div>
+      <div class="pub-body">
+        <h3><a href="https://www.science.org/doi/full/10.1126/sciadv.adw7696" target="_blank">On-chip multi-timescale spatiotemporal optical synchronization</a></h3>
+        <p class="authors"><strong>L. Xu</strong><sup class="dagger">†</sup>, M. J. Mehrabad<sup class="dagger">†</sup>, C. J. Flower<sup class="dagger">†</sup>, G. Moille, A. Restelli, D. G. S. Forero, Y. Chembo, S. Mittal, K. Srinivasan, M. Hafezi</p>
+        <div class="meta-line">
+          <span class="venue">Science Advances</span>
+          <span>11, eadw7696</span>
+          <span class="role no-sep">co-first author</span>
+        </div>
+        <p class="my-role">Led experimental demonstration and theoretical analysis of multi-timescale mode-locking.</p>
+      </div>
+    </article>
+
+    <article class="pub-item">
+      <div class="pub-year">2025</div>
+      <div class="pub-body">
+        <h3>Sub-wavelength optical lattice in 2D materials</h3>
+        <p class="authors">S. Sarkar<sup class="dagger">†</sup>, M. J. Mehrabad<sup class="dagger">†</sup>, D. G. S. Forero<sup class="dagger">†</sup>, L. Gu<sup class="dagger">†</sup>, C. J. Flower, <strong>L. Xu</strong>, K. Watanabe, T. Taniguchi, S. Park, H. Jang, Y. Zhou, M. Hafezi</p>
+        <div class="meta-line">
+          <span class="venue">Science Advances</span>
+          <span>11, eadv2023</span>
+          <span class="role no-sep">contributing author</span>
+        </div>
+        <p class="my-role">Contributed to the design of grating couplers based on 3D FDTD simulations.</p>
+        <div class="media-row">
+          <span class="media-label">media</span>
+          <a href="https://jqi.umd.edu/news/sub-wavelength-optical-lattice-2d-materials" target="_blank">JQI News</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="pub-item">
+      <div class="pub-year">2024</div>
+      <div class="pub-body">
+        <h3><a href="https://www.science.org/doi/full/10.1126/science.ado0053" target="_blank">Observation of topological frequency combs</a></h3>
+        <p class="authors">C. J. Flower<sup class="dagger">†</sup>, M. J. Mehrabad<sup class="dagger">†</sup>, <strong>L. Xu</strong><sup class="dagger">†</sup>, G. Moille, D. G. S. Forero, O. Örsel, G. Bahl, Y. Chembo, K. Srinivasan, S. Mittal, M. Hafezi</p>
+        <div class="meta-line">
+          <span class="venue">Science</span>
+          <span>384 (6702), 1356–1361</span>
+          <span class="role no-sep">co-first author</span>
+        </div>
+        <p class="my-role">Led theoretical simulations and the device search across 217 fabricated devices.</p>
+        <div class="media-row">
+          <span class="media-label">media</span>
+          <a href="https://phys.org/news/2024-06-photonic-frequency-comb-topological-protection.html" target="_blank">Phys.org</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================================
+       SUBMITTED / UNDER REVIEW
+       ============================================================ -->
+  <section class="pub-section">
+    <h2>Submitted <em>/ under review.</em></h2>
+    <p class="section-note">Manuscripts undergoing peer review.</p>
+
+    <article class="pub-item">
+      <div class="pub-year">2025</div>
+      <div class="pub-body">
+        <h3>Single-shot realization of 10000-mode octave-spanning artificial gauge fields</h3>
+        <p class="authors"><strong>L. Xu</strong><sup class="dagger">†*</sup>, A. Padhye<sup class="dagger">†</sup>, S. Sarkar, A. Parhizkar, C. J. Flower, G. Moille, K. Srinivasan, M. Hafezi, M. J. Mehrabad</p>
+        <div class="meta-line">
+          <span class="venue">submitted</span>
+          <span class="role no-sep">co-first author · corresponding</span>
+        </div>
+        <p class="my-role">Conceived the core idea, built the theoretical model, and led experimental demonstrations.</p>
+      </div>
+    </article>
+
+    <article class="pub-item">
+      <div class="pub-year">2025</div>
+      <div class="pub-body">
+        <h3>Quantum metamorphosis: emergence and the breakdown of bulk-edge dichotomy in multiscale systems</h3>
+        <p class="authors">M. J. Mehrabad<sup class="dagger">†</sup>, A. Parhizkar<sup class="dagger">†</sup>, <strong>L. Xu</strong><sup class="dagger">†</sup>, G. Moille, A. Dutt, D. Englund, K. Srinivasan, D. Leykam, M. Hafezi</p>
+        <div class="meta-line">
+          <span class="venue">submitted</span>
+          <span class="role no-sep">co-first author</span>
+        </div>
+        <p class="my-role">Built the software framework for quantum metamorphosis and the nonlinear simulations.</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================================
+       IN PREPARATION
+       ============================================================ -->
+  <section class="pub-section">
+    <h2>In <em>preparation.</em></h2>
+    <p class="section-note">Manuscripts being written.</p>
+
+    <article class="pub-item">
+      <div class="pub-year">soon</div>
+      <div class="pub-body">
+        <h3>Theory of nested frequency phase matching and harmonic generations</h3>
+        <p class="authors"><strong>L. Xu</strong>, A. Padhye, S. Sarkar, A. Parhizkar, G. Moille, K. Srinivasan, M. Hafezi, M. J. Mehrabad</p>
+        <div class="meta-line">
+          <span class="venue">in prep</span>
+          <span class="role no-sep">first author</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pub-item">
+      <div class="pub-year">soon</div>
+      <div class="pub-body">
+        <h3>Poling-free multi-timescale integrated nonlinear optics in lithium niobate</h3>
+        <p class="authors">A. Padhye<sup class="dagger">†</sup>, M. J. Mehrabad<sup class="dagger">†</sup>, <strong>L. Xu</strong><sup class="dagger">†</sup>, P. Barya<sup class="dagger">†</sup>, S. Sarkar, et al.</p>
+        <div class="meta-line">
+          <span class="venue">in prep</span>
+          <span class="role no-sep">co-first author</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="pub-item">
+      <div class="pub-year">soon</div>
+      <div class="pub-body">
+        <h3>Reservoir computing with topological photonic arrays</h3>
+        <p class="authors">P. Dolgirev, <strong>L. Xu</strong>, S. Sarkar, M. J. Mehrabad, M. Hafezi</p>
+        <div class="meta-line">
+          <span class="venue">in prep</span>
+          <span class="role no-sep">contributing author</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================================
+       AUTHORSHIP NOTE
+       ============================================================ -->
+  <p style="font-size:13px; color:var(--ink-mute); font-style:italic; padding-top:30px; border-top:1px solid var(--line); text-align:center;">
+    <span class="dagger">†</span> denotes equal contribution.
+    <span style="margin-left:8px;">*</span> denotes corresponding author.
+  </p>
+
+</main>
+
+<footer>© 2026 Lida Xu · <a href="index.html">Back to home</a></footer>
+
+</body>
+</html>

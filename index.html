@@ -964,6 +964,53 @@
   .direction-card:hover .read-more { border-bottom-color: var(--accent-color-deep, var(--gold-deep)); }
   .direction-card:hover .read-more .arrow { transform: translateX(4px); }
 
+
+  /* language toggle */
+  nav.top .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 14px;
+    padding-left: 18px;
+    border-left: 1px solid var(--line);
+  }
+  nav.top .lang-toggle a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    text-decoration: none;
+    transition: color .2s ease;
+    padding: 2px 4px;
+  }
+  nav.top .lang-toggle a:hover { color: var(--gold-deep); }
+  nav.top .lang-toggle a.active { color: var(--ink); font-weight: 600; }
+  nav.top .lang-toggle .lang-sep { color: var(--line); font-size: 14px; }
+
+
+  /* "see full list" link below cards */
+  .see-full {
+    text-align: center;
+    margin-top: 36px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 15px;
+  }
+  .see-full a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    transition: all .25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .see-full a:hover {
+    color: var(--gold-deep);
+    border-bottom-color: var(--gold-deep);
+  }
+  .see-full a:hover .arrow { transform: translateX(4px); }
+  .see-full .arrow { transition: transform .25s ease; }
+
   /* responsive */
   @media (max-width: 1100px) {
     .card-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1008,6 +1055,11 @@
     <a href="#talks">Talks</a>
     <a href="#awards">Awards</a>
     <a href="#contact">Say hi</a>
+    <span class="lang-toggle">
+      <a href="index.html" class="active" aria-current="true">EN</a>
+      <span class="lang-sep">·</span>
+      <a href="index_zh.html">中</a>
+    </span>
   </div>
 </nav>
 
@@ -1281,6 +1333,12 @@
     </a>
 
   </div>
+
+  <p class="see-full">
+    <a href="publications.html">
+      See the full publication list <span class="arrow">→</span>
+    </a>
+  </p>
 
 </section>
 
