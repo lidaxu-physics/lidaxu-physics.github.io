@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Homepage (English / Chinese) -->
+  <url>
+    <loc>https://lidaxu-physics.github.io/</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lidaxu-physics.github.io/index.html"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://lidaxu-physics.github.io/index_zh.html"/>
+  </url>
+  <url>
+    <loc>https://lidaxu-physics.github.io/index_zh.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lidaxu-physics.github.io/index.html"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://lidaxu-physics.github.io/index_zh.html"/>
+  </url>
+
+  <!-- Publications -->
+  <url>
+    <loc>https://lidaxu-physics.github.io/publications.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lidaxu-physics.github.io/publications_zh.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Research direction subpages -->
+  <url>
+    <loc>https://lidaxu-physics.github.io/research/topological-photonics.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lidaxu-physics.github.io/research/topological-photonics_zh.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lidaxu-physics.github.io/research/nonlinear-photonics.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lidaxu-physics.github.io/research/nonlinear-photonics_zh.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lidaxu-physics.github.io/research/photonic-computing.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lidaxu-physics.github.io/research/photonic-computing_zh.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Videos -->
+  <url>
+    <loc>https://lidaxu-physics.github.io/videos.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lidaxu-physics.github.io/videos_zh.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
