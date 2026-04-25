@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lida Xu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --warm-bg:     #fbf6ed;
+    --warm-bg-2:   #f5ecda;
+    --cream:       #fffaf0;
+    --ink:         #1c1814;
+    --ink-soft:    #45382c;
+    --ink-mute:    #7a6a55;
+    --gold:        #d4953a;
+    --gold-deep:   #a86d1a;
+    --gold-glow:   #f5c97a;
+    --rose:        #c54f3f;
+    --teal:        #2d6e6a;
+    --line:        #e8dcc4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse 1200px 800px at 80% -100px, rgba(245,201,122,0.35), transparent 60%),
+      radial-gradient(ellipse 900px 600px at -10% 600px, rgba(212,149,58,0.10), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  ::selection { background: var(--gold-glow); color: var(--ink); }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 1;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.30  0 0 0 0 0.10  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* nav */
+  nav.top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 22px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    background: linear-gradient(to bottom, rgba(251,246,237,0.92), rgba(251,246,237,0));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  nav.top .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  nav.top .logo .sun {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--gold-glow), var(--gold) 60%, var(--gold-deep));
+    box-shadow: 0 0 16px var(--gold-glow);
+  }
+  nav.top .links { display: flex; gap: 24px; flex-wrap: wrap; }
+  nav.top .links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    position: relative;
+    transition: color .2s ease;
+  }
+  nav.top .links a:hover { color: var(--gold-deep); }
+  nav.top .links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 1.5px;
+    background: var(--gold);
+    transition: width .3s ease;
+  }
+  nav.top .links a:hover::after { width: 100%; }
+
+  /* hero */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 56px 80px;
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hero .greeting {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--gold-deep);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(56px, 8vw, 96px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    margin-bottom: 28px;
+    color: var(--ink);
+  }
+  .hero h1 .accent {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold-deep);
+  }
+  .hero .lead {
+    font-size: 21px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 540px;
+    margin-bottom: 28px;
+  }
+  .hero .lead strong { color: var(--ink); font-weight: 600; }
+  .hero .meta-line {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    font-size: 14px;
+    color: var(--ink-mute);
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+  .hero .meta-line .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--ink-soft);
+  }
+  .hero .meta-line .pill .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 22px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all .25s ease;
+    border: 1.5px solid transparent;
+  }
+  .btn.primary {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+  .btn.primary:hover {
+    background: var(--gold-deep);
+    border-color: var(--gold-deep);
+    transform: translateY(-2px);
+  }
+  .btn.ghost {
+    color: var(--ink-soft);
+    border-color: var(--line);
+    background: transparent;
+  }
+  .btn.ghost:hover {
+    border-color: var(--ink-soft);
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  /* hero figure */
+  .hero-figure {
+    background:
+      radial-gradient(ellipse at 60% 40%, rgba(245,201,122,0.18), transparent 70%),
+      var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 30px 60px -30px rgba(168,109,26,0.25);
+  }
+  .hero-figure svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .hero-figure .caption {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--ink-mute);
+    text-align: center;
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+  }
+  .hero-figure .caption strong {
+    font-style: normal;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* section base */
+  section.standard {
+    padding: 100px 56px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 4;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 24px; height: 1.5px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  .section-title em { font-style: italic; color: var(--gold-deep); }
+  .section-intro {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 60px;
+    line-height: 1.6;
+  }
+
+  /* about */
+  #about .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .about-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 20px 40px -20px rgba(168,109,26,0.15);
+  }
+  .about-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+  .about-card .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+  }
+  .about-card .row:last-child { border-bottom: none; }
+  .about-card .row .k { color: var(--ink-mute); font-weight: 500; }
+  .about-card .row .v { color: var(--ink); font-weight: 500; text-align: right; }
+  .about-prose p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .about-prose p strong { color: var(--ink); font-weight: 600; }
+  .about-prose .signature {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--gold-deep);
+    margin-top: 28px;
+  }
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+  }
+  .highlight {
+    padding: 28px 24px;
+    background: linear-gradient(135deg, var(--cream), rgba(245,201,122,0.12));
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    transition: all .25s ease;
+  }
+  .highlight:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+  }
+  .highlight .num {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 44px;
+    color: var(--gold-deep);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .highlight .label {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  /* ============================================================
+     IMAGE CARDS — featured pubs and talks
+     ============================================================ */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card-grid.cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 760px;
+  }
+
+  .img-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all .3s ease;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+  }
+  .img-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold);
+    box-shadow: 0 30px 50px -25px rgba(168,109,26,0.3);
+  }
+  .img-card .image-wrap {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(245,201,122,0.15), rgba(197,79,63,0.08));
+  }
+  .img-card .image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .5s ease;
+  }
+  .img-card:hover .image-wrap img {
+    transform: scale(1.04);
+  }
+
+  /* badge over image */
+  .img-card .badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(28,24,20,0.85);
+    color: var(--cream);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .img-card .badge.role-firstauthor { background: rgba(197,79,63,0.95); }
+  .img-card .badge.role-cofirst { background: rgba(168,109,26,0.95); }
+  .img-card .badge.invited { background: rgba(45,110,106,0.95); }
+
+  .img-card .body {
+    padding: 22px 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+  .img-card .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .img-card .venue {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--gold-deep);
+    font-size: 14px;
+  }
+  .img-card .date {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .img-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .img-card h3 em { font-style: italic; color: var(--gold-deep); }
+  .img-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-top: 4px;
+  }
+  .img-card .read-more {
+    margin-top: auto;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold-deep);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 8px;
+  }
+  .img-card .read-more .arrow { transition: transform .25s ease; }
+  .img-card:hover .read-more .arrow { transform: translateX(3px); }
+
+  /* patents */
+  .patents-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .patent-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px;
+    transition: all .25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .patent-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+    box-shadow: 0 20px 40px -20px rgba(168,109,26,0.2);
+  }
+  .patent-card .pbadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: rgba(45,110,106,0.08);
+    padding: 4px 10px;
+    border-radius: 100px;
+    align-self: flex-start;
+  }
+  .patent-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .patent-card h3 a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    transition: border-color .2s ease;
+  }
+  .patent-card h3 a:hover { border-bottom-color: var(--gold); }
+  .patent-card .meta {
+    margin-top: auto;
+    font-size: 13px;
+    color: var(--ink-mute);
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+  }
+  .patent-card .meta strong {
+    color: var(--ink-soft);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* awards */
+  .awards-list { display: flex; flex-direction: column; }
+  .award-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 24px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+    transition: padding .3s ease;
+  }
+  .award-item:last-child { border-bottom: 1px solid var(--line); }
+  .award-item:hover { padding-left: 12px; }
+  .award-item .year {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--gold-deep);
+    line-height: 1;
+  }
+  .award-item .name {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .award-item .name em { font-style: italic; color: var(--gold-deep); }
+  .award-item .org {
+    font-size: 14px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+  .award-item .icon {
+    font-size: 22px;
+    color: var(--gold);
+  }
+  .awards-placeholder {
+    background: var(--cream);
+    border: 1px dashed var(--gold);
+    border-radius: 16px;
+    padding: 24px;
+    color: var(--ink-mute);
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  /* beyond */
+  #beyond {
+    background: linear-gradient(135deg, rgba(212,149,58,0.06), rgba(197,79,63,0.04));
+    border-radius: 32px;
+    margin: 80px auto;
+    padding: 80px 56px;
+    max-width: 1100px;
+  }
+  .beyond-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    margin-top: 40px;
+  }
+  .vibe {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px;
+    transition: all .25s ease;
+  }
+  .vibe:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+  }
+  .vibe .emoji {
+    font-size: 30px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .vibe h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 19px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .vibe p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* contact */
+  #contact {
+    text-align: center;
+    padding: 120px 56px;
+  }
+  #contact .big {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 800px;
+    margin: 0 auto 40px;
+  }
+  #contact .big em { font-style: italic; color: var(--gold-deep); }
+  #contact .links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  #contact .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--cream);
+    border: 1.5px solid var(--line);
+    border-radius: 100px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all .25s ease;
+  }
+  #contact .links a:hover {
+    border-color: var(--gold);
+    background: rgba(245,201,122,0.18);
+    transform: translateY(-2px);
+  }
+
+  footer {
+    padding: 40px 56px 60px;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 13px;
+    position: relative; z-index: 4;
+  }
+  footer .heart { color: var(--rose); }
+
+  /* responsive */
+  @media (max-width: 1100px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 1000px) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 120px 24px 60px;
+      gap: 40px;
+    }
+    .hero-figure { max-width: 480px; margin: 0 auto; }
+  }
+  @media (max-width: 760px) {
+    nav.top { padding: 16px 20px; }
+    nav.top .links { gap: 14px; }
+    nav.top .links a { font-size: 13px; }
+    section.standard { padding: 70px 24px; }
+    #beyond { padding: 60px 24px; margin: 40px 16px; }
+    #about .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .highlights { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    .card-grid.cols-2 { grid-template-columns: 1fr; }
+    .beyond-grid { grid-template-columns: 1fr; }
+    .patents-grid { grid-template-columns: 1fr; }
+    .award-item { grid-template-columns: 60px 1fr auto; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="#" class="logo">
+    <span class="sun"></span>
+    <span>Lida Xu</span>
+  </a>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#patents">Patents</a>
+    <a href="#talks">Talks</a>
+    <a href="#awards">Awards</a>
+    <a href="#contact">Say hi</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="greeting">Hi there, I'm</div>
+    <h1>
+      Lida Xu —<br/>
+      <span class="accent">curious about light.</span>
+    </h1>
+    <p class="lead">
+      A physics PhD candidate at the <strong>Joint Quantum Institute</strong>, UMD. I build photonic chips that bend light in unusual ways — and try to make those tricks robust enough to be actually useful.
+    </p>
+    <div class="meta-line">
+      <span class="pill"><span class="dot"></span>Hafezi Lab · UMD</span>
+      <span class="pill"><span class="dot"></span>he/him</span>
+      <span class="pill"><span class="dot"></span>Nanjing → College Park</span>
+    </div>
+    <div class="ctas">
+      <a class="btn primary" href="#work">See my work →</a>
+      <a class="btn ghost" href="https://lidaxu66.github.io/uploads/resume.pdf">Download CV</a>
+    </div>
+  </div>
+
+  <div class="hero-figure">
+    <svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="trailGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f5c97a"/>
+          <stop offset="50%" stop-color="#c54f3f"/>
+          <stop offset="100%" stop-color="#6dc4be"/>
+        </linearGradient>
+        <radialGradient id="photonGrad">
+          <stop offset="0%" stop-color="#fff5dc" stop-opacity="1"/>
+          <stop offset="40%" stop-color="#f5c97a" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#d4953a" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <g id="latticeGroup"></g>
+      <g transform="translate(300, 380)">
+        <line x1="0" y1="-10" x2="0" y2="20" stroke="#a86d1a" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>
+        <polygon points="-5,18 5,18 0,26" fill="#a86d1a" opacity="0.6"/>
+      </g>
+      <g id="combGroup">
+        <line x1="40" y1="640" x2="560" y2="640" stroke="#7a6a55" stroke-width="1.2" opacity="0.6"/>
+        <text x="40" y="668" font-family="Inter Tight, sans-serif" font-size="11" fill="#7a6a55" opacity="0.7">frequency →</text>
+        <line x1="300" y1="450" x2="300" y2="475" stroke="#c54f3f" stroke-width="1.2" stroke-dasharray="2 2"/>
+        <text x="300" y="445" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="12" fill="#c54f3f">pump</text>
+        <g id="combTeeth"></g>
+        <g id="combGlow"></g>
+      </g>
+    </svg>
+    <div class="caption"><strong>Topological frequency comb.</strong> Light is pumped into a photonic lattice, where chiral edge modes turn one color into many — perfectly evenly spaced.</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="standard" id="about">
+  <div class="eyebrow">A little about me</div>
+  <h2 class="section-title">Physicist. Engineer. <em>Tinkerer.</em></h2>
+
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>The basics</h3>
+      <div class="row"><span class="k">Currently</span><span class="v">Physics PhD candidate</span></div>
+      <div class="row"><span class="k">Where</span><span class="v">Hafezi Lab, UMD</span></div>
+      <div class="row"><span class="k">Before that</span><span class="v">BS Physics, Nanjing U.</span></div>
+      <div class="row"><span class="k">Field</span><span class="v">Topological & nonlinear photonics</span></div>
+      <div class="row"><span class="k">Pronouns</span><span class="v">he/him</span></div>
+      <div class="row"><span class="k">Languages</span><span class="v">English · 中文</span></div>
+    </div>
+
+    <div class="about-prose">
+      <p>I think of myself as a <strong>hybrid</strong> — part physicist, part engineer, and somewhere between an experimentalist and a theorist. I like that I don't have to choose.</p>
+      <p>My work sits at the intersection of <strong>topological photonics</strong>, <strong>nonlinear optics</strong>, and <strong>frequency combs</strong> — using the geometry of photonic lattices to make optical "rulers" that are stable, broadband, and chip-scale. The dream: take Nobel-Prize-worthy physics out of the textbook and turn it into something useful in the real world.</p>
+      <p>Fundamental science is cool. But I really want it to <strong>do something</strong> — that's the part that gets me out of bed.</p>
+      <p class="signature">— Lida</p>
+    </div>
+  </div>
+
+  <div class="highlights">
+    <div class="highlight"><div class="num">3</div><div class="label">Co-first-author papers in <em>Science</em> & <em>Science Advances</em></div></div>
+    <div class="highlight"><div class="num">4</div><div class="label">US patents filed (equal share)</div></div>
+    <div class="highlight"><div class="num">∞</div><div class="label">Cups of coffee consumed in lab</div></div>
+  </div>
+</section>
+
+<!-- ============= FEATURED WORK — image cards ============= -->
+<section class="standard" id="work">
+  <div class="eyebrow">Featured work</div>
+  <h2 class="section-title">A few things I'm <em>proud of.</em></h2>
+  <p class="section-intro">
+    The greatest hits from my PhD so far. Each was a team effort, and I had the privilege of leading or co-leading the work.
+  </p>
+
+  <div class="card-grid">
+
+    <a class="img-card" href="https://www.science.org/doi/abs/10.1126/science.adu6368" target="_blank">
+      <div class="image-wrap">
+        <img src="https://lidaxu66.github.io/publications/science2025nestedfpm/featured.png"
+             alt="Multi-timescale frequency-phase matching"
+             loading="lazy"/>
+        <span class="badge role-cofirst">Co-first author</span>
+      </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">Science</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">Nov 2025</span>
+        </div>
+        <h3>Multi-timescale frequency-phase matching for high-yield <em>nonlinear photonics</em></h3>
+        <p>Helping nonlinear photonic chips work the same way twice — a step toward wafer-scale reliability.</p>
+        <span class="read-more">Read the paper <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+    <a class="img-card" href="https://www.science.org/doi/full/10.1126/sciadv.adw7696" target="_blank">
+      <div class="image-wrap">
+        <img src="https://lidaxu66.github.io/publications/sciadv2025modelocking/featured.png"
+             alt="Multi-timescale optical synchronization"
+             loading="lazy"/>
+        <span class="badge role-firstauthor">First author</span>
+      </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">Science Advances</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">Jun 2025</span>
+        </div>
+        <h3>On-chip multi-timescale spatiotemporal <em>optical synchronization</em></h3>
+        <p>Two frequency combs locking together across wildly different timescales (1 THz and 4 GHz) on the same topological chip.</p>
+        <span class="read-more">Read the paper <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+    <a class="img-card" href="https://www.science.org/doi/full/10.1126/science.ado0053" target="_blank">
+      <div class="image-wrap">
+        <img src="https://lidaxu66.github.io/publications/science2024observation/featured.png"
+             alt="Observation of topological frequency combs"
+             loading="lazy"/>
+        <span class="badge role-cofirst">Co-first author</span>
+      </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">Science</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">Jun 2024</span>
+        </div>
+        <h3>Observation of <em>topological frequency combs</em></h3>
+        <p>The first experimental demo of frequency combs that inherit topological protection from their lattice. Where a lot of my current work begins.</p>
+        <span class="read-more">Read the paper <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="section-intro" style="margin-top: 50px; margin-bottom: 0;">
+    <a href="https://lidaxu66.github.io/#papers" style="color: var(--gold-deep); text-decoration: none; font-weight: 500; border-bottom: 1.5px solid var(--gold);">See full publication list →</a>
+  </p>
+</section>
+
+<!-- ============= PATENTS ============= -->
+<section class="standard" id="patents">
+  <div class="eyebrow">Inventions</div>
+  <h2 class="section-title">Patents <em>filed.</em></h2>
+  <p class="section-intro">
+    Four provisional US patents (filed 2025), all with equal share among co-inventors. These come out of joint work with the Hafezi Lab and collaborators at NIST.
+  </p>
+
+  <div class="patents-grid">
+    <div class="patent-card">
+      <span class="pbadge">Provisional · 2025</span>
+      <h3><a href="https://lidaxu66.github.io/patents/patent-bagf/" target="_blank">Systems of ultrabroadband multimodal artificial gauge fields</a></h3>
+      <div class="meta"><strong>Inventors:</strong> L. Xu, M. J. Mehrabad, S. Sarkar, A. Padhye, M. Hafezi</div>
+    </div>
+    <div class="patent-card">
+      <span class="pbadge">Provisional · 2025</span>
+      <h3><a href="https://lidaxu66.github.io/patents/patent-nesting/" target="_blank">Nested frequency and phase matching</a></h3>
+      <div class="meta"><strong>Inventors:</strong> M. J. Mehrabad, L. Xu, G. Moille, K. Srinivasan, M. Hafezi</div>
+    </div>
+    <div class="patent-card">
+      <span class="pbadge">Provisional · 2025</span>
+      <h3><a href="https://lidaxu66.github.io/patents/patent-qumorph/" target="_blank">Quantum optical metamorphosis</a></h3>
+      <div class="meta"><strong>Inventors:</strong> M. J. Mehrabad, A. Parhizkar, L. Xu, M. Hafezi</div>
+    </div>
+    <div class="patent-card">
+      <span class="pbadge">Provisional · 2025</span>
+      <h3><a href="https://lidaxu66.github.io/patents/patent-topai/" target="_blank">TOPAI: Topological photonics architectures for optical computing and AI</a></h3>
+      <div class="meta"><strong>Inventors:</strong> M. J. Mehrabad, L. Xu, S. Sarkar, Z. Y. Wei, M. Hafezi</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= TALKS — image cards ============= -->
+<section class="standard" id="talks">
+  <div class="eyebrow">Recent & upcoming talks</div>
+  <h2 class="section-title">Where I've been <em>sharing this.</em></h2>
+
+  <div class="card-grid cols-2">
+
+    <a class="img-card" href="https://lidaxu66.github.io/events/cleo2026/" target="_blank">
+      <div class="image-wrap">
+        <img src="https://lidaxu66.github.io/events/cleo2026/featured.png"
+             alt="CLEO 2026 talk"
+             loading="lazy"/>
+      </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">CLEO 2026</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">May 18, 2026</span>
+        </div>
+        <h3>Frequency comb realization of the integer quantum Hall <em>model</em></h3>
+        <p>First realization of the photonic nonlinear IQH model.</p>
+        <span class="read-more">Event details <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+    <a class="img-card" href="https://lidaxu66.github.io/events/pqe2026/" target="_blank">
+      <div class="image-wrap">
+        <img src="https://lidaxu66.github.io/events/pqe2026/featured.jpg"
+             alt="PQE 2026 invited talk"
+             loading="lazy"/>
+        <span class="badge invited">Invited</span>
+      </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">PQE 2026</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">Jan 5, 2026</span>
+        </div>
+        <h3>Integrated nonlinear topological <em>photonics</em></h3>
+        <p>Recent works on integrated nonlinear topological photonics.</p>
+        <span class="read-more">Slides (PDF) <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============= AWARDS ============= -->
+<section class="standard" id="awards">
+  <div class="eyebrow">Recognition</div>
+  <h2 class="section-title">Awards & <em>honors.</em></h2>
+  <p class="section-intro">A few highlights along the way.</p>
+
+  <div class="awards-list">
+    <div class="award-item">
+      <div class="year">YYYY</div>
+      <div>
+        <div class="name"><em>[Award name]</em></div>
+        <div class="org">[Awarding organization]</div>
+      </div>
+      <div class="icon">🏅</div>
+    </div>
+    <div class="award-item">
+      <div class="year">YYYY</div>
+      <div>
+        <div class="name"><em>[Award name]</em></div>
+        <div class="org">[Awarding organization]</div>
+      </div>
+      <div class="icon">🏅</div>
+    </div>
+    <div class="award-item">
+      <div class="year">YYYY</div>
+      <div>
+        <div class="name"><em>[Award name]</em></div>
+        <div class="org">[Awarding organization]</div>
+      </div>
+      <div class="icon">🏅</div>
+    </div>
+  </div>
+
+  <p class="awards-placeholder" style="margin-top: 20px;">
+    ✏️ Send me your award list and I'll fill these in properly.
+  </p>
+</section>
+
+<!-- ============= BEYOND ============= -->
+<section class="standard" id="beyond">
+  <div class="eyebrow">When I'm not in the lab</div>
+  <h2 class="section-title">Things that <em>also matter</em> to me.</h2>
+
+  <div class="beyond-grid">
+    <div class="vibe">
+      <span class="emoji">🤝</span>
+      <h4>The people I work with</h4>
+      <p>I've been lucky to work with brilliant collaborators across UMD, NIST, and beyond. Science is a team sport, and the team makes it worth doing.</p>
+    </div>
+    <div class="vibe">
+      <span class="emoji">🌉</span>
+      <h4>Bridging worlds</h4>
+      <p>Theory and experiment, physics and engineering, fundamental and applied — I like the messy in-between. Sharp boundaries are usually wrong.</p>
+    </div>
+    <div class="vibe">
+      <span class="emoji">🛠️</span>
+      <h4>Building tools</h4>
+      <p>I write a lot of simulation software for our group, much of it open source. There's something satisfying about a tool that other people actually use.</p>
+    </div>
+    <div class="vibe">
+      <span class="emoji">📚</span>
+      <h4>Translating science</h4>
+      <p>I like explaining hard ideas in simple language. If a Nobel-Prize idea can't be told to a curious friend, we haven't finished understanding it yet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============= CONTACT ============= -->
+<section class="standard" id="contact">
+  <p class="big">I'm always up for a good <em>conversation</em> — about photonics, collaborations, or anything else.</p>
+  <div class="links">
+    <a href="mailto:lidaxu@umd.edu">📧 Email</a>
+    <a href="https://hafezi.jqi.umd.edu/people/lida-xu" target="_blank">🔬 Lab page</a>
+    <a href="https://scholar.google.com" target="_blank">📚 Google Scholar</a>
+    <a href="https://github.com" target="_blank">💻 GitHub</a>
+    <a href="https://lidaxu66.github.io/uploads/resume.pdf" target="_blank">📄 CV</a>
+  </div>
+</section>
+
+<footer>Made with <span class="heart">♥</span> in College Park · © 2026 Lida Xu</footer>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const latticeGroup = document.getElementById('latticeGroup');
+const combTeeth = document.getElementById('combTeeth');
+const combGlow = document.getElementById('combGlow');
+const NX = 6, NY = 6;
+const padX = 110, padY = 50;
+const dx = (600 - 2 * padX) / (NX - 1);
+const dy = 300 / (NY - 1);
+for (let i = 0; i < NX; i++) for (let j = 0; j < NY; j++) {
+  const cx = padX + i * dx, cy = padY + j * dy;
+  if (i < NX - 1) { const ln = document.createElementNS(NS, 'line');
+    ln.setAttribute('x1', cx + 14); ln.setAttribute('y1', cy);
+    ln.setAttribute('x2', cx + dx - 14); ln.setAttribute('y2', cy);
+    ln.setAttribute('stroke', '#c5b491'); ln.setAttribute('stroke-width', 1);
+    latticeGroup.appendChild(ln); }
+  if (j < NY - 1) { const ln = document.createElementNS(NS, 'line');
+    ln.setAttribute('x1', cx); ln.setAttribute('y1', cy + 14);
+    ln.setAttribute('x2', cx); ln.setAttribute('y2', cy + dy - 14);
+    ln.setAttribute('stroke', '#c5b491'); ln.setAttribute('stroke-width', 1);
+    latticeGroup.appendChild(ln); }
+}
+const edgePoints = [];
+for (let i = 0; i < NX; i++) edgePoints.push([padX + i * dx, padY]);
+for (let j = 1; j < NY; j++) edgePoints.push([padX + (NX - 1) * dx, padY + j * dy]);
+for (let i = NX - 2; i >= 0; i--) edgePoints.push([padX + i * dx, padY + (NY - 1) * dy]);
+for (let j = NY - 2; j > 0; j--) edgePoints.push([padX, padY + j * dy]);
+const trail = document.createElementNS(NS, 'path');
+const pathStr = 'M ' + edgePoints.map(p => p.join(',')).join(' L ') + ' Z';
+trail.setAttribute('d', pathStr); trail.setAttribute('fill', 'none');
+trail.setAttribute('stroke', 'url(#trailGrad)');
+trail.setAttribute('stroke-width', 3); trail.setAttribute('stroke-linecap', 'round');
+trail.setAttribute('opacity', 0.55); latticeGroup.appendChild(trail);
+for (let i = 0; i < NX; i++) for (let j = 0; j < NY; j++) {
+  const cx = padX + i * dx, cy = padY + j * dy;
+  const isEdge = (i === 0 || i === NX - 1 || j === 0 || j === NY - 1);
+  const ring = document.createElementNS(NS, 'circle');
+  ring.setAttribute('cx', cx); ring.setAttribute('cy', cy); ring.setAttribute('r', 14);
+  ring.setAttribute('fill', '#fffaf0');
+  ring.setAttribute('stroke', isEdge ? '#a86d1a' : '#7a6a55');
+  ring.setAttribute('stroke-width', isEdge ? 2 : 1.2);
+  latticeGroup.appendChild(ring);
+}
+[0.10, 0.43, 0.76].forEach((t, i) => {
+  const pt = trail.getPointAtLength(t * trail.getTotalLength());
+  const halo = document.createElementNS(NS, 'circle');
+  halo.setAttribute('cx', pt.x); halo.setAttribute('cy', pt.y);
+  halo.setAttribute('r', 18); halo.setAttribute('fill', 'url(#photonGrad)');
+  latticeGroup.appendChild(halo);
+  const dot = document.createElementNS(NS, 'circle');
+  dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+  dot.setAttribute('r', 5);
+  dot.setAttribute('fill', ['#fff5dc', '#ffe0d0', '#d4f0ee'][i]);
+  latticeGroup.appendChild(dot);
+});
+const N_TEETH = 23, COMB_X0 = 60, COMB_X1 = 540, BASELINE = 640, PEAK_H = 170;
+const COMB_DX = (COMB_X1 - COMB_X0) / (N_TEETH - 1);
+const PUMP_INDEX = Math.floor(N_TEETH / 2);
+function envH(i) { const x = (i - PUMP_INDEX) / 5.5; const s = 2 / (Math.exp(x) + Math.exp(-x)); return PEAK_H * s * s; }
+function specCol(t) {
+  const stops = [[0,[122,31,108]],[0.2,[53,86,168]],[0.4,[45,142,138]],[0.6,[212,149,58]],[0.8,[197,79,63]],[1,[122,31,18]]];
+  for (let i = 0; i < stops.length - 1; i++) { const [t0, c0] = stops[i], [t1, c1] = stops[i+1];
+    if (t >= t0 && t <= t1) { const f = (t - t0) / (t1 - t0);
+      return `rgb(${Math.round(c0[0]+(c1[0]-c0[0])*f)},${Math.round(c0[1]+(c1[1]-c0[1])*f)},${Math.round(c0[2]+(c1[2]-c0[2])*f)})`; } }
+  return 'rgb(212,149,58)';
+}
+for (let i = 0; i < N_TEETH; i++) {
+  const x = COMB_X0 + i * COMB_DX, h = envH(i), color = specCol(i / (N_TEETH - 1));
+  const tooth = document.createElementNS(NS, 'line');
+  tooth.setAttribute('x1', x); tooth.setAttribute('y1', BASELINE);
+  tooth.setAttribute('x2', x); tooth.setAttribute('y2', BASELINE - h);
+  tooth.setAttribute('stroke', color); tooth.setAttribute('stroke-width', 2.5);
+  tooth.setAttribute('stroke-linecap', 'round'); combTeeth.appendChild(tooth);
+  if (h > 8) { const glow = document.createElementNS(NS, 'circle');
+    glow.setAttribute('cx', x); glow.setAttribute('cy', BASELINE - h);
+    glow.setAttribute('r', 3.5); glow.setAttribute('fill', color); glow.setAttribute('opacity', 0.7);
+    combGlow.appendChild(glow); }
+}
+const env = document.createElementNS(NS, 'path'); let envD = '';
+for (let i = 0; i <= 100; i++) { const t = i / 100, x = COMB_X0 + t * (COMB_X1 - COMB_X0), h = envH(t * (N_TEETH - 1));
+  envD += (i === 0 ? 'M ' : ' L ') + x + ',' + (BASELINE - h); }
+env.setAttribute('d', envD); env.setAttribute('fill', 'none');
+env.setAttribute('stroke', '#a86d1a'); env.setAttribute('stroke-width', 1);
+env.setAttribute('stroke-dasharray', '3 4'); env.setAttribute('opacity', 0.4);
+document.getElementById('combGroup').appendChild(env);
+</script>
+</body>
+</html>
