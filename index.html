@@ -685,6 +685,91 @@
   }
   footer .heart { color: var(--rose); }
 
+
+  /* education & experience timeline */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 12px;
+    bottom: 12px;
+    width: 1.5px;
+    background: linear-gradient(to bottom, var(--gold), var(--rose), var(--teal));
+    opacity: 0.4;
+  }
+  .tl-item {
+    position: relative;
+    padding: 14px 0 28px;
+  }
+  .tl-item::before {
+    content: "";
+    position: absolute;
+    left: -32px;
+    top: 22px;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 2.5px solid var(--gold-deep);
+    box-shadow: 0 0 0 4px rgba(245,201,122,0.18);
+  }
+  .tl-item.current::before {
+    background: var(--gold);
+    border-color: var(--gold-deep);
+    animation: pulseDot 2.5s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(245,201,122,0.18); }
+    50%      { box-shadow: 0 0 0 9px rgba(245,201,122,0.05); }
+  }
+  .tl-item .tl-period {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--gold-deep);
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tl-item .tl-tag {
+    font-style: normal;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: rgba(245,201,122,0.18);
+    color: var(--gold-deep);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+  .tl-item h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .tl-item h3 em { font-style: italic; color: var(--gold-deep); }
+  .tl-item .tl-org {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .tl-item .tl-org strong { color: var(--ink); font-weight: 600; }
+  .tl-item .tl-detail {
+    font-size: 14px;
+    color: var(--ink-mute);
+    line-height: 1.55;
+    max-width: 600px;
+  }
+
   /* responsive */
   @media (max-width: 1100px) {
     .card-grid { grid-template-columns: repeat(2, 1fr); }
@@ -722,6 +807,7 @@
   </a>
   <div class="links">
     <a href="#about">About</a>
+    <a href="#experience">Experience</a>
     <a href="#work">Work</a>
     <a href="#patents">Patents</a>
     <a href="#talks">Talks</a>
@@ -744,7 +830,6 @@
     <div class="meta-line">
       <span class="pill"><span class="dot"></span>Hafezi Lab · UMD</span>
       <span class="pill"><span class="dot"></span>he/him</span>
-      <span class="pill"><span class="dot"></span>Nanjing → College Park</span>
     </div>
     <div class="ctas">
       <a class="btn primary" href="#work">See my work →</a>
@@ -815,6 +900,44 @@
   </div>
 </section>
 
+<!-- ============= EDUCATION & EXPERIENCE ============= -->
+<section class="standard" id="experience">
+  <div class="eyebrow">The path so far</div>
+  <h2 class="section-title">Education & <em>experience.</em></h2>
+
+  <div class="timeline">
+
+    <div class="tl-item current">
+      <div class="tl-period">2021 — present <span class="tl-tag">Current</span></div>
+      <h3>PhD candidate, <em>Physics</em></h3>
+      <p class="tl-org"><strong>University of Maryland, College Park</strong> · Joint Quantum Institute</p>
+      <p class="tl-detail">Advised by Prof. Mohammad Hafezi. Working on integrated nonlinear topological photonics — building photonic chips that turn ideas from condensed matter into useful devices.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-period">2020 — 2021</div>
+      <h3>Research <em>assistant</em></h3>
+      <p class="tl-org"><strong>Southern University of Science and Technology</strong> (SUSTech), Shenzhen</p>
+      <p class="tl-detail">A year between undergrad and PhD spent doing research and figuring out where to go next.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-period">2016 — 2020</div>
+      <h3>BS, <em>Physics</em></h3>
+      <p class="tl-org"><strong>Nanjing University</strong></p>
+      <p class="tl-detail">Where it all started — my first taste of doing physics seriously.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-period">2010 — 2016</div>
+      <h3>Junior & senior <em>high school</em></h3>
+      <p class="tl-org"><strong>Jiangsu Tianyi High School</strong>, Wuxi</p>
+      <p class="tl-detail">Six formative years in a Wuxi classroom, working out which questions felt worth asking.</p>
+    </div>
+
+  </div>
+</section>
+
 <!-- ============= FEATURED WORK — image cards ============= -->
 <section class="standard" id="work">
   <div class="eyebrow">Featured work</div>
@@ -836,6 +959,8 @@
           <span class="venue">Science</span>
           <span style="color:var(--ink-mute)">·</span>
           <span class="date">Nov 2025</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">Co-first author</span>
         </div>
         <h3>Multi-timescale frequency-phase matching for high-yield <em>nonlinear photonics</em></h3>
         <p>Helping nonlinear photonic chips work the same way twice — a step toward wafer-scale reliability.</p>
@@ -854,6 +979,8 @@
           <span class="venue">Science Advances</span>
           <span style="color:var(--ink-mute)">·</span>
           <span class="date">Jun 2025</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">First author</span>
         </div>
         <h3>On-chip multi-timescale spatiotemporal <em>optical synchronization</em></h3>
         <p>Two frequency combs locking together across wildly different timescales (1 THz and 4 GHz) on the same topological chip.</p>
@@ -872,6 +999,8 @@
           <span class="venue">Science</span>
           <span style="color:var(--ink-mute)">·</span>
           <span class="date">Jun 2024</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">Co-first author</span>
         </div>
         <h3>Observation of <em>topological frequency combs</em></h3>
         <p>The first experimental demo of frequency combs that inherit topological protection from their lattice. Where a lot of my current work begins.</p>
@@ -945,13 +1074,14 @@
         <img src="images/pqe2026.jpg"
              alt="PQE 2026 invited talk"
              loading="lazy"/>
-        <span class="badge invited">Invited</span>
       </div>
       <div class="body">
         <div class="meta-row">
           <span class="venue">PQE 2026</span>
           <span style="color:var(--ink-mute)">·</span>
           <span class="date">Jan 5, 2026</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">Invited</span>
         </div>
         <h3>Integrated nonlinear topological <em>photonics</em></h3>
         <p>Recent works on integrated nonlinear topological photonics.</p>
@@ -966,38 +1096,50 @@
 <section class="standard" id="awards">
   <div class="eyebrow">Recognition</div>
   <h2 class="section-title">Awards & <em>honors.</em></h2>
-  <p class="section-intro">A few highlights along the way.</p>
+  <p class="section-intro">A few highlights along the way — and one reminder that I am, in fact, capable of running.</p>
 
   <div class="awards-list">
     <div class="award-item">
-      <div class="year">YYYY</div>
+      <div class="year">2026</div>
       <div>
-        <div class="name"><em>[Award name]</em></div>
-        <div class="org">[Awarding organization]</div>
+        <div class="name">NSF I-Corps™ Teams Award · <em>Entrepreneurial Lead</em></div>
+        <div class="org">National Science Foundation</div>
       </div>
-      <div class="icon">🏅</div>
+      <div class="icon">🏆</div>
     </div>
     <div class="award-item">
-      <div class="year">YYYY</div>
+      <div class="year">2026</div>
       <div>
-        <div class="name"><em>[Award name]</em></div>
-        <div class="org">[Awarding organization]</div>
+        <div class="name">UMD Invention of the Year · <em>Finalist</em></div>
+        <div class="org">University of Maryland · winner announced May 2026</div>
       </div>
-      <div class="icon">🏅</div>
+      <div class="icon">💡</div>
     </div>
     <div class="award-item">
-      <div class="year">YYYY</div>
+      <div class="year">2021</div>
       <div>
-        <div class="name"><em>[Award name]</em></div>
-        <div class="org">[Awarding organization]</div>
+        <div class="name">Ralph Myers and Friends of Physics Award · <em>Honorable Mention</em></div>
+        <div class="org">University of Maryland, Department of Physics</div>
       </div>
-      <div class="icon">🏅</div>
+      <div class="icon">🎖️</div>
+    </div>
+    <div class="award-item">
+      <div class="year">2018–19</div>
+      <div>
+        <div class="name">Elite Program <em>Scholarship</em></div>
+        <div class="org">School of Physics, Nanjing University</div>
+      </div>
+      <div class="icon">📚</div>
+    </div>
+    <div class="award-item">
+      <div class="year">2016</div>
+      <div>
+        <div class="name">High School Soccer League · <em>Silver Medalist</em></div>
+        <div class="org">Wuxi City — proof I have done at least one non-physics thing</div>
+      </div>
+      <div class="icon">⚽</div>
     </div>
   </div>
-
-  <p class="awards-placeholder" style="margin-top: 20px;">
-    ✏️ Send me your award list and I'll fill these in properly.
-  </p>
 </section>
 
 <!-- ============= BEYOND ============= -->
@@ -1033,7 +1175,7 @@
 <section class="standard" id="contact">
   <p class="big">I'm always up for a good <em>conversation</em> — about photonics, collaborations, or anything else.</p>
   <div class="links">
-    <a href="mailto:lidaxu@umd.edu">📧 Email</a>
+    <a href="mailto:lidaxu66@umd.edu">📧 Email</a>
     <a href="https://hafezi.jqi.umd.edu/people/lida-xu" target="_blank">🔬 Lab page</a>
     <a href="https://scholar.google.com" target="_blank">📚 Google Scholar</a>
     <a href="https://github.com" target="_blank">💻 GitHub</a>
