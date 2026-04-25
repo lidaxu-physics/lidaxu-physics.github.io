@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Integrated nonlinear photonics — Lida Xu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  
+  :root {
+    --warm-bg:     #fbf6ed;
+    --warm-bg-2:   #f5ecda;
+    --cream:       #fffaf0;
+    --ink:         #1c1814;
+    --ink-soft:    #45382c;
+    --ink-mute:    #7a6a55;
+    --gold:        #d4953a;
+    --gold-deep:   #a86d1a;
+    --gold-glow:   #f5c97a;
+    --rose:        #c54f3f;
+    --teal:        #2d6e6a;
+    --line:        #e8dcc4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    background-image:
+      radial-gradient(ellipse 1200px 800px at 80% -100px, rgba(245,201,122,0.35), transparent 60%),
+      radial-gradient(ellipse 900px 600px at -10% 600px, rgba(212,149,58,0.10), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 1;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.30  0 0 0 0 0.10  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* nav */
+  nav.top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 22px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    background: linear-gradient(to bottom, rgba(251,246,237,0.92), rgba(251,246,237,0));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  nav.top .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  nav.top .logo .sun {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--gold-glow), var(--gold) 60%, var(--gold-deep));
+    box-shadow: 0 0 16px var(--gold-glow);
+  }
+  nav.top .links { display: flex; gap: 24px; flex-wrap: wrap; }
+  nav.top .links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    position: relative;
+    transition: color .2s ease;
+  }
+  nav.top .links a:hover { color: var(--gold-deep); }
+
+  /* breadcrumb / back link */
+  .breadcrumb {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 120px 56px 0;
+    position: relative;
+    z-index: 4;
+  }
+  .breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-mute);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 14px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    transition: all .25s ease;
+  }
+  .breadcrumb a:hover {
+    border-color: var(--accent);
+    color: var(--accent-deep);
+    transform: translateX(-3px);
+  }
+
+  /* page header */
+  header.page-header {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 56px 60px;
+    position: relative;
+    z-index: 4;
+  }
+  .page-header .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 18px;
+  }
+  .page-header .eyebrow::before {
+    content: "";
+    width: 24px; height: 1.5px;
+    background: var(--accent);
+  }
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(48px, 7vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .page-header h1 em {
+    font-style: italic;
+    color: var(--accent-deep);
+  }
+  .page-header .lede {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 640px;
+  }
+
+  /* page content */
+  article.page-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 56px 80px;
+    position: relative;
+    z-index: 4;
+  }
+  article.page-content h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.15;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+  article.page-content h2 em { font-style: italic; color: var(--accent-deep); }
+  article.page-content p {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  article.page-content p strong { color: var(--ink); font-weight: 600; }
+  article.page-content a {
+    color: var(--accent-deep);
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    transition: border-color .2s ease;
+  }
+  article.page-content a:hover { border-bottom-color: var(--accent); }
+  article.page-content .pullquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 28px;
+    margin: 36px 0;
+  }
+
+  /* nobel chip */
+  .nobel-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-deep);
+    background: rgba(245,201,122,0.18);
+    padding: 2px 10px;
+    border-radius: 100px;
+    text-decoration: none;
+    border-bottom: none !important;
+    margin: 0 2px;
+    white-space: nowrap;
+    transition: all .2s ease;
+  }
+  .nobel-chip::before { content: "🏅"; font-size: 11px; }
+  .nobel-chip:hover {
+    background: rgba(245,201,122,0.35);
+    color: var(--ink);
+  }
+
+  /* related work section */
+  section.related-work {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 56px 100px;
+    position: relative;
+    z-index: 4;
+  }
+  section.related-work h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  section.related-work h2 em { font-style: italic; color: var(--accent-deep); }
+
+  .related-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .related-item {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+    transition: padding .3s ease;
+  }
+  .related-item:last-child { border-bottom: 1px solid var(--line); }
+  .related-item:hover { padding-left: 12px; }
+  .related-item .year {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent-deep);
+    font-weight: 500;
+  }
+  .related-item h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .related-item h3 a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    transition: border-color .2s ease;
+  }
+  .related-item h3 a:hover { border-bottom-color: var(--accent); }
+  .related-item .meta {
+    font-size: 14px;
+    color: var(--ink-mute);
+  }
+  .related-item .meta .venue {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--accent-deep);
+  }
+  .related-item .role {
+    font-size: 12px;
+    color: var(--ink-mute);
+    text-align: right;
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+    white-space: nowrap;
+  }
+
+  /* footer */
+  footer {
+    padding: 40px 56px 60px;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 13px;
+    position: relative; z-index: 4;
+    border-top: 1px solid var(--line);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  footer a {
+    color: var(--ink-mute);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* responsive */
+  @media (max-width: 760px) {
+    nav.top { padding: 16px 20px; }
+    nav.top .links { gap: 14px; }
+    nav.top .links a { font-size: 13px; }
+    .breadcrumb { padding: 100px 24px 0; }
+    header.page-header { padding: 32px 24px 50px; }
+    article.page-content { padding: 0 24px 60px; }
+    section.related-work { padding: 50px 24px 80px; }
+    .related-item { grid-template-columns: 60px 1fr; gap: 14px; }
+    .related-item .role { grid-column: 1 / -1; text-align: left; }
+  }
+
+  body {
+    --accent: #c54f3f;
+    --accent-deep: #7a1f12;
+  }
+</style>
+</head>
+<body>
+
+
+<nav class="top">
+  <a href="../index.html" class="logo">
+    <span class="sun"></span>
+    <span>Lida Xu</span>
+  </a>
+  <div class="links">
+    <a href="../index.html#about">About</a>
+    <a href="../index.html#research">Research</a>
+    <a href="../index.html#work">Work</a>
+    <a href="../index.html#contact">Say hi</a>
+  </div>
+</nav>
+
+
+<div class="breadcrumb">
+  <a href="../index.html#research">← All research directions</a>
+</div>
+
+<header class="page-header">
+  <div class="eyebrow">Research direction · 02</div>
+  <h1>Integrated nonlinear <em>photonics.</em></h1>
+  <p class="lede">Bringing the precision of optical frequency combs out of laser labs and onto chips small enough to integrate into real systems.</p>
+</header>
+
+<article class="page-content">
+  
+  <p>Optical frequency combs revolutionized precision measurement — a breakthrough recognized by the <a class="nobel-chip" href="https://www.nobelprize.org/prizes/physics/2005/summary/" target="_blank">2005 Nobel</a> — by providing an exquisitely stable ruler for measuring optical frequencies with unprecedented accuracy. Traditional combs, however, rely on large, complex femtosecond laser systems. In the past decade, a major scientific push has aimed to <strong>miniaturize this Nobel-Prize–winning capability onto chip-scale platforms</strong>.</p>
+
+  <p>Microresonator frequency combs, or <strong>microcombs</strong>, achieve this by confining continuous-wave laser light inside a high-Q cavity, where intense circulating fields drive Kerr nonlinearities and generate a series of equally spaced spectral lines. These chip-based combs can operate at microwave repetition rates, produce coherent solitons, and integrate directly with photonic circuits.</p>
+
+  <p class="pullquote">Their compactness, stability, and CMOS compatibility position microcombs as powerful tools for next-generation precision metrology, telecommunications, and emerging nonlinear and quantum technologies.</p>
+
+  <h2>What I work on <em>here</em></h2>
+  <p>I focus on the <strong>integrated</strong> side — making nonlinear photonic devices that are not just clever physics demonstrations, but reliable, reproducible, and ready to be built into real systems. The hard problem isn't getting any one comb to work; it's getting the <em>same</em> comb to work twice, on hundreds of chips fabricated in different runs.</p>
+
+  <p>That's where my work on <em>multi-timescale frequency-phase matching</em> comes in. By engineering the matching condition across multiple timescales simultaneously, we can stabilize the comb generation process against the small fabrication variations that have plagued integrated nonlinear optics for years.</p>
+
+</article>
+
+<section class="related-work">
+  <h2>Related <em>work.</em></h2>
+  <div class="related-list">
+    <article class="related-item">
+      <div class="year">2025</div>
+      <div>
+        <h3><a href="https://www.science.org/doi/abs/10.1126/science.adu6368" target="_blank">Multi-timescale frequency-phase matching for high-yield nonlinear photonics</a></h3>
+        <div class="meta"><span class="venue">Science</span> · M. J. Mehrabad, L. Xu, et al.</div>
+      </div>
+      <div class="role">Co-first author</div>
+    </article>
+    <article class="related-item">
+      <div class="year">2025</div>
+      <div>
+        <h3><a href="https://www.science.org/doi/full/10.1126/sciadv.adw7696" target="_blank">On-chip multi-timescale spatiotemporal optical synchronization</a></h3>
+        <div class="meta"><span class="venue">Science Advances</span> · L. Xu, M. J. Mehrabad, C. J. Flower, et al.</div>
+      </div>
+      <div class="role">First author</div>
+    </article>
+    <article class="related-item">
+      <div class="year">2024</div>
+      <div>
+        <h3><a href="https://www.science.org/doi/full/10.1126/science.ado0053" target="_blank">Observation of topological frequency combs</a></h3>
+        <div class="meta"><span class="venue">Science</span> · C. J. Flower, M. J. Mehrabad, L. Xu, et al.</div>
+      </div>
+      <div class="role">Co-first author</div>
+    </article>
+    <article class="related-item">
+      <div class="year">in prep</div>
+      <div>
+        <h3>Theory of nested frequency-phase matching and harmonic generations</h3>
+        <div class="meta"><span class="venue">Manuscript</span> · L. Xu, A. Padhye, et al.</div>
+      </div>
+      <div class="role">First author</div>
+    </article>
+  </div>
+</section>
+
+
+<footer>© 2026 Lida Xu · <a href="../index.html">Back to home</a></footer>
+
+
+</body>
+</html>
