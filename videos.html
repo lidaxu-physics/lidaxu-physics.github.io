@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Science communication — Lida Xu</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --warm-bg:     #fbf6ed;
+    --warm-bg-2:   #f5ecda;
+    --cream:       #fffaf0;
+    --ink:         #1c1814;
+    --ink-soft:    #45382c;
+    --ink-mute:    #7a6a55;
+    --gold:        #d4953a;
+    --gold-deep:   #a86d1a;
+    --gold-glow:   #f5c97a;
+    --rose:        #c54f3f;
+    --teal:        #2d6e6a;
+    --line:        #e8dcc4;
+    --accent:      var(--gold);
+    --accent-deep: var(--gold-deep);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    background-image:
+      radial-gradient(ellipse 1200px 800px at 80% -100px, rgba(245,201,122,0.35), transparent 60%),
+      radial-gradient(ellipse 900px 600px at -10% 600px, rgba(212,149,58,0.10), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 1;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.30  0 0 0 0 0.10  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* nav */
+  nav.top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 22px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    background: linear-gradient(to bottom, rgba(251,246,237,0.92), rgba(251,246,237,0));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  nav.top .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  nav.top .logo .sun {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--gold-glow), var(--gold) 60%, var(--gold-deep));
+    box-shadow: 0 0 16px var(--gold-glow);
+  }
+  nav.top .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  nav.top .lang-toggle a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    text-decoration: none;
+    transition: color .2s ease;
+    padding: 2px 4px;
+  }
+  nav.top .lang-toggle a:hover { color: var(--gold-deep); }
+  nav.top .lang-toggle a.active { color: var(--ink); font-weight: 600; }
+  nav.top .lang-toggle .lang-sep { color: var(--line); font-size: 14px; }
+
+  /* breadcrumb */
+  .breadcrumb {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 120px 56px 0;
+    position: relative;
+    z-index: 4;
+  }
+  .breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-mute);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 14px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    transition: all .25s ease;
+  }
+  .breadcrumb a:hover {
+    border-color: var(--gold);
+    color: var(--gold-deep);
+    transform: translateX(-3px);
+  }
+
+  /* page header */
+  header.page-header {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 56px 40px;
+    position: relative;
+    z-index: 4;
+  }
+  .page-header .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 18px;
+  }
+  .page-header .eyebrow::before {
+    content: "";
+    width: 24px; height: 1.5px;
+    background: var(--gold);
+  }
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(48px, 7vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .page-header h1 em { font-style: italic; color: var(--gold-deep); }
+  .page-header .lede {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 720px;
+  }
+  .page-header .meta-pills {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .page-header .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--ink-soft);
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+  .page-header .pill.ghost { background: transparent; }
+  .page-header .pill.ghost.lang-note {
+    color: var(--ink-mute);
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+  }
+  .page-header .pill .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--rose);
+  }
+
+  /* main listing */
+  main.videos {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 56px 80px;
+    position: relative;
+    z-index: 4;
+  }
+
+  .episode {
+    margin-bottom: 56px;
+  }
+  .episode .ep-head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 14px;
+  }
+  .episode .ep-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--gold-deep);
+    font-weight: 500;
+    flex-shrink: 0;
+    min-width: 70px;
+  }
+  .episode h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.25;
+    color: var(--ink);
+    flex: 1;
+  }
+  .episode h2 em { font-style: italic; color: var(--gold-deep); }
+  .episode .ep-subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-mute);
+    margin-left: 88px;
+    margin-top: -8px;
+    margin-bottom: 14px;
+  }
+  .episode .video-wrap {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;   /* 16:9 */
+    background: var(--ink);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px -16px rgba(28,24,20,0.3);
+  }
+  .episode .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+
+  /* "to be continued" placeholder */
+  .tbc {
+    margin-top: 80px;
+    padding: 32px;
+    text-align: center;
+    border: 1.5px dashed var(--line);
+    border-radius: 12px;
+    background: rgba(255,250,240,0.4);
+  }
+  .tbc-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-mute);
+  }
+  .tbc-sub {
+    font-size: 13.5px;
+    color: var(--ink-mute);
+    margin-top: 8px;
+    font-family: 'Inter Tight', sans-serif;
+  }
+
+  footer {
+    padding: 40px 56px 60px;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 13px;
+    position: relative; z-index: 4;
+    border-top: 1px solid var(--line);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  footer a {
+    color: var(--ink-mute);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (max-width: 760px) {
+    nav.top { padding: 16px 20px; }
+    .breadcrumb { padding: 100px 24px 0; }
+    header.page-header { padding: 32px 24px 30px; }
+    main.videos { padding: 20px 24px 60px; }
+    .episode { margin-bottom: 40px; }
+    .episode .ep-head { gap: 12px; }
+    .episode .ep-num { font-size: 18px; min-width: 50px; }
+    .episode h2 { font-size: 20px; }
+    .episode .ep-subtitle { margin-left: 62px; font-size: 14px; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="index.html" class="logo">
+    <span class="sun"></span>
+    <span>Lida Xu</span>
+  </a>
+  <span class="lang-toggle">
+    <a href="videos.html" class="active" aria-current="true">EN</a>
+    <span class="lang-sep">·</span>
+    <a href="videos_zh.html">中</a>
+  </span>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">← Back to home</a>
+</div>
+
+<header class="page-header">
+  <div class="eyebrow">Science communication</div>
+  <h1>Physics, <em>in Mandarin.</em></h1>
+  <p class="lede">I make a Mandarin physics-history video series on Bilibili. It's where my outreach side lives — when the lab work is done and I want to tell stories instead of write papers.</p>
+  <div class="meta-pills">
+    <span class="pill"><span class="dot"></span>Bilibili</span>
+    <span class="pill ghost lang-note">videos are in Mandarin Chinese</span>
+  </div>
+</header>
+
+<main class="videos">
+
+  <p style="font-family:'Fraunces',serif; font-style:italic; font-size:18px; color:var(--ink-soft); margin-bottom:48px; max-width:720px; line-height:1.55;">
+    The current series is a five-part deep dive into <strong>Paul Dirac</strong> — strange genius, inventor of antimatter, accidental founder of quantum field theory — based mostly on his biography <em>The Strangest Man</em>. The original Chinese episode titles are kept as-is below; English subtitles give a sense of each one.
+  </p>
+
+
+  <article class="episode">
+    <div class="ep-head">
+      <div class="ep-num">No. 01</div>
+      <h2>横空出世的卷王狄拉克</h2>
+    </div>
+    <p class="ep-subtitle">Episode 1: Dirac the workaholic, a force of nature</p>
+    <div class="video-wrap">
+      <iframe src="//player.bilibili.com/player.html?bvid=BV17S4y1m7kL&page=1&high_quality=1&danmaku=0"
+              scrolling="no" border="0" frameborder="no"
+              framespacing="0" allowfullscreen="true"
+              loading="lazy"></iframe>
+    </div>
+  </article>
+
+  <article class="episode">
+    <div class="ep-head">
+      <div class="ep-num">No. 02</div>
+      <h2>狄拉克是什么物理单位</h2>
+    </div>
+    <p class="ep-subtitle">Episode 2: What kind of physics unit is "a Dirac"?</p>
+    <div class="video-wrap">
+      <iframe src="//player.bilibili.com/player.html?bvid=BV15t4y1s7tS&page=1&high_quality=1&danmaku=0"
+              scrolling="no" border="0" frameborder="no"
+              framespacing="0" allowfullscreen="true"
+              loading="lazy"></iframe>
+    </div>
+  </article>
+
+  <article class="episode">
+    <div class="ep-head">
+      <div class="ep-num">No. 03</div>
+      <h2>狄拉克之海诞生的前夜</h2>
+    </div>
+    <p class="ep-subtitle">Episode 3: The eve of the Dirac sea</p>
+    <div class="video-wrap">
+      <iframe src="//player.bilibili.com/player.html?bvid=BV1jc411Z7je&page=1&high_quality=1&danmaku=0"
+              scrolling="no" border="0" frameborder="no"
+              framespacing="0" allowfullscreen="true"
+              loading="lazy"></iframe>
+    </div>
+  </article>
+
+  <article class="episode">
+    <div class="ep-head">
+      <div class="ep-num">No. 04</div>
+      <h2>海森堡为何担心狄拉克</h2>
+    </div>
+    <p class="ep-subtitle">Episode 4: Why was Heisenberg worried about Dirac?</p>
+    <div class="video-wrap">
+      <iframe src="//player.bilibili.com/player.html?bvid=BV1yH4y1z7ic&page=1&high_quality=1&danmaku=0"
+              scrolling="no" border="0" frameborder="no"
+              framespacing="0" allowfullscreen="true"
+              loading="lazy"></iframe>
+    </div>
+  </article>
+
+  <article class="episode">
+    <div class="ep-head">
+      <div class="ep-num">No. 05</div>
+      <h2>狄拉克之海是弄啥嘞</h2>
+    </div>
+    <p class="ep-subtitle">Episode 5: So what in the world is the Dirac sea?</p>
+    <div class="video-wrap">
+      <iframe src="//player.bilibili.com/player.html?bvid=BV1ob4y1g7Tw&page=1&high_quality=1&danmaku=0"
+              scrolling="no" border="0" frameborder="no"
+              framespacing="0" allowfullscreen="true"
+              loading="lazy"></iframe>
+    </div>
+  </article>
+
+
+  <div class="tbc">
+    <div class="tbc-text">— to be continued —</div>
+    <div class="tbc-sub">More episodes are in the works.</div>
+  </div>
+
+</main>
+
+<footer>© 2026 Lida Xu · <a href="index.html">Back to home</a></footer>
+
+</body>
+</html>
