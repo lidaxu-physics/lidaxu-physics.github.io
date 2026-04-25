@@ -320,6 +320,97 @@
     border-bottom: 1px solid var(--line);
   }
 
+
+  /* ===== PHOTONIC COMPUTING FULL-WIDTH STAGE ===== */
+  .pc-stage-wrap {
+    max-width: 1000px;
+    margin: 0 auto 60px;
+    padding: 0 40px;
+    position: relative;
+    z-index: 4;
+  }
+  .pc-stage {
+    width: 100%;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(109,196,190,0.08), transparent 70%),
+      var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 28px 28px 16px;
+    box-shadow: 0 30px 60px -30px rgba(45,110,106,0.18);
+  }
+  .pc-stage svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .pc-caption {
+    margin-top: 18px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-mute);
+    text-align: center;
+    min-height: 22px;
+    transition: opacity 0.4s ease;
+    padding-bottom: 8px;
+  }
+  .pc-caption strong {
+    font-style: normal;
+    color: var(--accent-deep);
+    font-weight: 600;
+  }
+
+  /* scroll beat blocks for text */
+  .pc-text {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 56px 40px;
+    position: relative;
+    z-index: 4;
+  }
+  .pc-text p {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  .pc-text p strong { color: var(--ink); font-weight: 600; }
+  .pc-text .pullquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 28px;
+    margin: 36px 0;
+  }
+  .pc-text h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.15;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+  .pc-text h2 em { font-style: italic; color: var(--accent-deep); }
+
+  @media (max-width: 760px) {
+    .pc-stage-wrap { padding: 0 20px; }
+    .pc-stage { padding: 18px 14px 10px; }
+    .pc-text { padding: 0 24px 40px; }
+  }
+
+
+  #catImg, #dogImg { transition: opacity 0.6s ease; }
+
+
+  #catChoice:hover #catFrame, #dogChoice:hover #dogFrame {
+    stroke: #2d6e6a;
+  }
+
   /* responsive */
   @media (max-width: 760px) {
     nav.top { padding: 16px 20px; }
@@ -366,16 +457,139 @@
   <p class="lede">Exploring whether the same lattices that taught us topology can be the substrate for a different kind of processor.</p>
 </header>
 
-<article class="page-content">
-  
-  <p>Building on my PhD work with <strong>large-scale nonlinear photonic lattices</strong>, I'm exploring their potential as a hardware platform for optical computing. The same lattices we use to study fundamental topological physics turn out to have an interesting property: they perform a kind of natural, parallel signal processing as light flows through them.</p>
+<article class="page-content pc-text">
+  <p>Building on my PhD work with <strong>large-scale nonlinear photonic lattices</strong>, I'm exploring their potential as a hardware platform for optical computing — using light's natural parallelism and topology's robustness to build a different kind of processor.</p>
+</article>
 
-  <p class="pullquote">If geometry can route light without backscattering, can geometry also do useful computation?</p>
+<div class="pc-stage-wrap">
+  <div class="pc-stage"><svg id="pcSvg" viewBox="0 0 920 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="pcPhotonTeal">
+      <stop offset="0%" stop-color="#d4f0ee" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#6dc4be" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#2d6e6a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="siliconGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d8cfc0"/>
+      <stop offset="100%" stop-color="#b8ab94"/>
+    </linearGradient>
+    <filter id="pcGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
 
-  <p>This is a young direction in my work, and the questions are still being framed. The principal targets I find most exciting are <strong>reservoir computing</strong> with topological photonic arrays, where the rich dynamics of a fixed nonlinear lattice serve as a computational substrate, and <strong>optical neural networks</strong> built from the same fabrication processes that give us microcombs and topological lattices.</p>
+  <!-- ================= INPUT PANEL — two clickable images ================= -->
+  <g id="inputPanel">
+    <text x="105" y="78" text-anchor="middle"
+          font-family="Fraunces,serif" font-style="italic" font-size="11" fill="#7a6a55">click to classify</text>
+
+    <!-- CAT choice -->
+    <g id="catChoice" style="cursor:pointer;">
+      <rect id="catFrame" x="30" y="90" width="150" height="110" rx="6" ry="6"
+            fill="#fffaf0" stroke="#7a6a55" stroke-width="1"
+            style="transition: stroke 0.25s ease, stroke-width 0.25s ease;"/>
+      <clipPath id="catClip">
+        <rect x="34" y="94" width="142" height="102" rx="4" ry="4"/>
+      </clipPath>
+      <image id="catImg" href="../images/cat.png"
+             x="34" y="94" width="142" height="102"
+             preserveAspectRatio="xMidYMid slice"
+             clip-path="url(#catClip)"/>
+    </g>
+
+    <!-- DOG choice -->
+    <g id="dogChoice" style="cursor:pointer;">
+      <rect id="dogFrame" x="30" y="220" width="150" height="110" rx="6" ry="6"
+            fill="#fffaf0" stroke="#7a6a55" stroke-width="1"
+            style="transition: stroke 0.25s ease, stroke-width 0.25s ease;"/>
+      <clipPath id="dogClip">
+        <rect x="34" y="224" width="142" height="102" rx="4" ry="4"/>
+      </clipPath>
+      <image id="dogImg" href="../images/dog.png"
+             x="34" y="224" width="142" height="102"
+             preserveAspectRatio="xMidYMid slice"
+             clip-path="url(#dogClip)"/>
+    </g>
+  </g>
+
+  <!-- ================= INPUT WAVEGUIDES (two bundles, one per image) ================= -->
+  <g id="inputWaveguides">
+    <path id="catBundle" d="" fill="none" stroke="#a86d1a" stroke-width="2"
+          stroke-linecap="round" opacity="0.55"/>
+    <path id="dogBundle" d="" fill="none" stroke="#a86d1a" stroke-width="2"
+          stroke-linecap="round" opacity="0.55"/>
+  </g>
+
+  <!-- ================= CHIP ================= -->
+  <g id="chipGroup">
+    <!-- silicon substrate (darker rounded rect behind lattice) -->
+    <rect x="280" y="50" width="280" height="320" rx="12" ry="12"
+          fill="url(#siliconGrad)" stroke="#7a6a55" stroke-width="1" opacity="0.55"/>
+    <!-- corner contact pads (gold squares to look IC-like) -->
+    <rect x="290" y="60" width="12" height="12" fill="#d4953a" opacity="0.7"/>
+    <rect x="538" y="60" width="12" height="12" fill="#d4953a" opacity="0.7"/>
+    <rect x="290" y="348" width="12" height="12" fill="#d4953a" opacity="0.7"/>
+    <rect x="538" y="348" width="12" height="12" fill="#d4953a" opacity="0.7"/>
+    <!-- chip label -->
+    <text x="420" y="42" text-anchor="middle"
+          font-family="Inter Tight, sans-serif" font-size="10" letter-spacing="0.18em" font-weight="600"
+          fill="#a86d1a" opacity="0.7">TOPAI · 8×8</text>
+    <!-- lattice couplings and sites -->
+    <g id="chipCouplings" stroke="#6b5f4a" stroke-width="1"></g>
+    <g id="chipSites"></g>
+  </g>
+
+  <!-- ================= OUTPUT WAVEGUIDES ================= -->
+  <g id="outputWaveguides"></g>
+
+  <!-- ================= NEURAL NET ================= -->
+  <g id="nnGroup">
+    <!-- label -->
+    <text x="665" y="42" text-anchor="middle"
+          font-family="Inter Tight, sans-serif" font-size="10" letter-spacing="0.18em" font-weight="600"
+          fill="#2d6e6a" opacity="0.7">READOUT</text>
+    <!-- synapse lines will be drawn here -->
+    <g id="nnSynapses"></g>
+    <!-- hidden layer neurons -->
+    <g id="nnHidden"></g>
+    <!-- output neurons -->
+    <g id="nnOutputs"></g>
+    <!-- output labels -->
+    <text id="catLabel" x="790" y="145" font-family="Fraunces,serif" font-size="14" fill="#7a6a55"
+          font-weight="500">cat</text>
+    <text id="dogLabel" x="790" y="275" font-family="Fraunces,serif" font-size="14" fill="#7a6a55"
+          font-weight="500">dog</text>
+  </g>
+
+  <!-- ================= VERDICT DISPLAY ================= -->
+  <g id="verdictPanel" opacity="0">
+    <rect x="830" y="140" width="80" height="120" rx="6" ry="6"
+          fill="#fffaf0" stroke="#2d6e6a" stroke-width="1.2"/>
+    <text x="870" y="132" text-anchor="middle"
+          font-family="Inter Tight, sans-serif" font-size="8" letter-spacing="0.2em" font-weight="600"
+          fill="#2d6e6a" opacity="0.8">VERDICT</text>
+    <!-- tiny drawing slot -->
+    <g id="verdictDrawing" transform="translate(840 152)"></g>
+    <!-- verdict text -->
+    <text id="verdictText" x="870" y="248" text-anchor="middle"
+          font-family="Fraunces,serif" font-style="italic" font-size="16" font-weight="500"
+          fill="#2d6e6a"></text>
+  </g>
+</svg>
+    <div class="pc-caption" id="pcCaption">A photonic chip. Feed it an image.</div>
+  </div>
+</div>
+
+<article class="page-content pc-text">
+
+  <p>The idea: the <strong>lattice itself is the computation.</strong> Send in an encoded input; the nonlinear coupling between rings creates a rich, high-dimensional response. A small trained <em>readout layer</em> at the output interprets that response.</p>
+
+  <p class="pullquote">The chip does not "know" about cats or dogs. It just transforms optical signals. A small neural network learns to call them from the response.</p>
+
+  <p>Change the input and the lattice's response changes too — deterministically, but in ways no one has to hand-design. The same readout weights discriminate both classes. <strong>The chip stays fixed. Only the tiny classifier is trained.</strong></p>
 
   <h2>Why this <em>matters</em></h2>
-  <p>Today's AI workloads are running into the limits of electronic computation — energy, bandwidth, latency. Photons don't have those same limits. The bet is that a photonic processor designed around topology and nonlinearity could do certain kinds of calculations vastly more efficiently than transistors. The TOPAI patent (Topological Photonics Architectures for Optical Computing and AI) is one early step in that direction.</p>
+  <p>Today's AI workloads are running into the limits of electronic computation — energy, bandwidth, latency. Photons don't have those same limits. The bet is that a photonic processor designed around topology and nonlinearity could do certain kinds of calculations vastly more efficiently than transistors. The <strong>TOPAI patent</strong> (Topological Photonics Architectures for Optical Computing and AI) is one early step in that direction.</p>
 
   <h2>I am also <em>curious about</em></h2>
   <p>Light–matter interactions — specifically how the integration of <strong>atomic systems</strong> might overcome the inherent limitations of photonics alone, to enable scalable quantum networking and computing. Photons are fast and lossless, but they don't interact with each other. Atoms can hold information and couple to single photons. Combining the two is an old idea, but a hard one to actually engineer at chip scale.</p>
@@ -408,5 +622,486 @@
 <footer>© 2026 Lida Xu · <a href="../index.html">Back to home</a></footer>
 
 
+<script>
+(function() {
+  const NS = 'http://www.w3.org/2000/svg';
+
+  const CAT_TINY = [
+    [1,0,0,0,0,1],
+    [1,1,0,0,1,1],
+    [1,1,1,1,1,1],
+    [1,0,1,1,0,1],
+    [1,1,0,0,1,1],
+    [0,1,1,1,1,0],
+  ];
+  const DOG_TINY = [
+    [1,0,0,0,0,1],
+    [1,1,1,1,1,1],
+    [1,0,1,1,0,1],
+    [1,1,0,0,1,1],
+    [0,1,1,1,1,0],
+    [0,0,1,1,0,0],
+  ];
+
+  // =============== BUILD LATTICE ===============
+  const chipSitesG = document.getElementById('chipSites');
+  const chipCouplingsG = document.getElementById('chipCouplings');
+  const CHIP_X0 = 305, CHIP_Y0 = 80;
+  const CHIP_NX = 8, CHIP_NY = 8;
+  const CHIP_DX = (530 - CHIP_X0) / (CHIP_NX - 1);
+  const CHIP_DY = (340 - CHIP_Y0) / (CHIP_NY - 1);
+
+  const chipSites = [];
+  for (let i = 0; i < CHIP_NX; i++) {
+    for (let j = 0; j < CHIP_NY; j++) {
+      const cx = CHIP_X0 + i * CHIP_DX;
+      const cy = CHIP_Y0 + j * CHIP_DY;
+      if (i < CHIP_NX - 1) {
+        const ln = document.createElementNS(NS, 'line');
+        ln.setAttribute('x1', cx + 6); ln.setAttribute('y1', cy);
+        ln.setAttribute('x2', cx + CHIP_DX - 6); ln.setAttribute('y2', cy);
+        chipCouplingsG.appendChild(ln);
+      }
+      if (j < CHIP_NY - 1) {
+        const ln = document.createElementNS(NS, 'line');
+        ln.setAttribute('x1', cx); ln.setAttribute('y1', cy + 6);
+        ln.setAttribute('x2', cx); ln.setAttribute('y2', cy + CHIP_DY - 6);
+        chipCouplingsG.appendChild(ln);
+      }
+    }
+  }
+  for (let i = 0; i < CHIP_NX; i++) {
+    for (let j = 0; j < CHIP_NY; j++) {
+      const cx = CHIP_X0 + i * CHIP_DX;
+      const cy = CHIP_Y0 + j * CHIP_DY;
+      const ring = document.createElementNS(NS, 'circle');
+      ring.setAttribute('cx', cx); ring.setAttribute('cy', cy);
+      ring.setAttribute('r', 6);
+      ring.setAttribute('fill', '#fffaf0');
+      ring.setAttribute('stroke', '#6b5f4a');
+      ring.setAttribute('stroke-width', 1);
+      chipSitesG.appendChild(ring);
+      chipSites.push({ i, j, cx, cy, element: ring, glow: 0 });
+    }
+  }
+
+  // =============== TWO INPUT BUNDLES (cat and dog) ===============
+  // Each starts at its image's right-center and arcs to the chip left-edge middle.
+  const CAT_SRC_X = 180, CAT_SRC_Y = 145;   // right-middle of cat frame (y: 90..200)
+  const DOG_SRC_X = 180, DOG_SRC_Y = 275;   // right-middle of dog frame (y: 220..330)
+  const CHIP_ENTRY_X = CHIP_X0;
+  const CHIP_ENTRY_Y = CHIP_Y0 + 3.5 * CHIP_DY;   // vertical middle of lattice
+
+  function buildBundle(sx, sy) {
+    return `M ${sx} ${sy} ` +
+      `C ${sx + 45} ${sy}, ` +
+        `${CHIP_ENTRY_X - 45} ${CHIP_ENTRY_Y}, ` +
+        `${CHIP_ENTRY_X} ${CHIP_ENTRY_Y}`;
+  }
+  const catBundleEl = document.getElementById('catBundle');
+  const dogBundleEl = document.getElementById('dogBundle');
+  catBundleEl.setAttribute('d', buildBundle(CAT_SRC_X, CAT_SRC_Y));
+  dogBundleEl.setAttribute('d', buildBundle(DOG_SRC_X, DOG_SRC_Y));
+  const catBundleLength = catBundleEl.getTotalLength();
+  const dogBundleLength = dogBundleEl.getTotalLength();
+
+  // =============== OUTPUT WAVEGUIDES (one per row, from chip right edge) ===============
+  const outputWGs = document.getElementById('outputWaveguides');
+  const NN_HIDDEN_X = 660;
+  const HIDDEN_N = 6;
+  const HIDDEN_YS = [];
+  for (let h = 0; h < HIDDEN_N; h++) HIDDEN_YS.push(90 + h * 48);
+  const outputPaths = [];
+  for (let r = 0; r < CHIP_NY; r++) {
+    const sx = CHIP_X0 + (CHIP_NX - 1) * CHIP_DX;
+    const sy = CHIP_Y0 + r * CHIP_DY;
+    const h = r % HIDDEN_N;
+    const ex = NN_HIDDEN_X;
+    const ey = HIDDEN_YS[h];
+    const midX = (sx + ex) / 2;
+    const pathD = `M ${sx} ${sy} C ${midX} ${sy}, ${midX} ${ey}, ${ex} ${ey}`;
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', pathD);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', '#b8ab94');
+    path.setAttribute('stroke-width', 0.7);
+    path.setAttribute('opacity', 0.45);
+    outputWGs.appendChild(path);
+    outputPaths.push({ el: path, length: path.getTotalLength(), chipRow: r, hidden: h });
+  }
+
+  // =============== HIDDEN NEURONS ===============
+  const nnHiddenG = document.getElementById('nnHidden');
+  const hiddenNeurons = [];
+  for (let h = 0; h < HIDDEN_N; h++) {
+    const glow = document.createElementNS(NS, 'circle');
+    glow.setAttribute('cx', NN_HIDDEN_X); glow.setAttribute('cy', HIDDEN_YS[h]);
+    glow.setAttribute('r', 14);
+    glow.setAttribute('fill', 'url(#pcPhotonTeal)');
+    glow.setAttribute('filter', 'url(#pcGlow)');
+    glow.setAttribute('opacity', 0);
+    nnHiddenG.appendChild(glow);
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', NN_HIDDEN_X); c.setAttribute('cy', HIDDEN_YS[h]);
+    c.setAttribute('r', 8);
+    c.setAttribute('fill', '#fffaf0');
+    c.setAttribute('stroke', '#2d6e6a'); c.setAttribute('stroke-width', 1);
+    nnHiddenG.appendChild(c);
+    hiddenNeurons.push({ node: c, glow, x: NN_HIDDEN_X, y: HIDDEN_YS[h], pulse: 0 });
+  }
+
+  // =============== OUTPUT NEURONS ===============
+  const nnOutputsG = document.getElementById('nnOutputs');
+  const NN_OUT_X = 770;
+  const CAT_Y = 140, DOG_Y = 270;
+  function makeOutput(cx, cy) {
+    const glow = document.createElementNS(NS, 'circle');
+    glow.setAttribute('cx', cx); glow.setAttribute('cy', cy);
+    glow.setAttribute('r', 22);
+    glow.setAttribute('fill', 'url(#pcPhotonTeal)');
+    glow.setAttribute('filter', 'url(#pcGlow)');
+    glow.setAttribute('opacity', 0);
+    nnOutputsG.appendChild(glow);
+    const node = document.createElementNS(NS, 'circle');
+    node.setAttribute('cx', cx); node.setAttribute('cy', cy);
+    node.setAttribute('r', 12);
+    node.setAttribute('fill', '#fffaf0');
+    node.setAttribute('stroke', '#2d6e6a'); node.setAttribute('stroke-width', 1.3);
+    nnOutputsG.appendChild(node);
+    return { node, glow, x: cx, y: cy, pulse: 0 };
+  }
+  const catOut = makeOutput(NN_OUT_X, CAT_Y);
+  const dogOut = makeOutput(NN_OUT_X, DOG_Y);
+
+  // =============== SYNAPSES ===============
+  const nnSynG = document.getElementById('nnSynapses');
+  const synapsePaths = [];
+  for (let h = 0; h < HIDDEN_N; h++) {
+    for (const [outY, cls] of [[CAT_Y, 'cat'], [DOG_Y, 'dog']]) {
+      const ln = document.createElementNS(NS, 'line');
+      ln.setAttribute('x1', NN_HIDDEN_X + 8); ln.setAttribute('y1', HIDDEN_YS[h]);
+      ln.setAttribute('x2', NN_OUT_X - 12); ln.setAttribute('y2', outY);
+      ln.setAttribute('stroke', '#b8ab94'); ln.setAttribute('stroke-width', 0.5);
+      ln.setAttribute('opacity', 0.35);
+      nnSynG.appendChild(ln);
+      synapsePaths.push({
+        el: ln, x1: NN_HIDDEN_X + 8, y1: HIDDEN_YS[h], x2: NN_OUT_X - 12, y2: outY, hidden: h, cls
+      });
+    }
+  }
+
+  // =============== VERDICT PANEL ===============
+  const verdictDrawingG = document.getElementById('verdictDrawing');
+  const verdictPixelEls = [];
+  for (let r = 0; r < 6; r++) {
+    verdictPixelEls[r] = [];
+    for (let c = 0; c < 6; c++) {
+      const sq = document.createElementNS(NS, 'rect');
+      sq.setAttribute('x', c * 9); sq.setAttribute('y', r * 9);
+      sq.setAttribute('width', 8); sq.setAttribute('height', 8);
+      sq.setAttribute('fill', '#2d6e6a');
+      sq.setAttribute('opacity', 0);
+      sq.setAttribute('rx', 1);
+      verdictDrawingG.appendChild(sq);
+      verdictPixelEls[r][c] = sq;
+    }
+  }
+  function drawVerdictTiny(pattern) {
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        verdictPixelEls[r][c].setAttribute('opacity', pattern[r][c] ? 0.95 : 0);
+      }
+    }
+  }
+
+  // =============== CHIP ZIG-ZAG PATH (class-dependent) ===============
+  function chipPathFor(cls, row) {
+    const pts = [[0, row]];
+    let i = 0, j = row;
+    const turns = cls === 'cat'
+      ? [[1,0],[1,0],[0,1],[1,0],[0,-1],[1,0],[0,1],[1,0]]
+      : [[1,0],[0,1],[1,0],[0,-1],[1,0],[1,0],[0,1],[1,0]];
+    for (const [di, dj] of turns) {
+      i = Math.max(0, Math.min(CHIP_NX - 1, i + di));
+      j = Math.max(0, Math.min(CHIP_NY - 1, j + dj));
+      pts.push([i, j]);
+      if (i >= CHIP_NX - 1) break;
+    }
+    while (i < CHIP_NX - 1) { i++; pts.push([i, j]); }
+    return pts;
+  }
+  function gridToXY(i, j) {
+    return { x: CHIP_X0 + i * CHIP_DX, y: CHIP_Y0 + j * CHIP_DY };
+  }
+
+  // =============== PHOTONS ===============
+  const photonsLayer = document.createElementNS(NS, 'g');
+  photonsLayer.setAttribute('id', 'photonsLayer');
+  document.getElementById('pcSvg').appendChild(photonsLayer);
+  const activePhotons = [];
+
+  function spawnPhoton(kind, row, delay) {
+    const halo = document.createElementNS(NS, 'circle');
+    halo.setAttribute('r', 5);
+    halo.setAttribute('fill', 'url(#pcPhotonTeal)');
+    halo.setAttribute('filter', 'url(#pcGlow)');
+    halo.setAttribute('opacity', 0);
+    photonsLayer.appendChild(halo);
+    const core = document.createElementNS(NS, 'circle');
+    core.setAttribute('r', 1.6);
+    core.setAttribute('fill', '#2d6e6a');
+    core.setAttribute('opacity', 0);
+    photonsLayer.appendChild(core);
+
+    activePhotons.push({
+      halo, core,
+      kind, row,
+      chipPath: chipPathFor(kind, row),
+      phase: 'waiting',
+      waitLeft: delay,
+      t: 0,
+      chipIdx: 0, chipSegT: 0,
+      hiddenIdx: null, outSynapse: null
+    });
+  }
+
+  function destroy(p) {
+    p.halo.remove(); p.core.remove();
+    const k = activePhotons.indexOf(p);
+    if (k >= 0) activePhotons.splice(k, 1);
+  }
+
+  function pumpLatticeAt(i, j, amount) {
+    const idx = i * CHIP_NY + j;
+    if (idx >= 0 && idx < chipSites.length) {
+      chipSites[idx].glow = Math.min(1, chipSites[idx].glow + amount);
+    }
+  }
+  function decayLattice(dt) {
+    for (const s of chipSites) {
+      s.glow = Math.max(0, s.glow - dt * 0.5);
+      const g = s.glow;
+      if (g > 0.02) {
+        const fill = `rgb(${Math.round(255 - g*155)},${Math.round(250 - g*130)},${Math.round(240 - g*180)})`;
+        s.element.setAttribute('fill', fill);
+        s.element.setAttribute('stroke', g > 0.5 ? '#2d6e6a' : '#6b5f4a');
+      } else {
+        s.element.setAttribute('fill', '#fffaf0');
+        s.element.setAttribute('stroke', '#6b5f4a');
+      }
+    }
+  }
+
+  // =============== CLASSIFICATION STATE ===============
+  let lastClassified = null;     // 'cat' | 'dog' | null
+  let verdictPulseUntil = 0;     // timestamp until which output neuron glows
+  let pendingKind = null;        // classification in flight (not yet revealed)
+  let arrivalsNeeded = 0;        // number of arrivals before verdict reveal
+  let arrivalsSoFar = 0;
+
+  function classify(kind) {
+    // activate the chosen frame border
+    const catFrame = document.getElementById('catFrame');
+    const dogFrame = document.getElementById('dogFrame');
+    if (kind === 'cat') {
+      catFrame.setAttribute('stroke', '#2d6e6a');
+      catFrame.setAttribute('stroke-width', 2.2);
+      dogFrame.setAttribute('stroke', '#7a6a55');
+      dogFrame.setAttribute('stroke-width', 1);
+    } else {
+      dogFrame.setAttribute('stroke', '#2d6e6a');
+      dogFrame.setAttribute('stroke-width', 2.2);
+      catFrame.setAttribute('stroke', '#7a6a55');
+      catFrame.setAttribute('stroke-width', 1);
+    }
+
+    // Hide verdict panel while the burst is in flight — suspense.
+    const verdictPanel = document.getElementById('verdictPanel');
+    verdictPanel.setAttribute('opacity', 0);
+    lastClassified = null;   // no winner yet
+    pendingKind = kind;
+    arrivalsSoFar = 0;
+
+    // Spawn burst: 3 waves × 8 rows
+    const BURST_WAVES = 3;
+    const totalPhotons = BURST_WAVES * CHIP_NY;
+    // We reveal verdict once ~1/3 of photons have reached the output layer —
+    // early enough to feel snappy, but well after they've clearly arrived.
+    arrivalsNeeded = Math.ceil(totalPhotons / 3);
+    for (let wave = 0; wave < BURST_WAVES; wave++) {
+      for (let row = 0; row < CHIP_NY; row++) {
+        spawnPhoton(kind, row, wave * 0.22);
+      }
+    }
+
+    // Status caption during flight — no answer yet
+    setCaption(`Reading the ${kind}…`);
+  }
+
+  function revealVerdict(kind) {
+    lastClassified = kind;
+    verdictPulseUntil = performance.now() + 3000;
+
+    setCaption(`Reading the ${kind}… <strong>${kind === 'cat' ? '"cat"' : '"dog"'}</strong>.`);
+
+    const verdictPanel = document.getElementById('verdictPanel');
+    const verdictText = document.getElementById('verdictText');
+    drawVerdictTiny(kind === 'cat' ? CAT_TINY : DOG_TINY);
+    verdictText.textContent = kind === 'cat' ? '"cat"' : '"dog"';
+    verdictPanel.setAttribute('opacity', 1);
+  }
+
+  // =============== CLICK HANDLERS ===============
+  document.getElementById('catChoice').addEventListener('click', () => classify('cat'));
+  document.getElementById('dogChoice').addEventListener('click', () => classify('dog'));
+
+  // =============== CAPTIONS ===============
+  const captionEl = document.getElementById('pcCaption');
+  function setCaption(text) {
+    captionEl.style.opacity = 0;
+    setTimeout(() => {
+      captionEl.innerHTML = text;
+      captionEl.style.opacity = 1;
+    }, 180);
+  }
+  setCaption('Click the cat or the dog. Watch the chip classify it.');
+
+  // =============== TICK LOOP ===============
+  let lastTs = performance.now();
+
+  function tick(now) {
+    const dt = Math.min((now - lastTs) / 1000, 0.05);
+    lastTs = now;
+
+    const BUNDLE_SPEED = 1.2;
+    const CHIP_SPEED   = 1.3;
+    const OUTPUT_SPEED = 1.2;
+    const SYNAPSE_SPEED = 2.2;
+
+    for (let k = activePhotons.length - 1; k >= 0; k--) {
+      const p = activePhotons[k];
+      let pos = null;
+
+      if (p.phase === 'waiting') {
+        p.waitLeft -= dt;
+        if (p.waitLeft <= 0) {
+          p.phase = 'bundle';
+          p.t = 0;
+          p.halo.setAttribute('opacity', 0.85);
+          p.core.setAttribute('opacity', 1);
+        }
+      }
+
+      if (p.phase === 'bundle') {
+        p.t += dt * BUNDLE_SPEED;
+        const bundleEl = p.kind === 'cat' ? catBundleEl : dogBundleEl;
+        const bundleLen = p.kind === 'cat' ? catBundleLength : dogBundleLength;
+        if (p.t >= 1) {
+          p.phase = 'chip';
+          p.chipIdx = 0; p.chipSegT = 0;
+        } else {
+          try { pos = bundleEl.getPointAtLength(p.t * bundleLen); } catch(e) {}
+        }
+      }
+
+      if (p.phase === 'chip') {
+        const path = p.chipPath;
+        if (p.chipIdx >= path.length - 1) {
+          p.exitRow = path[path.length - 1][1];
+          p.phase = 'output';
+          p.t = 0;
+        } else {
+          p.chipSegT += dt * CHIP_SPEED;
+          const [ia, ja] = path[p.chipIdx];
+          const [ib, jb] = path[p.chipIdx + 1];
+          const a = gridToXY(ia, ja);
+          const b = gridToXY(ib, jb);
+          const f = Math.min(1, p.chipSegT);
+          pos = { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
+          pumpLatticeAt(ia, ja, dt * 1.8);
+          if (p.chipSegT >= 1) { p.chipIdx++; p.chipSegT = 0; }
+        }
+      }
+
+      if (p.phase === 'output') {
+        const outPath = outputPaths[p.exitRow];
+        p.t += dt * OUTPUT_SPEED;
+        if (p.t >= 1) {
+          p.hiddenIdx = outPath.hidden;
+          hiddenNeurons[p.hiddenIdx].pulse = Math.min(1, hiddenNeurons[p.hiddenIdx].pulse + 0.8);
+          const candidates = synapsePaths.filter(s => s.hidden === p.hiddenIdx && s.cls === p.kind);
+          p.outSynapse = candidates[0];
+          p.phase = 'synapse';
+          p.t = 0;
+        } else {
+          try { pos = outPath.el.getPointAtLength(p.t * outPath.length); } catch(e) {}
+        }
+      }
+
+      if (p.phase === 'synapse') {
+        p.t += dt * SYNAPSE_SPEED;
+        if (p.t >= 1) {
+          // on arrival, pulse the correct output
+          if (p.kind === 'cat') catOut.pulse = Math.min(1, catOut.pulse + 0.4);
+          else dogOut.pulse = Math.min(1, dogOut.pulse + 0.4);
+          // Count arrivals toward verdict reveal
+          if (pendingKind === p.kind) {
+            arrivalsSoFar++;
+            if (arrivalsSoFar >= arrivalsNeeded) {
+              revealVerdict(pendingKind);
+              pendingKind = null;
+            }
+          }
+          destroy(p);
+          continue;
+        } else {
+          const s = p.outSynapse;
+          if (s) { pos = { x: s.x1 + (s.x2 - s.x1) * p.t, y: s.y1 + (s.y2 - s.y1) * p.t }; }
+        }
+      }
+
+      if (pos) {
+        p.halo.setAttribute('cx', pos.x); p.halo.setAttribute('cy', pos.y);
+        p.core.setAttribute('cx', pos.x); p.core.setAttribute('cy', pos.y);
+      }
+    }
+
+    // decay lattice and neurons
+    decayLattice(dt);
+
+    hiddenNeurons.forEach(n => {
+      n.pulse = Math.max(0, n.pulse - dt * 0.9);
+      n.glow.setAttribute('opacity', n.pulse * 0.9);
+      n.node.setAttribute('fill', n.pulse > 0.4 ? '#d4f0ee' : '#fffaf0');
+    });
+
+    // Output neurons: pulsing during classification window, then decay
+    catOut.pulse = Math.max(0, catOut.pulse - dt * 0.5);
+    dogOut.pulse = Math.max(0, dogOut.pulse - dt * 0.5);
+    const breathe = 0.85 + 0.15 * Math.sin(now / 500);
+    const catAmp = lastClassified === 'cat' && now < verdictPulseUntil ? breathe : catOut.pulse;
+    const dogAmp = lastClassified === 'dog' && now < verdictPulseUntil ? breathe : dogOut.pulse;
+    catOut.glow.setAttribute('opacity', catAmp);
+    catOut.node.setAttribute('fill', catAmp > 0.4 ? '#d4f0ee' : '#fffaf0');
+    catOut.node.setAttribute('stroke-width', catAmp > 0.4 ? 2 : 1.3);
+    dogOut.glow.setAttribute('opacity', dogAmp);
+    dogOut.node.setAttribute('fill', dogAmp > 0.4 ? '#d4f0ee' : '#fffaf0');
+    dogOut.node.setAttribute('stroke-width', dogAmp > 0.4 ? 2 : 1.3);
+
+    // Output labels
+    document.getElementById('catLabel').setAttribute('fill',
+      lastClassified === 'cat' && now < verdictPulseUntil ? '#2d6e6a' : '#7a6a55');
+    document.getElementById('catLabel').setAttribute('font-weight',
+      lastClassified === 'cat' && now < verdictPulseUntil ? 600 : 500);
+    document.getElementById('dogLabel').setAttribute('fill',
+      lastClassified === 'dog' && now < verdictPulseUntil ? '#2d6e6a' : '#7a6a55');
+    document.getElementById('dogLabel').setAttribute('font-weight',
+      lastClassified === 'dog' && now < verdictPulseUntil ? 600 : 500);
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
 </body>
 </html>
