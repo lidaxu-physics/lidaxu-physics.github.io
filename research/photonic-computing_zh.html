@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Photonic computing — Lida Xu</title>
+<title>光子计算 — 徐李达</title>
 <link rel="icon" type="image/png" href="../images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -461,31 +461,31 @@
     <span>Lida Xu</span>
   </a>
   <div class="links">
-    <a href="../index.html#about">About</a>
-    <a href="../index.html#research">Research</a>
-    <a href="../index.html#work">Publications</a>
-    <a href="../index.html#contact">Say hi</a>
+    <a href="../index_zh.html#about">关于</a>
+    <a href="../index_zh.html#research">研究</a>
+    <a href="../index_zh.html#work">论文</a>
+    <a href="../index_zh.html#contact">联系</a>
     <span class="lang-toggle">
-      <a href="photonic-computing.html" class="active" aria-current="true">EN</a>
+      <a href="photonic-computing.html">EN</a>
       <span class="lang-sep">·</span>
-      <a href="photonic-computing_zh.html">中</a>
+      <a href="photonic-computing_zh.html" class="active" aria-current="true">中</a>
     </span>
   </div>
 </nav>
 
 
 <div class="breadcrumb">
-  <a href="../index.html#research">← All research directions</a>
+  <a href="../index_zh.html#research">← 所有研究方向</a>
 </div>
 
 <header class="page-header">
-  <div class="eyebrow">Research direction · 03</div>
-  <h1>Photonic <em>computing.</em></h1>
-  <p class="lede">Exploring whether the same lattices that taught us topology can be the substrate for a different kind of processor.</p>
+  <div class="eyebrow">研究方向 · 03</div>
+  <h1>光子<em>计算。</em></h1>
+  <p class="lede">探索那些教会我们拓扑的晶格,能否成为另一种处理器的底层基质。</p>
 </header>
 
 <article class="page-content pc-text">
-  <p>Building on my PhD work with <strong>large-scale nonlinear photonic lattices</strong>, I'm exploring their potential as a hardware platform for optical computing — using light's natural parallelism and topology's robustness to build a different kind of processor.</p>
+  <p>基于我博士期间在<strong>大规模非线性光子晶格</strong>上的工作,我在探索把它们作为光学计算硬件平台的潜力 —— 利用光天然的并行性,以及拓扑的鲁棒性,造出一种不一样的处理器。</p>
 </article>
 
 <div class="pc-stage-wrap">
@@ -508,7 +508,7 @@
   <!-- ================= INPUT PANEL — two clickable images ================= -->
   <g id="inputPanel">
     <text x="105" y="78" text-anchor="middle"
-          font-family="Fraunces,serif" font-style="italic" font-size="11" fill="#7a6a55">click to classify</text>
+          font-family="Fraunces,serif" font-style="italic" font-size="11" fill="#7a6a55">点击进行分类</text>
 
     <!-- CAT choice -->
     <g id="catChoice" style="cursor:pointer;">
@@ -574,7 +574,7 @@
     <!-- label -->
     <text x="665" y="42" text-anchor="middle"
           font-family="Inter Tight, sans-serif" font-size="10" letter-spacing="0.18em" font-weight="600"
-          fill="#2d6e6a" opacity="0.7">READOUT</text>
+          fill="#2d6e6a" opacity="0.7">读出层</text>
     <!-- synapse lines will be drawn here -->
     <g id="nnSynapses"></g>
     <!-- hidden layer neurons -->
@@ -583,9 +583,9 @@
     <g id="nnOutputs"></g>
     <!-- output labels -->
     <text id="catLabel" x="790" y="145" font-family="Fraunces,serif" font-size="14" fill="#7a6a55"
-          font-weight="500">cat</text>
+          font-weight="500">猫</text>
     <text id="dogLabel" x="790" y="275" font-family="Fraunces,serif" font-size="14" fill="#7a6a55"
-          font-weight="500">dog</text>
+          font-weight="500">狗</text>
   </g>
 
   <!-- ================= VERDICT DISPLAY ================= -->
@@ -594,7 +594,7 @@
           fill="#fffaf0" stroke="#2d6e6a" stroke-width="1.2"/>
     <text x="870" y="132" text-anchor="middle"
           font-family="Inter Tight, sans-serif" font-size="8" letter-spacing="0.2em" font-weight="600"
-          fill="#2d6e6a" opacity="0.8">VERDICT</text>
+          fill="#2d6e6a" opacity="0.8">结论</text>
     <!-- tiny drawing slot -->
     <g id="verdictDrawing" transform="translate(840 152)"></g>
     <!-- verdict text -->
@@ -603,50 +603,50 @@
           fill="#2d6e6a"></text>
   </g>
 </svg>
-    <div class="pc-caption" id="pcCaption">A photonic chip. Feed it an image.</div>
+    <div class="pc-caption" id="pcCaption">一块光子芯片。喂给它一张图。</div>
   </div>
 </div>
 
 <article class="page-content pc-text">
 
-  <p>The idea: the <strong>lattice itself is the computation.</strong> Send in an encoded input; the nonlinear coupling between rings creates a rich, high-dimensional response. A small trained <em>readout layer</em> at the output interprets that response.</p>
+  <p>核心想法是:<strong>晶格本身就是计算。</strong>把编码后的输入送进去,微环之间的非线性耦合,会产生丰富、高维的响应。在输出端,一个训练过的小型<em>读出层</em>来解读这种响应。</p>
 
-  <p class="pullquote">The chip does not "know" about cats or dogs. It just transforms optical signals. A small neural network learns to call them from the response.</p>
+  <p class="pullquote">芯片并不"知道"什么是猫或狗。它只是在变换光信号。一个小型神经网络学会从这些响应里把它们识别出来。</p>
 
-  <p>Change the input and the lattice's response changes too — deterministically, but in ways no one has to hand-design. The same readout weights discriminate both classes. <strong>The chip stays fixed. Only the tiny classifier is trained.</strong></p>
+  <p>换一个输入,晶格的响应也会跟着变 —— 是确定性的,但又不需要人手工去设计。同一组读出权重,就能区分两个类别。<strong>芯片本身不变,只训练那个很小的分类器。</strong></p>
 
-  <h2>Why this <em>matters</em></h2>
-  <p>Today's AI workloads are running into the limits of electronic computation — energy, bandwidth, latency. Photons don't have those same limits. The bet is that a photonic processor designed around topology and nonlinearity could do certain kinds of calculations vastly more efficiently than transistors. The <strong>TOPAI patent</strong> (Topological Photonics Architectures for Optical Computing and AI) is one early step in that direction.</p>
+  <h2>为什么<em>重要</em></h2>
+  <p>今天的 AI 任务正在撞上电子计算的极限 —— 能耗、带宽、延迟。光子没有这些限制。我们的赌注是:一个围绕拓扑和非线性设计的光子处理器,在某些计算上能比晶体管高效得多。<strong>TOPAI 专利</strong>(面向光学计算与 AI 的拓扑光子学架构)就是朝这个方向迈出的早期一步。</p>
 
-  <h2>I am also <em>curious about</em></h2>
-  <p>Light–matter interactions — specifically how the integration of <strong>atomic systems</strong> might overcome the inherent limitations of photonics alone, to enable scalable quantum networking and computing. Photons are fast and lossless, but they don't interact with each other. Atoms can hold information and couple to single photons. Combining the two is an old idea, but a hard one to actually engineer at chip scale.</p>
+  <h2>我也<em>好奇</em>这些</h2>
+  <p>光与物质的相互作用 —— 具体来说,把<strong>原子系统</strong>集成进来,如何弥补光子学单打独斗的局限,从而实现可扩展的量子网络与量子计算。光子又快又无损,但彼此之间不相互作用。原子能存储信息、能与单个光子耦合。把两者结合,这是个老想法 —— 但要在芯片尺度上真做出来,非常难。</p>
 
 </article>
 
 <section class="related-work">
-  <h2>Related <em>work.</em></h2>
+  <h2>相关<em>工作。</em></h2>
   <div class="related-list">
     <article class="related-item">
       <div class="year">2025</div>
       <div>
-        <h3>TOPAI: Topological photonics architectures for optical computing and AI</h3>
-        <div class="meta"><span class="venue">US Patent (filed)</span> · M. J. Mehrabad, L. Xu, S. Sarkar, et al.</div>
+        <h3>TOPAI:面向光学计算与 AI 的拓扑光子学架构</h3>
+        <div class="meta"><span class="venue">美国专利(已提交)</span> · M. J. Mehrabad, L. Xu, S. Sarkar, et al.</div>
       </div>
-      <div class="role">Inventor · UMD Invention of the Year Finalist</div>
+      <div class="role">发明人 · 马里兰大学年度发明入围</div>
     </article>
     <article class="related-item">
       <div class="year">in prep</div>
       <div>
-        <h3>Reservoir computing with topological photonic arrays</h3>
-        <div class="meta"><span class="venue">Manuscript</span> · P. Dolgirev, L. Xu, S. Sarkar, et al.</div>
+        <h3>基于拓扑光子阵列的储备池计算</h3>
+        <div class="meta"><span class="venue">撰写中</span> · P. Dolgirev, L. Xu, S. Sarkar, et al.</div>
       </div>
-      <div class="role">Co-author</div>
+      <div class="role">合作者</div>
     </article>
   </div>
 </section>
 
 
-<footer>© 2026 Lida Xu · <a href="../index.html">Back to home</a></footer>
+<footer>© 2026 徐李达 · <a href="../index_zh.html">返回首页</a></footer>
 
 
 <script>
@@ -962,19 +962,19 @@
     }
 
     // Status caption during flight — no answer yet
-    setCaption(`Reading the ${kind}…`);
+    setCaption(`正在读取这只${kind === 'cat' ? '猫' : '狗'}…`);
   }
 
   function revealVerdict(kind) {
     lastClassified = kind;
     verdictPulseUntil = performance.now() + 3000;
 
-    setCaption(`Reading the ${kind}… <strong>${kind === 'cat' ? '"cat"' : '"dog"'}</strong>.`);
+    setCaption(`正在读取这只${kind === 'cat' ? '猫' : '狗'}… <strong>${kind === 'cat' ? '"猫"' : '"狗"'}</strong>。`);
 
     const verdictPanel = document.getElementById('verdictPanel');
     const verdictText = document.getElementById('verdictText');
     drawVerdictTiny(kind === 'cat' ? CAT_TINY : DOG_TINY);
-    verdictText.textContent = kind === 'cat' ? '"cat"' : '"dog"';
+    verdictText.textContent = kind === 'cat' ? '"猫"' : '"狗"';
     verdictPanel.setAttribute('opacity', 1);
   }
 
@@ -991,7 +991,7 @@
       captionEl.style.opacity = 1;
     }, 180);
   }
-  setCaption('Click the cat or the dog. Watch the chip classify it.');
+  setCaption('点击那只猫或那只狗。看芯片把它分类出来。');
 
   // =============== TICK LOOP ===============
   let lastTs = performance.now();
