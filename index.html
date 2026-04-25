@@ -197,15 +197,15 @@
     transform: translateY(-2px);
   }
 
-  /* hero figure (now a photo) */
-  .hero-figure {
-    text-align: center;
+  /* hero figure — toggleable photo */
+  .hero-figure { text-align: center; }
+  .photo-toggle {
+    max-width: 460px;
+    margin: 0 auto;
   }
   .photo-frame {
     position: relative;
     aspect-ratio: 4 / 5;
-    max-width: 460px;
-    margin: 0 auto;
     border-radius: 24px;
     overflow: hidden;
     box-shadow:
@@ -214,7 +214,14 @@
     border: 1px solid var(--line);
     background: var(--cream);
   }
-  .photo-frame img {
+  .photo-frame .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .photo-frame .slide.active { opacity: 1; }
+  .photo-frame .slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -222,30 +229,84 @@
     display: block;
     transition: transform .8s ease;
   }
-  .photo-frame:hover img {
+  .photo-frame:hover .slide.active img {
     transform: scale(1.03);
   }
-  /* warm vignette over the photo */
+  /* warm vignette */
   .photo-frame::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background:
-      radial-gradient(ellipse at 50% 30%, transparent 50%, rgba(168,109,26,0.10) 100%);
+    background: radial-gradient(ellipse at 50% 30%, transparent 50%, rgba(168,109,26,0.10) 100%);
     mix-blend-mode: multiply;
+    z-index: 1;
   }
+  /* caption that swaps with photo */
   .hero-figure .caption {
+    position: relative;
     margin-top: 18px;
-    font-size: 14px;
-    color: var(--ink-mute);
-    font-style: italic;
-    font-family: 'Fraunces', serif;
+    min-height: 56px;
   }
-  .hero-figure .caption strong {
+  .hero-figure .cap-text {
+    position: absolute;
+    left: 0; right: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .hero-figure .cap-text.active { opacity: 1; }
+  .hero-figure .cap-text p { margin: 0; }
+  .hero-figure .cap-text em {
+    font-style: italic;
+    color: var(--rose);
+    font-weight: 500;
+  }
+  .hero-figure .year-tag {
+    display: inline-block;
     font-style: normal;
-    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
     font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold-deep);
+    background: rgba(245,201,122,0.18);
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 8px;
+  }
+  /* toggle pills under caption */
+  .toggle-pills {
+    display: inline-flex;
+    gap: 4px;
+    margin-top: 18px;
+    padding: 4px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+  }
+  .pill-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+    transition: all .25s ease;
+  }
+  .pill-btn:hover { color: var(--ink-soft); }
+  .pill-btn.active {
+    background: var(--ink);
+    color: var(--cream);
+    box-shadow: 0 4px 12px -4px rgba(0,0,0,0.25);
   }
 
   /* section base */
@@ -972,10 +1033,30 @@
   </div>
 
   <div class="hero-figure">
-    <div class="photo-frame">
-      <img src="images/selfie.jpg" alt="Lida Xu" />
+    <div class="photo-toggle" id="photoToggle">
+      <div class="photo-frame">
+        <div class="slide active" data-year="2021">
+          <img src="images/selfie.jpg" alt="Lida in 2021" />
+        </div>
+        <div class="slide" data-year="2026">
+          <img src="images/selfie2.png" alt="Lida in his final year" />
+        </div>
+      </div>
+      <div class="caption">
+        <div class="cap-text active" data-year="2021">
+          <span class="year-tag">2021</span>
+          <p>Lida was just starting his physics PhD.</p>
+        </div>
+        <div class="cap-text" data-year="2026">
+          <span class="year-tag">2026</span>
+          <p>Lida is in his final year. Five years older.<br/><em>Same hairline. Don't ask me how.</em></p>
+        </div>
+      </div>
+      <div class="toggle-pills">
+        <button class="pill-btn active" data-target="2021">2021</button>
+        <button class="pill-btn" data-target="2026">2026</button>
+      </div>
     </div>
-    <div class="caption"><strong>Lida Xu</strong>, somewhere between the chalkboard and the optics table.</div>
   </div>
 </section>
 
@@ -1375,6 +1456,32 @@
 </section>
 
 <footer>© 2026 Lida Xu</footer>
+
+<script>
+  // photo toggle
+  (function() {
+    const toggle = document.getElementById('photoToggle');
+    if (!toggle) return;
+    const buttons = toggle.querySelectorAll('.pill-btn');
+    const slides = toggle.querySelectorAll('.slide');
+    const captions = toggle.querySelectorAll('.cap-text');
+
+    function setActive(year) {
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.target === year));
+      slides.forEach(s => s.classList.toggle('active', s.dataset.year === year));
+      captions.forEach(c => c.classList.toggle('active', c.dataset.year === year));
+    }
+
+    buttons.forEach(b => b.addEventListener('click', () => setActive(b.dataset.target)));
+
+    // optional: auto-cycle every 5s, pause on hover
+    let timer = setInterval(() => {
+      const current = toggle.querySelector('.pill-btn.active').dataset.target;
+      setActive(current === '2021' ? '2026' : '2021');
+    }, 5000);
+    toggle.addEventListener('mouseenter', () => clearInterval(timer));
+  })();
+</script>
 
 </body>
 </html>
