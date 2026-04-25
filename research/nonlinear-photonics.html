@@ -320,6 +320,125 @@
     border-bottom: 1px solid var(--line);
   }
 
+
+  /* ===== SCROLL SCENE LAYOUT ===== */
+  .scroll-scene {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 56px 60px;
+    position: relative;
+    z-index: 4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .scroll-scene .text-col p {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  .scroll-scene .text-col p strong { color: var(--ink); font-weight: 600; }
+  .scroll-scene .text-col a {
+    color: var(--accent-deep);
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    transition: border-color .2s ease;
+  }
+  .scroll-scene .text-col a:hover { border-bottom-color: var(--accent); }
+  .scroll-scene .text-col h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.15;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+  .scroll-scene .text-col h2 em { font-style: italic; color: var(--accent-deep); }
+  .scroll-scene .text-col .pullquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 28px;
+    margin: 36px 0;
+  }
+  .scroll-scene .visual-col {
+    position: sticky;
+    top: 100px;
+    height: calc(100vh - 140px);
+    max-height: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lattice-stage {
+    width: 100%;
+    aspect-ratio: 4 / 7.6;
+    max-width: 380px;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(245,201,122,0.12), transparent 70%),
+      var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 30px 60px -30px rgba(168,109,26,0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .lattice-stage svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    flex: 1;
+  }
+  .lattice-stage .stage-caption {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-mute);
+    text-align: center;
+    min-height: 18px;
+    transition: opacity 0.4s ease;
+  }
+  .lattice-stage .stage-caption strong {
+    font-style: normal;
+    color: var(--accent-deep);
+    font-weight: 600;
+  }
+
+  @media (max-width: 1000px) {
+    .scroll-scene {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding: 0 24px 40px;
+    }
+    .scroll-scene .visual-col {
+      position: relative;
+      top: auto;
+      height: auto;
+      max-height: none;
+      order: -1;
+    }
+    .lattice-stage { max-width: 380px; }
+  }
+
+
+  /* smooth fades for nonlinear stage elements */
+  #latticeGroup, #combGroup, #miniComb, #zoomFrame, #zoomLines,
+  #combTeeth line, #miniComb line, #waveguide, #pumpWaveguide {
+    transition: opacity 0.7s ease;
+  }
+  /* tooth height transitions for grow-in */
+  #combTeeth line, #miniComb line {
+    transition: opacity 0.7s ease, y2 0.9s cubic-bezier(.2,.7,.2,1);
+  }
+  
   /* responsive */
   @media (max-width: 760px) {
     nav.top { padding: 16px 20px; }
@@ -366,20 +485,146 @@
   <p class="lede">Bringing the precision of optical frequency combs out of laser labs and onto chips small enough to integrate into real systems.</p>
 </header>
 
-<article class="page-content">
-  
-  <p>Optical frequency combs revolutionized precision measurement — a breakthrough recognized by the <a class="nobel-chip" href="https://www.nobelprize.org/prizes/physics/2005/summary/" target="_blank">2005 Nobel</a> — by providing an exquisitely stable ruler for measuring optical frequencies with unprecedented accuracy. Traditional combs, however, rely on large, complex femtosecond laser systems. In the past decade, a major scientific push has aimed to <strong>miniaturize this Nobel-Prize–winning capability onto chip-scale platforms</strong>.</p>
+<section class="scroll-scene" id="scrollScene">
 
-  <p>Microresonator frequency combs, or <strong>microcombs</strong>, achieve this by confining continuous-wave laser light inside a high-Q cavity, where intense circulating fields drive Kerr nonlinearities and generate a series of equally spaced spectral lines. These chip-based combs can operate at microwave repetition rates, produce coherent solitons, and integrate directly with photonic circuits.</p>
+  <div class="text-col">
 
-  <p class="pullquote">Their compactness, stability, and CMOS compatibility position microcombs as powerful tools for next-generation precision metrology, telecommunications, and emerging nonlinear and quantum technologies.</p>
+    <div data-beat="0">
+      <p>Optical frequency combs revolutionized precision measurement — a breakthrough recognized by the <a class="nobel-chip" href="https://www.nobelprize.org/prizes/physics/2005/summary/" target="_blank">2005 Nobel</a> — by providing an exquisitely stable ruler for measuring optical frequencies.</p>
 
-  <h2>What I work on <em>here</em></h2>
-  <p>I focus on the <strong>integrated</strong> side — making nonlinear photonic devices that are not just clever physics demonstrations, but reliable, reproducible, and ready to be built into real systems. The hard problem isn't getting any one comb to work; it's getting the <em>same</em> comb to work twice, on hundreds of chips fabricated in different runs.</p>
+      <p>The traditional version relies on big, complex femtosecond laser systems. The push of the past decade has been to <strong>shrink that capability onto a chip</strong> — combining the topological lattice from the previous page with the right kind of nonlinearity, so that one color of laser light, sent in, comes out as <strong>many</strong>.</p>
+    </div>
 
-  <p>That's where my work on <em>multi-timescale frequency-phase matching</em> comes in. By engineering the matching condition across multiple timescales simultaneously, we can stabilize the comb generation process against the small fabrication variations that have plagued integrated nonlinear optics for years.</p>
+    <div data-beat="1">
+      <p class="pullquote">Pump the lattice with a single color of laser light. Out comes a comb — many colors at once.</p>
 
-</article>
+      <p>The lattice does the work. As the pump circulates, the Kerr nonlinearity in each ring couples it to its neighboring frequencies, building up a comb of optical lines below.</p>
+    </div>
+
+    <div data-beat="2">
+      <h2>And here's the <em>twist</em></h2>
+
+      <p>Look closely at one tooth of that comb. Zoom in. What looks like a single spectral line at one scale turns out to be — at finer resolution — <strong>another comb</strong>.</p>
+
+      <p>This is the heart of <em>nested frequency-phase matching</em>: combs within combs, on multiple timescales simultaneously. A coarse comb sets the rhythm; inside each tooth, a finer comb follows. Both lock to the chip; both stay phase-coherent.</p>
+
+      <h2>Why this <em>matters</em></h2>
+      <p>Each comb tooth is, in principle, a usable channel — for telecommunications, for sensing, for clocks. A nested comb gives you orders of magnitude more channels from the same chip area, with the matching conditions engineered in by the lattice geometry rather than tuned painstakingly after fabrication. That's the door this work opens, and it's why most of my recent papers live here.</p>
+    </div>
+
+  </div>
+
+  <div class="visual-col">
+    <div class="lattice-stage">
+      <svg id="stageSvg" viewBox="0 0 400 760" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="photonBlue">
+            <stop offset="0%" stop-color="#cfe6ff" stop-opacity="1"/>
+            <stop offset="40%" stop-color="#5b8fe8" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="#1c3556" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="photonGreen">
+            <stop offset="0%" stop-color="#d8f0d4" stop-opacity="1"/>
+            <stop offset="40%" stop-color="#5fa86e" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="#2d6b3a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="photonRed">
+            <stop offset="0%" stop-color="#ffd6cc" stop-opacity="1"/>
+            <stop offset="40%" stop-color="#c54f3f" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="#7a1f12" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="trailGradMulti" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#5b8fe8"/>
+            <stop offset="50%" stop-color="#5fa86e"/>
+            <stop offset="100%" stop-color="#c54f3f"/>
+          </linearGradient>
+          <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4"/>
+          </filter>
+        </defs>
+
+        <!-- LATTICE GROUP (top half: y 0..280) -->
+        <g id="latticeGroup">
+          <g id="couplings" stroke="#c5b491" stroke-width="1.2"></g>
+          <g id="sites"></g>
+          <path id="edgePath" d="" fill="none" stroke="none"/>
+          <path id="edgeTrail" d="" fill="none"
+                stroke="url(#trailGradMulti)" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round"
+                opacity="0"/>
+          <g id="photons" opacity="0"></g>
+          <defs>
+            <radialGradient id="photonBlack">
+              <stop offset="0%" stop-color="#5a4f40" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#1c1814" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+        </g>
+
+        <!-- PUMP WAVEGUIDE — feeds black photons into the top-right ring -->
+        <g id="pumpWaveguide" opacity="0">
+          <path id="pumpPath" d=""
+                fill="none" stroke="#3a342a" stroke-width="1.8"
+                stroke-linecap="round"/>
+          <text id="pumpLabel" x="380" y="50"
+                text-anchor="end"
+                font-family="Fraunces,serif" font-style="italic" font-size="10"
+                fill="#3a342a" opacity="0.7">pump</text>
+        </g>
+
+        <!-- TAP WAVEGUIDE — extracts colored photons to the comb readout -->
+        <g id="waveguide" opacity="0">
+          <path id="waveguidePath" d=""
+                fill="none" stroke="#a86d1a" stroke-width="2"
+                stroke-linecap="round"/>
+          <text id="waveguideLabel" x="200" y="270"
+                text-anchor="middle"
+                font-family="Fraunces,serif" font-style="italic" font-size="11"
+                fill="#a86d1a" opacity="0.85">tap → readout</text>
+        </g>
+
+        <!-- COMB GROUP — visualized inside an OSA-style instrument frame -->
+        <g id="combGroup" opacity="0">
+          <!-- OSA outer frame -->
+          <rect x="22" y="295" width="356" height="445" rx="8" ry="8"
+                fill="#fffaf0" stroke="#7a6a55" stroke-width="1.2" opacity="0.96"/>
+          <!-- header bar (top, dark) -->
+          <rect x="22" y="295" width="356" height="22" rx="8" ry="8" fill="#1c1814" opacity="0.92"/>
+          <!-- flatten the bottom of the rounded header -->
+          <rect x="22" y="308" width="356" height="9" fill="#1c1814" opacity="0.92"/>
+          <!-- header text -->
+          <text x="34" y="311" font-family="Inter Tight, sans-serif" font-size="10"
+                font-weight="600" fill="#fbf6ed" letter-spacing="0.18em">OSA</text>
+          <text x="60" y="311" font-family="Inter Tight, sans-serif" font-size="9"
+                fill="#fbf6ed" letter-spacing="0.18em" opacity="0.65">OPTICAL SPECTRUM ANALYZER</text>
+          <!-- pulsing LED indicator -->
+          <circle cx="368" cy="306" r="2.5" fill="#5fa86e">
+            <animate attributeName="opacity" values="0.4;1;0.4" dur="1.6s" repeatCount="indefinite"/>
+          </circle>
+          <!-- inner display tint -->
+          <rect x="32" y="324" width="336" height="406" rx="3" ry="3"
+                fill="#0c0a08" opacity="0.04"/>
+          <!-- baseline (inside OSA window) -->
+          <line x1="40" y1="500" x2="360" y2="500" stroke="#7a6a55" stroke-width="0.8" opacity="0.6"/>
+          <!-- frequency axis label inside the box -->
+          <text x="40" y="720" font-family="Inter Tight, sans-serif" font-size="9" fill="#7a6a55" opacity="0.7">frequency →</text>
+          <g id="combTeeth"></g>
+          <!-- highlight box that frames the tooth being zoomed -->
+          <rect id="zoomFrame" x="0" y="0" width="0" height="0"
+                fill="none" stroke="#c54f3f" stroke-width="1" stroke-dasharray="2 2" opacity="0"/>
+          <!-- mini-comb (revealed in beat 2) -->
+          <g id="miniComb" opacity="0"></g>
+          <!-- connecting lines from main comb tooth to mini-comb -->
+          <g id="zoomLines" opacity="0" stroke="#c54f3f" stroke-width="0.8" stroke-dasharray="2 2"></g>
+        </g>
+      </svg>
+      <div class="stage-caption" id="stageCaption">
+        <span>Three colors of light flow along the lattice edge.</span>
+      </div>
+    </div>
+  </div>
+
+</section>
 
 <section class="related-work">
   <h2>Related <em>work.</em></h2>
@@ -423,5 +668,507 @@
 <footer>© 2026 Lida Xu · <a href="../index.html">Back to home</a></footer>
 
 
+<script>
+(function() {
+  const NS = 'http://www.w3.org/2000/svg';
+  const sitesG = document.getElementById('sites');
+  const couplingsG = document.getElementById('couplings');
+  const photonsG = document.getElementById('photons');
+  const edgePath = document.getElementById('edgePath');
+  const edgeTrail = document.getElementById('edgeTrail');
+  const combGroup = document.getElementById('combGroup');
+  const combTeeth = document.getElementById('combTeeth');
+  const miniComb = document.getElementById('miniComb');
+  const zoomFrame = document.getElementById('zoomFrame');
+  const zoomLines = document.getElementById('zoomLines');
+  const captionEl = document.getElementById('stageCaption');
+
+  // ===== build lattice (top half of stage) =====
+  const NX = 6, NY = 5;
+  const padX = 80, padY = 50;
+  const dx = (400 - 2 * padX) / (NX - 1);
+  const dy = (220 - 2 * 30) / (NY - 1);   // lattice height ~ 220px in y, with internal padding
+  const yOffset = padY;
+
+  const sites = [];
+  for (let i = 0; i < NX; i++) {
+    for (let j = 0; j < NY; j++) {
+      const cx = padX + i * dx;
+      const cy = yOffset + 30 + j * dy;
+      const isEdge = (i === 0 || i === NX-1 || j === 0 || j === NY-1);
+      sites.push({ i, j, cx, cy, isEdge });
+    }
+  }
+
+  // couplings under sites
+  for (const s of sites) {
+    if (s.i < NX-1) {
+      const ln = document.createElementNS(NS, 'line');
+      ln.setAttribute('x1', s.cx + 9); ln.setAttribute('y1', s.cy);
+      ln.setAttribute('x2', s.cx + dx - 9); ln.setAttribute('y2', s.cy);
+      couplingsG.appendChild(ln);
+    }
+    if (s.j < NY-1) {
+      const ln = document.createElementNS(NS, 'line');
+      ln.setAttribute('x1', s.cx); ln.setAttribute('y1', s.cy + 9);
+      ln.setAttribute('x2', s.cx); ln.setAttribute('y2', s.cy + dy - 9);
+      couplingsG.appendChild(ln);
+    }
+  }
+
+  // sites
+  for (const s of sites) {
+    const ring = document.createElementNS(NS, 'circle');
+    ring.setAttribute('cx', s.cx);
+    ring.setAttribute('cy', s.cy);
+    ring.setAttribute('r', 9);
+    ring.setAttribute('fill', '#fffaf0');
+    ring.setAttribute('stroke', s.isEdge ? '#a86d1a' : '#7a6a55');
+    ring.setAttribute('stroke-width', s.isEdge ? 1.5 : 1);
+    s.element = ring;
+    sitesG.appendChild(ring);
+  }
+
+  // edge path (perimeter, clockwise)
+  const edgePoints = [];
+  for (let i = 0; i < NX; i++) edgePoints.push([padX + i*dx, yOffset + 30]);
+  for (let j = 1; j < NY; j++) edgePoints.push([padX + (NX-1)*dx, yOffset + 30 + j*dy]);
+  for (let i = NX-2; i >= 0; i--) edgePoints.push([padX + i*dx, yOffset + 30 + (NY-1)*dy]);
+  for (let j = NY-2; j > 0; j--) edgePoints.push([padX, yOffset + 30 + j*dy]);
+
+  const pathStr = 'M ' + edgePoints.map(p => p.join(',')).join(' L ') + ' Z';
+  edgePath.setAttribute('d', pathStr);
+  edgeTrail.setAttribute('d', pathStr);
+  const pathLength = edgePath.getTotalLength();
+  edgeTrail.style.strokeDasharray = pathLength;
+  edgeTrail.style.strokeDashoffset = 0;
+
+  function pointOnEdge(t) {
+    const w = ((t % 1) + 1) % 1;
+    return edgePath.getPointAtLength(w * pathLength);
+  }
+
+  // ===== photon journey path =====
+  // Photons enter at top-right, traverse the top edge LEFTWARD (still black),
+  // morph to a color at the top-left, continue down the left edge,
+  // across the bottom edge, then exit at bottom-right to the tap waveguide.
+  // We build a separate journey path that visits the corners in this order.
+  const journeyPath = document.createElementNS(NS, 'path');
+  // FULL CLOSED LOOP: top-right → top-left → bottom-left → bottom-right → top-right
+  const topY = yOffset + 30;
+  const botY = yOffset + 30 + (NY-1)*dy;
+  const leftX = padX;
+  const rightX = padX + (NX-1)*dx;
+  const journeyD =
+    `M ${rightX} ${topY} ` +    // start at top-right
+    `L ${leftX} ${topY} ` +      // top edge → top-left
+    `L ${leftX} ${botY} ` +      // left edge → bottom-left
+    `L ${rightX} ${botY} ` +     // bottom edge → bottom-right
+    `L ${rightX} ${topY}`;       // right edge → back to top-right (closed)
+  journeyPath.setAttribute('d', journeyD);
+  journeyPath.setAttribute('fill', 'none');
+  journeyPath.setAttribute('stroke', 'none');
+  document.getElementById('stageSvg').appendChild(journeyPath);
+  const journeyLength = journeyPath.getTotalLength();
+
+  // Edge fractions along the loop (used for morph + tap detection)
+  const topEdgeLength = rightX - leftX;
+  const sideEdgeLength = botY - topY;
+  const bottomEdgeLength = rightX - leftX;
+  // Cumulative arc length to each corner:
+  //   top-right (start)       : 0
+  //   top-left (morph)        : topEdgeLength
+  //   bottom-left             : topEdgeLength + sideEdgeLength
+  //   bottom-right (tap exit) : topEdgeLength + sideEdgeLength + bottomEdgeLength
+  //   back to top-right       : journeyLength (= prev + sideEdgeLength)
+  const morphFraction    = topEdgeLength / journeyLength;
+  const tapExitFraction  = (topEdgeLength + sideEdgeLength + bottomEdgeLength) / journeyLength;
+
+  // ===== build PUMP waveguide path =====
+  // Comes in from off-screen top, enters the top-right ring
+  const pumpPath = document.getElementById('pumpPath');
+  const pumpStartX = rightX + 60;
+  const pumpStartY = -20;
+  const pumpEndX = rightX;
+  const pumpEndY = topY;  // directly at the top-right corner of the photon path
+  const pumpPathStr = `M ${pumpStartX} ${pumpStartY} ` +
+    `C ${pumpStartX} ${(pumpStartY + pumpEndY)/2 + 20}, ` +
+      `${pumpEndX + 30} ${(pumpStartY + pumpEndY)/2 + 20}, ` +
+      `${pumpEndX} ${pumpEndY}`;
+  pumpPath.setAttribute('d', pumpPathStr);
+  const pumpLength = pumpPath.getTotalLength();
+
+  // ===== build TAP waveguide path =====
+  // Exits the bottom-right ring, curves down and into the comb pump position
+  const wgPath = document.getElementById('waveguidePath');
+  const wgStartX = rightX;
+  const wgStartY = botY;        // bottom-right corner of the lattice path
+  const wgEndX = 200;           // midpoint of OSA top edge — plug into the analyzer
+  const wgEndY = 295;           // top edge of OSA frame
+  const wgPathStr = `M ${wgStartX} ${wgStartY} ` +
+    `C ${wgStartX} ${(wgStartY + wgEndY)/2 + 10}, ` +
+      `${wgEndX + 40} ${(wgStartY + wgEndY)/2 + 10}, ` +
+      `${wgEndX} ${wgEndY}`;
+  wgPath.setAttribute('d', wgPathStr);
+  const wgLength = wgPath.getTotalLength();
+
+  // ===== Photon swarm management =====
+  // We continuously spawn photons on a journey: pump → top edge (black) → morph → rest of edge (color) → tap → comb
+  const activePhotons = [];
+  const COLORS = [
+    { halo: '#c54f3f', core: '#7a1f12' },   // red
+    { halo: '#5fa86e', core: '#2d6b3a' },   // green
+    { halo: '#5b8fe8', core: '#1c3556' },   // blue
+  ];
+  let colorCounter = 0;  // cycles through COLORS in sequence
+
+  function spawnPhoton() {
+    const halo = document.createElementNS(NS, 'circle');
+    halo.setAttribute('r', 9);
+    halo.setAttribute('fill', '#3a342a');
+    halo.setAttribute('opacity', 0.35);
+    halo.setAttribute('filter', 'url(#softBlur)');
+    photonsG.appendChild(halo);
+    const core = document.createElementNS(NS, 'circle');
+    core.setAttribute('r', 3.2);
+    core.setAttribute('fill', '#1c1814');
+    photonsG.appendChild(core);
+
+    activePhotons.push({
+      halo, core,
+      // phases:
+      //   pump:    0..1 along the pump waveguide
+      //   journey: 0..1 along the lattice perimeter, possibly multiple laps
+      //   tap:     0..1 along the tap waveguide
+      phase: 'pump',
+      t: 0,
+      lap: 0,             // lap 0: black photon traversing top edge then morphs at end of top edge.
+                          // lap 1: colored photon does another full perimeter, then exits.
+      assignedColor: null,
+    });
+  }
+
+  function destroyPhoton(p) {
+    p.halo.remove();
+    p.core.remove();
+    const idx = activePhotons.indexOf(p);
+    if (idx >= 0) activePhotons.splice(idx, 1);
+  }
+
+  // Spawn timer
+  let spawnAccumulator = 0;
+  const SPAWN_INTERVAL = 1.2;  // seconds between spawns (tweakable)
+
+  // ===== build main comb teeth =====
+
+  // Stage is 400x600. Lattice: 0..240. Waveguide curves down into OSA at y=295.
+  // OSA window: y 317..570. Comb baseline: y=500.
+  const N_TEETH = 23;
+  const COMB_X0 = 50, COMB_X1 = 350;
+  const BASELINE = 500;
+  const PEAK_H = 130;
+  const COMB_DX = (COMB_X1 - COMB_X0) / (N_TEETH - 1);
+  const PUMP_INDEX = Math.floor(N_TEETH / 2);
+  const ZOOM_INDEX = PUMP_INDEX + 4;
+
+  function envH(i) {
+    const x = (i - PUMP_INDEX) / 5.5;
+    const s = 2 / (Math.exp(x) + Math.exp(-x));
+    return PEAK_H * s * s;
+  }
+
+  // Map tooth index to a color along the gradient (blue → green → red)
+  function specCol(t) {
+    const stops = [
+      [0.0, [28, 53, 86]],     // deep blue
+      [0.25, [91, 143, 232]],  // light blue
+      [0.5, [95, 168, 110]],   // green
+      [0.75, [197, 79, 63]],   // red
+      [1.0, [122, 31, 18]],    // dark red
+    ];
+    for (let i = 0; i < stops.length - 1; i++) {
+      const [t0, c0] = stops[i], [t1, c1] = stops[i+1];
+      if (t >= t0 && t <= t1) {
+        const f = (t - t0) / (t1 - t0);
+        return `rgb(${Math.round(c0[0]+(c1[0]-c0[0])*f)},${Math.round(c0[1]+(c1[1]-c0[1])*f)},${Math.round(c0[2]+(c1[2]-c0[2])*f)})`;
+      }
+    }
+    return 'rgb(91,143,232)';
+  }
+
+  const teethData = [];
+  for (let i = 0; i < N_TEETH; i++) {
+    const x = COMB_X0 + i * COMB_DX;
+    const targetH = envH(i);
+    const color = specCol(i / (N_TEETH - 1));
+    const tooth = document.createElementNS(NS, 'line');
+    tooth.setAttribute('x1', x); tooth.setAttribute('y1', BASELINE);
+    tooth.setAttribute('x2', x); tooth.setAttribute('y2', BASELINE);
+    tooth.setAttribute('stroke', color);
+    tooth.setAttribute('stroke-width', 2.2);
+    tooth.setAttribute('stroke-linecap', 'round');
+    combTeeth.appendChild(tooth);
+    teethData.push({ tooth, x, targetH, color, idx: i });
+  }
+
+  // ===== build mini-comb =====
+  // The mini-comb is shown enlarged in beat 2. We'll position it below the main comb,
+  // expanding into the space that the main comb occupied (which gets dimmed).
+  // Mini comb teeth follow a similar sech² envelope but with finer spacing.
+  // Mini-comb sits inside the OSA window — well below the main comb so they don't overlap
+  const MINI_N = 17;
+  const MINI_X0 = 70, MINI_X1 = 330;
+  const MINI_BASELINE = 700;   // bottom half of the OSA, well below the main comb
+  const MINI_PEAK_H = 130;
+  const MINI_DX = (MINI_X1 - MINI_X0) / (MINI_N - 1);
+  const MINI_CENTER_IDX = Math.floor(MINI_N / 2);
+
+  function miniEnvH(i) {
+    const x = (i - MINI_CENTER_IDX) / 4.0;
+    const s = 2 / (Math.exp(x) + Math.exp(-x));
+    return MINI_PEAK_H * s * s;
+  }
+
+  const miniData = [];
+  // Take the color of the zoomed tooth as the base color for this mini-comb's tint
+  const miniBaseColor = specCol(ZOOM_INDEX / (N_TEETH - 1));
+  for (let i = 0; i < MINI_N; i++) {
+    const x = MINI_X0 + i * MINI_DX;
+    const h = miniEnvH(i);
+    const tooth = document.createElementNS(NS, 'line');
+    tooth.setAttribute('x1', x); tooth.setAttribute('y1', MINI_BASELINE);
+    tooth.setAttribute('x2', x); tooth.setAttribute('y2', MINI_BASELINE);
+    tooth.setAttribute('stroke', miniBaseColor);
+    tooth.setAttribute('stroke-width', 1.4);
+    tooth.setAttribute('stroke-linecap', 'round');
+    miniComb.appendChild(tooth);
+    miniData.push({ tooth, x, targetH: h });
+  }
+
+  // mini-comb baseline
+  const miniBase = document.createElementNS(NS, 'line');
+  miniBase.setAttribute('x1', MINI_X0 - 10); miniBase.setAttribute('y1', MINI_BASELINE);
+  miniBase.setAttribute('x2', MINI_X1 + 10); miniBase.setAttribute('y2', MINI_BASELINE);
+  miniBase.setAttribute('stroke', '#7a6a55'); miniBase.setAttribute('stroke-width', 0.6);
+  miniBase.setAttribute('opacity', 0.5);
+  miniComb.appendChild(miniBase);
+
+  // ===== captions =====
+  const captions = {
+    0: '<strong>Three colors</strong> of light circulating along the lattice edge.',
+    1: 'Generate a <strong>comb</strong> below — many colors, evenly spaced.',
+    2: 'Zoom into one tooth — <strong>another comb</strong> hiding inside.'
+  };
+
+  function getCurrentBeat() {
+    const blocks = document.querySelectorAll('[data-beat]');
+    const target = window.innerHeight * 0.35;
+    let active = 0;
+    for (const b of blocks) {
+      const r = b.getBoundingClientRect();
+      if (r.top <= target) active = parseInt(b.dataset.beat);
+    }
+    return active;
+  }
+
+  function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+  function smooth(x) { return x * x * (3 - 2 * x); }
+
+  let lastBeat = -1;
+  function setCaption(beat) {
+    if (beat === lastBeat) return;
+    lastBeat = beat;
+    captionEl.style.opacity = 0;
+    setTimeout(() => {
+      captionEl.innerHTML = captions[beat] || '';
+      captionEl.style.opacity = 1;
+    }, 200);
+  }
+
+  // ===== visual state per beat (scroll-locked) =====
+  function applyBeat(beat) {
+    setCaption(beat);
+
+    // BEAT 0: lattice + 3 photons. No comb.
+    // BEAT 1: lattice + 3 photons + comb teeth grow.
+    // BEAT 2: zoom into one tooth — main comb dims, zoom frame appears, mini comb grows out of it.
+
+    // photons always shown
+    photonsG.setAttribute('opacity', 1);
+    edgeTrail.setAttribute('opacity', 0.4);
+
+    // pump and tap waveguides visible from beat 0; slightly dimmed in beat 2 (zoomed view)
+    document.getElementById('pumpWaveguide').setAttribute('opacity', beat === 2 ? 0.35 : 1);
+    document.getElementById('waveguide').setAttribute('opacity', beat === 2 ? 0.35 : 1);
+
+    // comb visibility
+    combGroup.setAttribute('opacity', beat >= 1 ? 1 : 0);
+
+    // teeth heights
+    teethData.forEach(d => {
+      const isZoomed = (d.idx === ZOOM_INDEX);
+      let h = 0;
+      if (beat === 1) {
+        h = d.targetH;
+      } else if (beat === 2) {
+        // dim the other teeth, the zoomed one stays
+        h = d.targetH;
+      }
+      d.tooth.setAttribute('y2', BASELINE - h);
+      // dim non-zoomed teeth in beat 2
+      if (beat === 2 && !isZoomed) {
+        d.tooth.setAttribute('opacity', 0.18);
+      } else {
+        d.tooth.setAttribute('opacity', 1);
+      }
+    });
+
+    // zoom frame and mini-comb
+    if (beat === 2) {
+      const zd = teethData[ZOOM_INDEX];
+      // small frame around the zoomed tooth
+      const fx = zd.x - 6;
+      const fy = BASELINE - zd.targetH - 6;
+      const fw = 12;
+      const fh = zd.targetH + 12;
+      zoomFrame.setAttribute('x', fx);
+      zoomFrame.setAttribute('y', fy);
+      zoomFrame.setAttribute('width', fw);
+      zoomFrame.setAttribute('height', fh);
+      zoomFrame.setAttribute('opacity', 0.7);
+
+      // grow mini comb
+      miniData.forEach(d => {
+        d.tooth.setAttribute('y2', MINI_BASELINE - d.targetH);
+      });
+      miniComb.setAttribute('opacity', 1);
+
+      // connecting lines from zoom box corners to mini-comb extent
+      zoomLines.innerHTML = '';
+      const lineLeft = document.createElementNS(NS, 'line');
+      lineLeft.setAttribute('x1', fx); lineLeft.setAttribute('y1', fy + fh);
+      lineLeft.setAttribute('x2', MINI_X0 - 5); lineLeft.setAttribute('y2', MINI_BASELINE - 5);
+      lineLeft.setAttribute('stroke', '#c54f3f');
+      lineLeft.setAttribute('stroke-width', 0.8);
+      lineLeft.setAttribute('stroke-dasharray', '2 2');
+      zoomLines.appendChild(lineLeft);
+
+      const lineRight = document.createElementNS(NS, 'line');
+      lineRight.setAttribute('x1', fx + fw); lineRight.setAttribute('y1', fy + fh);
+      lineRight.setAttribute('x2', MINI_X1 + 5); lineRight.setAttribute('y2', MINI_BASELINE - 5);
+      lineRight.setAttribute('stroke', '#c54f3f');
+      lineRight.setAttribute('stroke-width', 0.8);
+      lineRight.setAttribute('stroke-dasharray', '2 2');
+      zoomLines.appendChild(lineRight);
+
+      zoomLines.setAttribute('opacity', 0.7);
+    } else {
+      zoomFrame.setAttribute('opacity', 0);
+      miniComb.setAttribute('opacity', 0);
+      zoomLines.setAttribute('opacity', 0);
+      miniData.forEach(d => d.tooth.setAttribute('y2', MINI_BASELINE));
+    }
+  }
+
+  // ===== continuous photon orbit =====
+  let orbitTime = 0;
+  let lastTs = performance.now();
+
+  function tick(now) {
+    const dt = Math.min((now - lastTs) / 1000, 0.05);
+    lastTs = now;
+
+    // spawn new photons on schedule
+    spawnAccumulator += dt;
+    if (spawnAccumulator >= SPAWN_INTERVAL) {
+      spawnAccumulator = 0;
+      spawnPhoton();
+    }
+
+    // advance each photon
+    const PUMP_SPEED = 0.45;     // 1/sec — full pump traversal in ~2.2s
+    const JOURNEY_SPEED = 0.13;  // 1/sec — full lattice loop in ~7.7s
+    const TAP_SPEED = 0.45;      // 1/sec — exit in ~2.2s
+
+    for (let i = activePhotons.length - 1; i >= 0; i--) {
+      const p = activePhotons[i];
+      let pos = null;
+
+      if (p.phase === 'pump') {
+        p.t += dt * PUMP_SPEED;
+        if (p.t >= 1) {
+          p.phase = 'journey';
+          p.t = 0;
+        } else {
+          try { pos = pumpPath.getPointAtLength(p.t * pumpLength); } catch(e) {}
+        }
+      }
+
+      if (p.phase === 'journey') {
+        p.t += dt * JOURNEY_SPEED;
+
+        // Decide color when the photon crosses the morph fraction (end of top edge, lap 0)
+        if (!p.assignedColor && p.t >= morphFraction) {
+          const c = COLORS[colorCounter % COLORS.length];
+          colorCounter++;
+          p.assignedColor = c;
+          p.halo.setAttribute('fill', c.halo);
+          p.halo.setAttribute('opacity', 0.5);
+          p.core.setAttribute('fill', c.core);
+        }
+
+        // On lap 1, exit at the bottom-right corner (tapExitFraction)
+        if (p.lap === 1 && p.t >= tapExitFraction) {
+          p.phase = 'tap';
+          p.t = 0;
+        } else if (p.t >= 1) {
+          // Completed full loop — start lap 1 (colored photon does another full traversal)
+          p.lap = 1;
+          p.t = 0;
+        } else {
+          try { pos = journeyPath.getPointAtLength(p.t * journeyLength); } catch(e) {}
+        }
+      }
+
+      if (p.phase === 'tap') {
+        p.t += dt * TAP_SPEED;
+        if (p.t >= 1) {
+          destroyPhoton(p);
+          continue;
+        } else {
+          try { pos = wgPath.getPointAtLength(p.t * wgLength); } catch(e) {}
+        }
+      }
+
+      if (pos) {
+        p.halo.setAttribute('cx', pos.x);
+        p.halo.setAttribute('cy', pos.y);
+        p.core.setAttribute('cx', pos.x);
+        p.core.setAttribute('cy', pos.y);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  // scroll listener
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        applyBeat(getCurrentBeat());
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  // initial paint
+  applyBeat(getCurrentBeat());
+})();
+</script>
 </body>
 </html>
