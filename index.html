@@ -375,27 +375,27 @@
   }
   .img-card .image-wrap {
     position: relative;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse at 50% 50%, rgba(255,250,240,1), rgba(245,236,218,1)),
-      linear-gradient(135deg, rgba(245,201,122,0.15), rgba(197,79,63,0.08));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px;
+    background: linear-gradient(135deg, rgba(245,201,122,0.15), rgba(197,79,63,0.08));
   }
   .img-card .image-wrap img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
     display: block;
     transition: transform .5s ease;
   }
   .img-card:hover .image-wrap img {
     transform: scale(1.04);
+  }
+  /* talk cards keep a wider aspect since they're landscape banners */
+  #talks .img-card .image-wrap {
+    aspect-ratio: 16 / 9;
+  }
+  #talks .img-card .image-wrap img {
+    object-position: center center;
   }
 
   /* badge over image */
@@ -417,6 +417,14 @@
   .img-card .badge.role-firstauthor { background: rgba(197,79,63,0.95); }
   .img-card .badge.role-cofirst { background: rgba(168,109,26,0.95); }
   .img-card .badge.invited { background: rgba(45,110,106,0.95); }
+  .img-card .badge.cover {
+    background: linear-gradient(135deg, #d4953a, #a86d1a);
+    box-shadow: 0 4px 12px -4px rgba(168,109,26,0.6);
+  }
+  .img-card .badge.cover::before {
+    content: "★";
+    margin-right: 4px;
+  }
 
   .img-card .body {
     padding: 22px 24px 26px;
@@ -839,9 +847,10 @@
     <a class="img-card" href="https://www.science.org/doi/full/10.1126/sciadv.adw7696" target="_blank">
       <div class="image-wrap">
         <img src="images/sciadv2025_modelocking.png"
-             alt="Multi-timescale optical synchronization"
+             alt="Science Advances cover, September 2025"
              loading="lazy"/>
-        <span class="badge role-firstauthor">First author</span>
+        <span class="badge cover">Cover</span>
+        <span class="badge role-firstauthor" style="top: auto; bottom: 14px;">First author</span>
       </div>
       <div class="body">
         <div class="meta-row">
