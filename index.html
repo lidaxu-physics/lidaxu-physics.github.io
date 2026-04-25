@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Lida Xu</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
@@ -196,26 +197,48 @@
     transform: translateY(-2px);
   }
 
-  /* hero figure */
+  /* hero figure (now a photo) */
   .hero-figure {
-    background:
-      radial-gradient(ellipse at 60% 40%, rgba(245,201,122,0.18), transparent 70%),
-      var(--cream);
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 30px 60px -30px rgba(168,109,26,0.25);
+    text-align: center;
   }
-  .hero-figure svg {
+  .photo-frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    max-width: 460px;
+    margin: 0 auto;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+      0 30px 60px -30px rgba(168,109,26,0.35),
+      0 1px 0 rgba(255,255,255,0.6) inset;
+    border: 1px solid var(--line);
+    background: var(--cream);
+  }
+  .photo-frame img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
     display: block;
+    transition: transform .8s ease;
+  }
+  .photo-frame:hover img {
+    transform: scale(1.03);
+  }
+  /* warm vignette over the photo */
+  .photo-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 50% 30%, transparent 50%, rgba(168,109,26,0.10) 100%);
+    mix-blend-mode: multiply;
   }
   .hero-figure .caption {
-    margin-top: 14px;
-    font-size: 13px;
+    margin-top: 18px;
+    font-size: 14px;
     color: var(--ink-mute);
-    text-align: center;
     font-style: italic;
     font-family: 'Fraunces', serif;
   }
@@ -949,34 +972,10 @@
   </div>
 
   <div class="hero-figure">
-    <svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="trailGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#f5c97a"/>
-          <stop offset="50%" stop-color="#c54f3f"/>
-          <stop offset="100%" stop-color="#6dc4be"/>
-        </linearGradient>
-        <radialGradient id="photonGrad">
-          <stop offset="0%" stop-color="#fff5dc" stop-opacity="1"/>
-          <stop offset="40%" stop-color="#f5c97a" stop-opacity="0.9"/>
-          <stop offset="100%" stop-color="#d4953a" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <g id="latticeGroup"></g>
-      <g transform="translate(300, 380)">
-        <line x1="0" y1="-10" x2="0" y2="20" stroke="#a86d1a" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>
-        <polygon points="-5,18 5,18 0,26" fill="#a86d1a" opacity="0.6"/>
-      </g>
-      <g id="combGroup">
-        <line x1="40" y1="640" x2="560" y2="640" stroke="#7a6a55" stroke-width="1.2" opacity="0.6"/>
-        <text x="40" y="668" font-family="Inter Tight, sans-serif" font-size="11" fill="#7a6a55" opacity="0.7">frequency →</text>
-        <line x1="300" y1="450" x2="300" y2="475" stroke="#c54f3f" stroke-width="1.2" stroke-dasharray="2 2"/>
-        <text x="300" y="445" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="12" fill="#c54f3f">pump</text>
-        <g id="combTeeth"></g>
-        <g id="combGlow"></g>
-      </g>
-    </svg>
-    <div class="caption"><strong>Topological frequency comb.</strong> Light is pumped into a photonic lattice, where chiral edge modes turn one color into many — perfectly evenly spaced.</div>
+    <div class="photo-frame">
+      <img src="images/selfie.jpg" alt="Lida Xu" />
+    </div>
+    <div class="caption"><strong>Lida Xu</strong>, somewhere between the chalkboard and the optics table.</div>
   </div>
 </section>
 
@@ -1377,91 +1376,5 @@
 
 <footer>© 2026 Lida Xu</footer>
 
-<script>
-const NS = 'http://www.w3.org/2000/svg';
-const latticeGroup = document.getElementById('latticeGroup');
-const combTeeth = document.getElementById('combTeeth');
-const combGlow = document.getElementById('combGlow');
-const NX = 6, NY = 6;
-const padX = 110, padY = 50;
-const dx = (600 - 2 * padX) / (NX - 1);
-const dy = 300 / (NY - 1);
-for (let i = 0; i < NX; i++) for (let j = 0; j < NY; j++) {
-  const cx = padX + i * dx, cy = padY + j * dy;
-  if (i < NX - 1) { const ln = document.createElementNS(NS, 'line');
-    ln.setAttribute('x1', cx + 14); ln.setAttribute('y1', cy);
-    ln.setAttribute('x2', cx + dx - 14); ln.setAttribute('y2', cy);
-    ln.setAttribute('stroke', '#c5b491'); ln.setAttribute('stroke-width', 1);
-    latticeGroup.appendChild(ln); }
-  if (j < NY - 1) { const ln = document.createElementNS(NS, 'line');
-    ln.setAttribute('x1', cx); ln.setAttribute('y1', cy + 14);
-    ln.setAttribute('x2', cx); ln.setAttribute('y2', cy + dy - 14);
-    ln.setAttribute('stroke', '#c5b491'); ln.setAttribute('stroke-width', 1);
-    latticeGroup.appendChild(ln); }
-}
-const edgePoints = [];
-for (let i = 0; i < NX; i++) edgePoints.push([padX + i * dx, padY]);
-for (let j = 1; j < NY; j++) edgePoints.push([padX + (NX - 1) * dx, padY + j * dy]);
-for (let i = NX - 2; i >= 0; i--) edgePoints.push([padX + i * dx, padY + (NY - 1) * dy]);
-for (let j = NY - 2; j > 0; j--) edgePoints.push([padX, padY + j * dy]);
-const trail = document.createElementNS(NS, 'path');
-const pathStr = 'M ' + edgePoints.map(p => p.join(',')).join(' L ') + ' Z';
-trail.setAttribute('d', pathStr); trail.setAttribute('fill', 'none');
-trail.setAttribute('stroke', 'url(#trailGrad)');
-trail.setAttribute('stroke-width', 3); trail.setAttribute('stroke-linecap', 'round');
-trail.setAttribute('opacity', 0.55); latticeGroup.appendChild(trail);
-for (let i = 0; i < NX; i++) for (let j = 0; j < NY; j++) {
-  const cx = padX + i * dx, cy = padY + j * dy;
-  const isEdge = (i === 0 || i === NX - 1 || j === 0 || j === NY - 1);
-  const ring = document.createElementNS(NS, 'circle');
-  ring.setAttribute('cx', cx); ring.setAttribute('cy', cy); ring.setAttribute('r', 14);
-  ring.setAttribute('fill', '#fffaf0');
-  ring.setAttribute('stroke', isEdge ? '#a86d1a' : '#7a6a55');
-  ring.setAttribute('stroke-width', isEdge ? 2 : 1.2);
-  latticeGroup.appendChild(ring);
-}
-[0.10, 0.43, 0.76].forEach((t, i) => {
-  const pt = trail.getPointAtLength(t * trail.getTotalLength());
-  const halo = document.createElementNS(NS, 'circle');
-  halo.setAttribute('cx', pt.x); halo.setAttribute('cy', pt.y);
-  halo.setAttribute('r', 18); halo.setAttribute('fill', 'url(#photonGrad)');
-  latticeGroup.appendChild(halo);
-  const dot = document.createElementNS(NS, 'circle');
-  dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
-  dot.setAttribute('r', 5);
-  dot.setAttribute('fill', ['#fff5dc', '#ffe0d0', '#d4f0ee'][i]);
-  latticeGroup.appendChild(dot);
-});
-const N_TEETH = 23, COMB_X0 = 60, COMB_X1 = 540, BASELINE = 640, PEAK_H = 170;
-const COMB_DX = (COMB_X1 - COMB_X0) / (N_TEETH - 1);
-const PUMP_INDEX = Math.floor(N_TEETH / 2);
-function envH(i) { const x = (i - PUMP_INDEX) / 5.5; const s = 2 / (Math.exp(x) + Math.exp(-x)); return PEAK_H * s * s; }
-function specCol(t) {
-  const stops = [[0,[122,31,108]],[0.2,[53,86,168]],[0.4,[45,142,138]],[0.6,[212,149,58]],[0.8,[197,79,63]],[1,[122,31,18]]];
-  for (let i = 0; i < stops.length - 1; i++) { const [t0, c0] = stops[i], [t1, c1] = stops[i+1];
-    if (t >= t0 && t <= t1) { const f = (t - t0) / (t1 - t0);
-      return `rgb(${Math.round(c0[0]+(c1[0]-c0[0])*f)},${Math.round(c0[1]+(c1[1]-c0[1])*f)},${Math.round(c0[2]+(c1[2]-c0[2])*f)})`; } }
-  return 'rgb(212,149,58)';
-}
-for (let i = 0; i < N_TEETH; i++) {
-  const x = COMB_X0 + i * COMB_DX, h = envH(i), color = specCol(i / (N_TEETH - 1));
-  const tooth = document.createElementNS(NS, 'line');
-  tooth.setAttribute('x1', x); tooth.setAttribute('y1', BASELINE);
-  tooth.setAttribute('x2', x); tooth.setAttribute('y2', BASELINE - h);
-  tooth.setAttribute('stroke', color); tooth.setAttribute('stroke-width', 2.5);
-  tooth.setAttribute('stroke-linecap', 'round'); combTeeth.appendChild(tooth);
-  if (h > 8) { const glow = document.createElementNS(NS, 'circle');
-    glow.setAttribute('cx', x); glow.setAttribute('cy', BASELINE - h);
-    glow.setAttribute('r', 3.5); glow.setAttribute('fill', color); glow.setAttribute('opacity', 0.7);
-    combGlow.appendChild(glow); }
-}
-const env = document.createElementNS(NS, 'path'); let envD = '';
-for (let i = 0; i <= 100; i++) { const t = i / 100, x = COMB_X0 + t * (COMB_X1 - COMB_X0), h = envH(t * (N_TEETH - 1));
-  envD += (i === 0 ? 'M ' : ' L ') + x + ',' + (BASELINE - h); }
-env.setAttribute('d', envD); env.setAttribute('fill', 'none');
-env.setAttribute('stroke', '#a86d1a'); env.setAttribute('stroke-width', 1);
-env.setAttribute('stroke-dasharray', '3 4'); env.setAttribute('opacity', 0.4);
-document.getElementById('combGroup').appendChild(env);
-</script>
 </body>
 </html>
