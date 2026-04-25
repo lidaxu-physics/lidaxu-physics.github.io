@@ -455,11 +455,13 @@
 <nav class="top">
   <a href="../index_zh.html" class="logo">
     <span class="sun"></span>
-    <span>Lida Xu</span>
+    <span>徐李达</span>
   </a>
     <span class="lang-toggle">
       <a href="photonic-computing.html">EN</a>
       <span class="lang-sep">·</span>
+      <a href="photonic-computing_zh.html" class="active" aria-current="true">中</a>
+    </span>
 </nav>
 
 
@@ -496,33 +498,33 @@
 
   <!-- ================= INPUT PANEL — two clickable images ================= -->
   <g id="inputPanel">
-    <text x="105" y="78" text-anchor="middle"
+    <text x="105" y="53" text-anchor="middle"
           font-family="Fraunces,serif" font-style="italic" font-size="11" fill="#7a6a55">点击进行分类</text>
 
     <!-- CAT choice -->
     <g id="catChoice" style="cursor:pointer;">
-      <rect id="catFrame" x="30" y="90" width="150" height="110" rx="6" ry="6"
+      <rect id="catFrame" x="30" y="65" width="150" height="135" rx="6" ry="6"
             fill="#fffaf0" stroke="#7a6a55" stroke-width="1"
             style="transition: stroke 0.25s ease, stroke-width 0.25s ease;"/>
       <clipPath id="catClip">
-        <rect x="34" y="94" width="142" height="102" rx="4" ry="4"/>
+        <rect x="34" y="69" width="142" height="127" rx="4" ry="4"/>
       </clipPath>
       <image id="catImg" href="../images/cat.png"
-             x="34" y="94" width="142" height="102"
+             x="34" y="69" width="142" height="127"
              preserveAspectRatio="xMidYMid slice"
              clip-path="url(#catClip)"/>
     </g>
 
     <!-- DOG choice -->
     <g id="dogChoice" style="cursor:pointer;">
-      <rect id="dogFrame" x="30" y="220" width="150" height="110" rx="6" ry="6"
+      <rect id="dogFrame" x="30" y="220" width="150" height="135" rx="6" ry="6"
             fill="#fffaf0" stroke="#7a6a55" stroke-width="1"
             style="transition: stroke 0.25s ease, stroke-width 0.25s ease;"/>
       <clipPath id="dogClip">
-        <rect x="34" y="224" width="142" height="102" rx="4" ry="4"/>
+        <rect x="34" y="224" width="142" height="127" rx="4" ry="4"/>
       </clipPath>
       <image id="dogImg" href="../images/dog.png"
-             x="34" y="224" width="142" height="102"
+             x="34" y="224" width="142" height="127"
              preserveAspectRatio="xMidYMid slice"
              clip-path="url(#dogClip)"/>
     </g>
@@ -703,8 +705,8 @@
 
   // =============== TWO INPUT BUNDLES (cat and dog) ===============
   // Each starts at its image's right-center and arcs to the chip left-edge middle.
-  const CAT_SRC_X = 180, CAT_SRC_Y = 145;   // right-middle of cat frame (y: 90..200)
-  const DOG_SRC_X = 180, DOG_SRC_Y = 275;   // right-middle of dog frame (y: 220..330)
+  const CAT_SRC_X = 180, CAT_SRC_Y = 132;   // right-middle of cat frame (y: 65..200)
+  const DOG_SRC_X = 180, DOG_SRC_Y = 287;   // right-middle of dog frame (y: 220..355)
   const CHIP_ENTRY_X = CHIP_X0;
   const CHIP_ENTRY_Y = CHIP_Y0 + 3.5 * CHIP_DY;   // vertical middle of lattice
 
@@ -914,8 +916,14 @@
   let pendingKind = null;        // classification in flight (not yet revealed)
   let arrivalsNeeded = 0;        // number of arrivals before verdict reveal
   let arrivalsSoFar = 0;
+  let isAnimating = false;       // true while burst is active or verdict still pulsing
 
   function classify(kind) {
+    if (isAnimating) return;   // ignore clicks while a previous run is in flight
+    isAnimating = true;
+    // visually mark inputs as locked
+    document.getElementById('catChoice').style.pointerEvents = 'none';
+    document.getElementById('dogChoice').style.pointerEvents = 'none';
     // activate the chosen frame border
     const catFrame = document.getElementById('catFrame');
     const dogFrame = document.getElementById('dogFrame');
@@ -946,7 +954,7 @@
     arrivalsNeeded = Math.ceil(totalPhotons / 3);
     for (let wave = 0; wave < BURST_WAVES; wave++) {
       for (let row = 0; row < CHIP_NY; row++) {
-        spawnPhoton(kind, row, wave * 0.22);
+        spawnPhoton(kind, row, wave * 0.11);
       }
     }
 
@@ -956,7 +964,7 @@
 
   function revealVerdict(kind) {
     lastClassified = kind;
-    verdictPulseUntil = performance.now() + 3000;
+    verdictPulseUntil = performance.now() + 1500;
 
     setCaption(`正在读取这只${kind === 'cat' ? '猫' : '狗'}… <strong>${kind === 'cat' ? '"猫"' : '"狗"'}</strong>。`);
 
@@ -989,10 +997,10 @@
     const dt = Math.min((now - lastTs) / 1000, 0.05);
     lastTs = now;
 
-    const BUNDLE_SPEED = 1.2;
-    const CHIP_SPEED   = 1.3;
-    const OUTPUT_SPEED = 1.2;
-    const SYNAPSE_SPEED = 2.2;
+    const BUNDLE_SPEED = 2.4;
+    const CHIP_SPEED   = 2.6;
+    const OUTPUT_SPEED = 2.4;
+    const SYNAPSE_SPEED = 4.4;
 
     for (let k = activePhotons.length - 1; k >= 0; k--) {
       const p = activePhotons[k];
@@ -1094,6 +1102,12 @@
     // Output neurons: pulsing during classification window, then decay
     catOut.pulse = Math.max(0, catOut.pulse - dt * 0.5);
     dogOut.pulse = Math.max(0, dogOut.pulse - dt * 0.5);
+    // When the verdict pulse window ends and no photons remain, unlock clicks
+    if (isAnimating && now >= verdictPulseUntil && activePhotons.length === 0) {
+      isAnimating = false;
+      document.getElementById('catChoice').style.pointerEvents = '';
+      document.getElementById('dogChoice').style.pointerEvents = '';
+    }
     const breathe = 0.85 + 0.15 * Math.sin(now / 500);
     const catAmp = lastClassified === 'cat' && now < verdictPulseUntil ? breathe : catOut.pulse;
     const dogAmp = lastClassified === 'dog' && now < verdictPulseUntil ? breathe : dogOut.pulse;
