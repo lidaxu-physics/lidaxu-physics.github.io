@@ -258,6 +258,76 @@
     border: 0;
   }
 
+
+  /* video placeholder — click to load */
+  .episode .video-wrap {
+    cursor: pointer;
+    background: linear-gradient(135deg, #2d2620 0%, #1c1814 100%);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .episode .video-wrap:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 50px -16px rgba(28,24,20,0.45);
+  }
+  .episode .video-wrap.loaded {
+    cursor: default;
+  }
+  .episode .video-wrap.loaded:hover {
+    transform: none;
+    box-shadow: 0 12px 40px -16px rgba(28,24,20,0.3);
+  }
+  .video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 24px;
+    text-align: center;
+    background-image:
+      radial-gradient(ellipse 600px 400px at 50% 50%, rgba(245,201,122,0.08), transparent 70%);
+  }
+  .video-placeholder .play-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(255,250,240,0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    transition: all .25s ease;
+  }
+  .video-wrap:hover .play-icon {
+    background: var(--gold-glow);
+    transform: scale(1.08);
+  }
+  .video-placeholder .play-icon::before {
+    content: "";
+    width: 0; height: 0;
+    border-left: 22px solid var(--ink);
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    margin-left: 6px;
+  }
+  .video-placeholder .ph-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(255,250,240,0.78);
+    max-width: 400px;
+    line-height: 1.4;
+  }
+  .video-placeholder .ph-source {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,201,122,0.7);
+  }
+
   /* "to be continued" placeholder */
   .tbc {
     margin-top: 80px;
@@ -330,7 +400,7 @@
 
 <header class="page-header">
   <div class="eyebrow">科普视频</div>
-  <h1>物理学,<em>用中文讲。</em></h1>
+  <h1>物理学小故事<em></em></h1>
   <p class="lede">我在 B 站做了一系列物理学的科普视频。实验室之外的我,更愿意用讲故事的方式聊物理 —— 而不是写论文。</p>
   <div class="meta-pills">
     <span class="pill"><span class="dot"></span>哔哩哔哩</span>
@@ -350,11 +420,12 @@
       <div class="ep-num">第1期</div>
       <h2>横空出世的卷王狄拉克</h2>
     </div>
-    <div class="video-wrap">
-      <iframe src="//player.bilibili.com/player.html?bvid=BV17S4y1m7kL&page=1&high_quality=1&danmaku=0"
-              scrolling="no" border="0" frameborder="no"
-              framespacing="0" allowfullscreen="true"
-              loading="lazy"></iframe>
+    <div class="video-wrap" data-bvid="BV17S4y1m7kL" role="button" tabindex="0" aria-label="播放第1期">
+      <div class="video-placeholder">
+        <div class="ph-source">哔哩哔哩 · 第1期</div>
+        <div class="play-icon"></div>
+        <div class="ph-title">横空出世的卷王狄拉克</div>
+      </div>
     </div>
   </article>
 
@@ -363,11 +434,12 @@
       <div class="ep-num">第2期</div>
       <h2>狄拉克是什么物理单位</h2>
     </div>
-    <div class="video-wrap">
-      <iframe src="//player.bilibili.com/player.html?bvid=BV15t4y1s7tS&page=1&high_quality=1&danmaku=0"
-              scrolling="no" border="0" frameborder="no"
-              framespacing="0" allowfullscreen="true"
-              loading="lazy"></iframe>
+    <div class="video-wrap" data-bvid="BV15t4y1s7tS" role="button" tabindex="0" aria-label="播放第2期">
+      <div class="video-placeholder">
+        <div class="ph-source">哔哩哔哩 · 第2期</div>
+        <div class="play-icon"></div>
+        <div class="ph-title">狄拉克是什么物理单位</div>
+      </div>
     </div>
   </article>
 
@@ -376,11 +448,12 @@
       <div class="ep-num">第3期</div>
       <h2>狄拉克之海诞生的前夜</h2>
     </div>
-    <div class="video-wrap">
-      <iframe src="//player.bilibili.com/player.html?bvid=BV1jc411Z7je&page=1&high_quality=1&danmaku=0"
-              scrolling="no" border="0" frameborder="no"
-              framespacing="0" allowfullscreen="true"
-              loading="lazy"></iframe>
+    <div class="video-wrap" data-bvid="BV1jc411Z7je" role="button" tabindex="0" aria-label="播放第3期">
+      <div class="video-placeholder">
+        <div class="ph-source">哔哩哔哩 · 第3期</div>
+        <div class="play-icon"></div>
+        <div class="ph-title">狄拉克之海诞生的前夜</div>
+      </div>
     </div>
   </article>
 
@@ -389,11 +462,12 @@
       <div class="ep-num">第4期</div>
       <h2>海森堡为何担心狄拉克</h2>
     </div>
-    <div class="video-wrap">
-      <iframe src="//player.bilibili.com/player.html?bvid=BV1yH4y1z7ic&page=1&high_quality=1&danmaku=0"
-              scrolling="no" border="0" frameborder="no"
-              framespacing="0" allowfullscreen="true"
-              loading="lazy"></iframe>
+    <div class="video-wrap" data-bvid="BV1yH4y1z7ic" role="button" tabindex="0" aria-label="播放第4期">
+      <div class="video-placeholder">
+        <div class="ph-source">哔哩哔哩 · 第4期</div>
+        <div class="play-icon"></div>
+        <div class="ph-title">海森堡为何担心狄拉克</div>
+      </div>
     </div>
   </article>
 
@@ -402,11 +476,12 @@
       <div class="ep-num">第5期</div>
       <h2>狄拉克之海是弄啥嘞</h2>
     </div>
-    <div class="video-wrap">
-      <iframe src="//player.bilibili.com/player.html?bvid=BV1ob4y1g7Tw&page=1&high_quality=1&danmaku=0"
-              scrolling="no" border="0" frameborder="no"
-              framespacing="0" allowfullscreen="true"
-              loading="lazy"></iframe>
+    <div class="video-wrap" data-bvid="BV1ob4y1g7Tw" role="button" tabindex="0" aria-label="播放第5期">
+      <div class="video-placeholder">
+        <div class="ph-source">哔哩哔哩 · 第5期</div>
+        <div class="play-icon"></div>
+        <div class="ph-title">狄拉克之海是弄啥嘞</div>
+      </div>
     </div>
   </article>
 
@@ -419,6 +494,36 @@
 </main>
 
 <footer>© 2026 徐李达 · <a href="index_zh.html">返回首页</a></footer>
+
+
+<script>
+(function() {
+  document.querySelectorAll('.video-wrap').forEach(wrap => {
+    wrap.addEventListener('click', function() {
+      if (this.classList.contains('loaded')) return;
+      const bvid = this.dataset.bvid;
+      if (!bvid) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = '//player.bilibili.com/player.html?bvid=' + bvid +
+                   '&page=1&high_quality=1&danmaku=0&autoplay=1';
+      iframe.setAttribute('scrolling', 'no');
+      iframe.setAttribute('frameborder', 'no');
+      iframe.setAttribute('framespacing', '0');
+      iframe.setAttribute('allowfullscreen', 'true');
+      iframe.style.position = 'absolute';
+      iframe.style.top = '0';
+      iframe.style.left = '0';
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.border = '0';
+      // Clear placeholder, append iframe
+      this.innerHTML = '';
+      this.appendChild(iframe);
+      this.classList.add('loaded');
+    });
+  });
+})();
+</script>
 
 </body>
 </html>

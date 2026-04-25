@@ -1040,6 +1040,123 @@
   .see-full a:hover .arrow { transform: translateX(4px); }
   .see-full .arrow { transition: transform .25s ease; font-size: 18px; }
 
+
+  /* science communication feature card (Beyond section) */
+  .comm-card {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 32px;
+    align-items: center;
+    margin-top: 32px;
+    padding: 32px 40px;
+    background: linear-gradient(135deg, #fffaf0 0%, #fef3df 100%);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: all .3s ease;
+    overflow: hidden;
+    position: relative;
+  }
+  .comm-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--gold), var(--gold-deep));
+  }
+  .comm-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -16px rgba(168,109,26,0.35);
+    border-color: var(--gold);
+  }
+  .comm-card:hover .arrow { transform: translateX(6px); }
+  .comm-card-content { padding: 4px 0; }
+  .comm-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 14px;
+  }
+  .comm-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--rose);
+    box-shadow: 0 0 8px rgba(197,79,63,0.5);
+  }
+  .comm-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .comm-card h3 em { font-style: italic; color: var(--gold-deep); }
+  .comm-card p {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    line-height: 1.55;
+    margin-bottom: 16px;
+    max-width: 600px;
+  }
+  .comm-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold-deep);
+  }
+  .comm-cta .arrow { transition: transform .3s ease; display: inline-block; }
+  .comm-card-art {
+    position: relative;
+    height: 160px;
+    width: 100%;
+  }
+  .comm-art-circle {
+    position: absolute;
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--gold-glow), var(--gold) 60%, var(--gold-deep));
+    top: 15px; left: 30px;
+    opacity: 0.85;
+    box-shadow: 0 8px 30px rgba(168,109,26,0.3);
+  }
+  .comm-art-square {
+    position: absolute;
+    width: 60px; height: 60px;
+    background: var(--rose);
+    top: 0; right: 0;
+    border-radius: 6px;
+    transform: rotate(12deg);
+    opacity: 0.85;
+  }
+  .comm-art-triangle {
+    position: absolute;
+    width: 0; height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 52px solid var(--teal);
+    bottom: 5px; right: 30px;
+    transform: rotate(-15deg);
+    opacity: 0.8;
+  }
+  @media (max-width: 760px) {
+    .comm-card {
+      grid-template-columns: 1fr;
+      padding: 24px;
+      gap: 20px;
+    }
+    .comm-card h3 { font-size: 22px; }
+    .comm-card-art { height: 120px; }
+  }
+
   /* responsive */
   @media (max-width: 1100px) {
     .card-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1564,6 +1681,23 @@
       <p>I like explaining hard ideas in simple language. If a Nobel-Prize idea can't be told to a curious friend, we haven't finished understanding it yet.</p>
     </div>
   </div>
+
+  <a href="videos.html" class="comm-card">
+    <div class="comm-card-content">
+      <div class="comm-eyebrow">
+        <span class="comm-dot"></span>
+        Featured · Science communication
+      </div>
+      <h3>I make a <em>physics video series</em> on Bilibili.</h3>
+      <p>A five-part deep dive into Paul Dirac and the strange world of antimatter, in Mandarin. Outreach is its own craft — and I love practicing it.</p>
+      <span class="comm-cta">Watch the series <span class="arrow">→</span></span>
+    </div>
+    <div class="comm-card-art" aria-hidden="true">
+      <div class="comm-art-circle"></div>
+      <div class="comm-art-square"></div>
+      <div class="comm-art-triangle"></div>
+    </div>
+  </a>
 </section>
 
 <!-- ============= CONTACT ============= -->
