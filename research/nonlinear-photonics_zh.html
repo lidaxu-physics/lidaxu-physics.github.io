@@ -1199,6 +1199,7 @@
   // scroll listener
   let ticking = false;
   function onScroll() {
+    if (window.matchMedia('(max-width: 1000px)').matches) return;
     if (!ticking) {
       requestAnimationFrame(() => {
         applyBeat(getCurrentBeat());
@@ -1211,7 +1212,28 @@
   window.addEventListener('resize', onScroll, { passive: true });
 
   // initial paint
-  applyBeat(getCurrentBeat());
+  // ============== MOBILE AUTOPLAY ==============
+  const IS_MOBILE_NL = window.matchMedia('(max-width: 1000px)').matches;
+  let nlAutoplayDone = false;
+  
+  if (IS_MOBILE_NL) {
+    const scene = document.querySelector('.scroll-scene');
+    if (scene) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !nlAutoplayDone) {
+            nlAutoplayDone = true;
+            applyBeat(0);
+            setTimeout(() => applyBeat(1), 3500);
+            setTimeout(() => applyBeat(2), 8000);
+          }
+        });
+      }, { threshold: 0.25 });
+      observer.observe(scene);
+    }
+  } else {
+    applyBeat(getCurrentBeat());
+  }
 })();
 </script>
 </body>
