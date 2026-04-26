@@ -552,30 +552,22 @@
   nav.top .lang-toggle .lang-sep { color: var(--line); font-size: 14px; }
 
 
-  /* MOBILE-ONLY scroll-driven lattice scene (hidden on desktop) */
+  /* MOBILE-ONLY auto-playing lattice scene (hidden on desktop) */
   .m-lattice-scene { display: none; }
   
   @media (max-width: 1000px) {
     .m-lattice-scene {
       display: block;
-      position: relative;
-      height: 540vh;            /* scroll runway — 3x longer for slow, deliberate scroll */
-      margin: 24px 0 32px;
+      margin: 32px 0;
     }
     .m-lattice-scene .m-pin {
-      position: sticky;
-      top: 60px;
-      height: calc(100vh - 80px);
-      max-height: 92vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 0 12px;
+      padding: 0 4px;
     }
     .m-lattice-scene .m-stage {
       width: 100%;
-      max-width: min(92vw, 70vh);
-      aspect-ratio: 1 / 1;
+      max-width: 420px;
       background:
         radial-gradient(ellipse at 50% 40%, rgba(245,201,122,0.12), transparent 70%),
         var(--cream);
@@ -583,15 +575,12 @@
       border-radius: 24px;
       padding: 16px 16px 14px;
       box-shadow: 0 30px 60px -30px rgba(168,109,26,0.25);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
     }
     .m-lattice-scene .m-stage svg {
       width: 100%;
       height: auto;
-      flex: 1;
-      max-height: 100%;
+      aspect-ratio: 1 / 1;
+      display: block;
     }
     .m-lattice-scene .m-stage-caption {
       font-family: 'Fraunces', serif;
@@ -600,6 +589,7 @@
       color: var(--ink-mute);
       text-align: center;
       min-height: 32px;
+      margin-top: 8px;
       transition: opacity 0.4s ease;
     }
     .m-lattice-scene .m-stage-caption strong {
@@ -607,7 +597,7 @@
       color: var(--accent-deep);
       font-weight: 600;
     }
-    /* Hide the original side-panel lattice when mobile is active */
+    /* Hide the original side-panel lattice on mobile (this one replaces it) */
     .scroll-scene .visual-col { display: none; }
   }
 
@@ -2108,8 +2098,6 @@
   const reroutePathD = 'M ' + reroutePoints.map(p => p.join(',')).join(' L ') + ' Z';
   const photonTrail = document.getElementById('mPhotonTrail');
   
-  // Set up trail length tracking. Using actual path lengths (in user units)
-  // not normalized, so we can do dasharray properly.
   photonTrail.setAttribute('d', intactPathD);
   let intactTrailLength = photonTrail.getTotalLength();
   photonTrail.setAttribute('d', reroutePathD);
@@ -2124,93 +2112,98 @@
   }
   
   function setTrail(lapFrac, totalLength, opacity) {
-    // Draw "lapFrac" portion of the path starting from index 0.
-    // stroke-dasharray: [visible, hidden]. Visible = lapFrac * totalLength.
     const visible = lapFrac * totalLength;
     const hidden = totalLength;
     photonTrail.setAttribute('stroke-dasharray', `${visible} ${hidden}`);
     photonTrail.setAttribute('opacity', opacity);
   }
   
-  function update() {
-    const rect = scene.getBoundingClientRect();
-    const total = rect.height - window.innerHeight;
-    const progress = clamp01(-rect.top / total);
+  // ============= TIME-DRIVEN AUTO-LOOP =============
+  // Phase timing (seconds):
+  //   0   - 1   intro (photon fading in)
+  //   1   - 7   intact lap (6 sec, plenty of time to watch)
+  //   7   - 9   site removal (2 sec)
+  //   9   - 15  rerouted lap (6 sec)
+  //   15  - 16  pause at end
+  //   16+ loop restart
+  
+  const LAP_INTACT_DURATION = 6;
+  const REMOVAL_DURATION = 2;
+  const LAP_REROUTE_DURATION = 6;
+  const INTRO = 1;
+  const HOLD_END = 1;
+  const TOTAL_DURATION = INTRO + LAP_INTACT_DURATION + REMOVAL_DURATION + 
+                         LAP_REROUTE_DURATION + HOLD_END;   // 16 sec
+  
+  function applyState(t) {
+    // t is seconds since loop start, 0 .. TOTAL_DURATION
+    let photonOpacity = 0, photonPos = null;
+    let removedSiteOpacity = 1, touchingCouplingOpacity = 1;
+    let trailFrac = 0, trailOpacity = 0, trailWhich = 'intact';
     
-    // ============= PHASE LOGIC =============
-    // 0.00 - 0.05: photon hidden (intro, lattice settling)
-    // 0.05 - 0.45: photon circulates intact perimeter (one full lap)
-    // 0.45 - 0.55: site fades out, couplings disconnect, trail clears
-    // 0.55 - 1.00: photon circulates rerouted perimeter (one full lap)
-    
-    let photonOpacity = 0;
-    let photonPos = null;
-    let removedSiteOpacity = 1;
-    let touchingCouplingOpacity = 1;
-    let trailFrac = 0;
-    let trailOpacity = 0;
-    let trailWhich = 'intact';
-    
-    if (progress < 0.05) {
-      // intro
+    if (t < INTRO) {
+      // intro fade-in, photon at start of intact path
       setCaption(captions.intact);
-      photonOpacity = 0;
-      trailOpacity = 0;
+      photonOpacity = t / INTRO;
+      photonPos = posAlongPath(intactPoints, 0);
     }
-    else if (progress < 0.45) {
-      // circulate intact + trail builds up behind photon
+    else if (t < INTRO + LAP_INTACT_DURATION) {
+      // intact lap
       setCaption(captions.circulate);
-      const lapFrac = (progress - 0.05) / 0.40;
+      const lapFrac = (t - INTRO) / LAP_INTACT_DURATION;
       photonPos = posAlongPath(intactPoints, lapFrac);
       photonOpacity = 1;
       trailWhich = 'intact';
       trailFrac = lapFrac;
       trailOpacity = 0.7;
     }
-    else if (progress < 0.55) {
-      // site removal phase — trail fades out alongside the site
+    else if (t < INTRO + LAP_INTACT_DURATION + REMOVAL_DURATION) {
+      // site removal
       setCaption(captions.removing);
-      const t = (progress - 0.45) / 0.10;
-      removedSiteOpacity = 1 - t;
-      touchingCouplingOpacity = 1 - t;
+      const removalT = (t - INTRO - LAP_INTACT_DURATION) / REMOVAL_DURATION;
+      removedSiteOpacity = 1 - removalT;
+      touchingCouplingOpacity = 1 - removalT;
       photonPos = posAlongPath(reroutePoints, 0);
       photonOpacity = 1;
-      // Trail from the intact lap fades out as site is removed
       trailWhich = 'intact';
       trailFrac = 1;
-      trailOpacity = 0.7 * (1 - t);
+      trailOpacity = 0.7 * (1 - removalT);
     }
-    else {
-      // circulate rerouted, fresh trail
+    else if (t < INTRO + LAP_INTACT_DURATION + REMOVAL_DURATION + LAP_REROUTE_DURATION) {
+      // rerouted lap
       setCaption(captions.rerouted);
       removedSiteOpacity = 0;
       touchingCouplingOpacity = 0;
-      const lapFrac = (progress - 0.55) / 0.45;
+      const lapFrac = (t - INTRO - LAP_INTACT_DURATION - REMOVAL_DURATION) / LAP_REROUTE_DURATION;
       photonPos = posAlongPath(reroutePoints, lapFrac);
       photonOpacity = 1;
       trailWhich = 'rerouted';
       trailFrac = lapFrac;
       trailOpacity = 0.7;
     }
+    else {
+      // hold at end before loop
+      setCaption(captions.rerouted);
+      removedSiteOpacity = 0;
+      touchingCouplingOpacity = 0;
+      photonPos = posAlongPath(reroutePoints, 1);
+      photonOpacity = 1;
+      trailWhich = 'rerouted';
+      trailFrac = 1;
+      trailOpacity = 0.7;
+    }
     
-    // Apply trail
     setTrailPath(trailWhich);
     const totalLen = trailWhich === 'intact' ? intactTrailLength : reroutedTrailLength;
     setTrail(trailFrac, totalLen, trailOpacity);
     
-    // Apply site removal
     sites.forEach(s => {
-      if (s.isRemoved) {
-        s.element.setAttribute('opacity', removedSiteOpacity);
-      }
+      if (s.isRemoved) s.element.setAttribute('opacity', removedSiteOpacity);
     });
     couplingElements.forEach(c => {
-      if (c.touchesRemoved) {
-        c.el.setAttribute('opacity', touchingCouplingOpacity);
-      }
+      if (c.touchesRemoved) c.el.setAttribute('opacity', touchingCouplingOpacity);
     });
     
-    // Apply photon
     if (photonPos) {
       photonHalo.setAttribute('cx', photonPos[0]);
       photonHalo.setAttribute('cy', photonPos[1]);
@@ -2224,19 +2217,38 @@
     }
   }
   
-  let ticking = false;
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        update();
-        ticking = false;
-      });
-      ticking = true;
+  // Animation loop with visibility gating (pause when scrolled out of view)
+  let isVisible = false;
+  let loopStartTime = 0;
+  let rafId = null;
+  
+  function animationFrame(now) {
+    if (!isVisible) {
+      rafId = null;
+      return;
     }
+    const t = ((now - loopStartTime) / 1000) % TOTAL_DURATION;
+    applyState(t);
+    rafId = requestAnimationFrame(animationFrame);
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  update();   // initial paint
+  
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !isVisible) {
+        isVisible = true;
+        loopStartTime = performance.now();
+        rafId = requestAnimationFrame(animationFrame);
+      } else if (!entry.isIntersecting && isVisible) {
+        isVisible = false;
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    });
+  }, { threshold: 0.15 });
+  observer.observe(scene);
+  
+  // Initial paint at t=0 so the lattice isn't blank before scrolling
+  applyState(0)
 })();
 </script>
 
