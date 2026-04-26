@@ -484,6 +484,55 @@
   nav.top .lang-toggle a.active { color: var(--ink); font-weight: 600; }
   nav.top .lang-toggle .lang-sep { color: var(--line); font-size: 14px; }
 
+
+  /* MOBILE-ONLY scroll-driven nonlinear scene */
+  .m-nonlin-scene { display: none; }
+  
+  @media (max-width: 1000px) {
+    .m-nonlin-scene {
+      display: block;
+      position: relative;
+      height: 540vh;            /* 3x scroll runway */
+      margin: 24px 0 32px;
+    }
+    .m-nonlin-scene .m-nonlin-pin {
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 80px);
+      max-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+    }
+    .m-nonlin-scene .m-nonlin-slot {
+      width: 100%;
+      max-width: min(92vw, 60vh);    /* portrait stage, narrower than topological */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Once the lattice-stage is moved into the slot, override its sizing */
+    .m-nonlin-scene .m-nonlin-slot .lattice-stage {
+      max-width: 100%;
+      width: 100%;
+      aspect-ratio: 4 / 7.6;     /* original portrait ratio */
+      max-height: 92vh;
+      padding: 14px;
+      margin: 0;
+    }
+    .m-nonlin-scene .m-nonlin-slot .lattice-stage svg {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+    }
+    .m-nonlin-scene .m-nonlin-slot .lattice-stage .stage-caption {
+      font-size: 12px;
+    }
+    /* Hide the original visual-col entirely on mobile (lattice was moved) */
+    .scroll-scene > .visual-col { display: none; }
+  }
+
   /* responsive */
   @media (max-width: 760px) {
     nav.top { padding: 16px 20px; }
@@ -551,6 +600,13 @@
       <p>Look closely at one tooth of that comb. Zoom in. What looks like a single spectral line at one scale turns out to be — at finer resolution — <strong>another comb</strong>.</p>
 
       <p>This is the heart of <em>nested frequency-phase matching</em>: combs within combs, on multiple timescales simultaneously. A coarse comb sets the rhythm; inside each tooth, a finer comb follows. Both lock to the chip; both stay phase-coherent.</p>
+
+      <!-- Mobile-only scroll runway + slot for the nonlinear stage -->
+      <div class="m-nonlin-scene" id="mNonlinScene">
+        <div class="m-nonlin-pin">
+          <div class="m-nonlin-slot" id="mNonlinSlot"></div>
+        </div>
+      </div>
 
       <h2>Why this <em>matters</em></h2>
       <p>Each comb tooth is, in principle, a usable channel — for telecommunications, for sensing, for clocks. A nested comb gives you orders of magnitude more channels from the same chip area, with the matching conditions engineered in by the lattice geometry rather than tuned painstakingly after fabrication. That's the door this work opens, and it's why most of my recent papers live here.</p>
@@ -1214,22 +1270,52 @@
   // initial paint
   // ============== MOBILE AUTOPLAY ==============
   const IS_MOBILE_NL = window.matchMedia('(max-width: 1000px)').matches;
-  let nlAutoplayDone = false;
   
   if (IS_MOBILE_NL) {
-    const scene = document.querySelector('.scroll-scene');
-    if (scene) {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && !nlAutoplayDone) {
-            nlAutoplayDone = true;
-            applyBeat(0);
-            setTimeout(() => applyBeat(1), 3500);
-            setTimeout(() => applyBeat(2), 8000);
-          }
-        });
-      }, { threshold: 0.25 });
-      observer.observe(scene);
+    // Move the existing .lattice-stage into the mobile slot so it lives between
+    // "twist" and "Why this matters" in the mobile layout.
+    const stage = document.querySelector('.scroll-scene > .visual-col > .lattice-stage');
+    const slot = document.getElementById('mNonlinSlot');
+    if (stage && slot) {
+      slot.appendChild(stage);
+    }
+    
+    // SCROLL-DRIVEN BEAT LOGIC for mobile.
+    // Progress 0..1 from the m-nonlin-scene's scroll position drives beat changes.
+    // Photons inside each beat keep flowing naturally (the existing animation loop
+    // handles that — we just change which beat is "active").
+    const mScene = document.getElementById('mNonlinScene');
+    if (mScene) {
+      function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+      let lastMobileBeat = -1;
+      function getMobileBeat() {
+        const rect = mScene.getBoundingClientRect();
+        const total = rect.height - window.innerHeight;
+        const progress = clamp01(-rect.top / total);
+        // Three beats split evenly: 0 .. 1/3 = beat 0, 1/3 .. 2/3 = beat 1, 2/3 .. 1 = beat 2
+        if (progress < 0.33) return 0;
+        if (progress < 0.66) return 1;
+        return 2;
+      }
+      function updateMobileBeat() {
+        const b = getMobileBeat();
+        if (b !== lastMobileBeat) {
+          lastMobileBeat = b;
+          applyBeat(b);
+        }
+      }
+      let mTicking = false;
+      window.addEventListener('scroll', () => {
+        if (!mTicking) {
+          requestAnimationFrame(() => {
+            updateMobileBeat();
+            mTicking = false;
+          });
+          mTicking = true;
+        }
+      }, { passive: true });
+      window.addEventListener('resize', updateMobileBeat, { passive: true });
+      updateMobileBeat();
     }
   } else {
     applyBeat(getCurrentBeat());

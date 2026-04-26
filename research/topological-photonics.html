@@ -450,23 +450,10 @@
       gap: 24px;
       padding: 0 24px 40px;
     }
+    /* On mobile: hide original visual column — replaced by .m-lattice-scene below */
     .scroll-scene .visual-col {
-      /* normal flow on mobile — visual plays in place via autoplay-on-view */
-      position: relative;
-      top: auto;
-      height: auto;
-      max-height: none;
-      order: -1;
+      display: none;
     }
-    .lattice-stage {
-      max-width: 100%;
-      width: min(100%, 70vh);
-      aspect-ratio: 1 / 1;
-      margin: 0 auto;
-      padding: 16px;
-    }
-    .lattice-stage svg { flex: none; height: auto; }
-    .lattice-stage .stage-caption { font-size: 12px; }
   }
   
   @media (max-width: 760px) {
@@ -564,6 +551,66 @@
   nav.top .lang-toggle a.active { color: var(--ink); font-weight: 600; }
   nav.top .lang-toggle .lang-sep { color: var(--line); font-size: 14px; }
 
+
+  /* MOBILE-ONLY scroll-driven lattice scene (hidden on desktop) */
+  .m-lattice-scene { display: none; }
+  
+  @media (max-width: 1000px) {
+    .m-lattice-scene {
+      display: block;
+      position: relative;
+      height: 540vh;            /* scroll runway — 3x longer for slow, deliberate scroll */
+      margin: 24px 0 32px;
+    }
+    .m-lattice-scene .m-pin {
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 80px);
+      max-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+    }
+    .m-lattice-scene .m-stage {
+      width: 100%;
+      max-width: min(92vw, 70vh);
+      aspect-ratio: 1 / 1;
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(245,201,122,0.12), transparent 70%),
+        var(--cream);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 16px 16px 14px;
+      box-shadow: 0 30px 60px -30px rgba(168,109,26,0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .m-lattice-scene .m-stage svg {
+      width: 100%;
+      height: auto;
+      flex: 1;
+      max-height: 100%;
+    }
+    .m-lattice-scene .m-stage-caption {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 12px;
+      color: var(--ink-mute);
+      text-align: center;
+      min-height: 32px;
+      transition: opacity 0.4s ease;
+    }
+    .m-lattice-scene .m-stage-caption strong {
+      font-style: normal;
+      color: var(--accent-deep);
+      font-weight: 600;
+    }
+    /* Hide the original side-panel lattice when mobile is active */
+    .scroll-scene .visual-col { display: none; }
+  }
+
   /* responsive */
   @media (max-width: 760px) {
     nav.top { padding: 16px 20px; }
@@ -649,6 +696,34 @@
       <p>Now break the lattice. Remove a site from the edge. In any ordinary system, this would be a defect — a place where light scatters, gets stuck, leaks away.</p>
 
       <p>In a topological system, <strong>the edge mode just reroutes</strong>. It finds a new boundary, traces around the gap, and continues its one-way journey. The topology of the band structure forbids backscattering — the chip can be sloppy, and the physics still works.</p>
+
+<!-- ============================================================
+     MOBILE-ONLY scroll-driven lattice scene
+     Lives between punchline and compelling. Hidden on desktop.
+     ============================================================ -->
+<section class="m-lattice-scene" id="mLatticeScene">
+  <div class="m-pin">
+    <div class="m-stage">
+      <svg id="mLatticeSvg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="mPhotonGlow">
+            <stop offset="0%" stop-color="#1c1814" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#1c1814" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <g id="mCouplings" stroke="#a86d1a" stroke-width="1.5" stroke-linecap="round"></g>
+        <g id="mSites"></g>
+        <!-- photon trail — drawn below the photon, on top of the lattice -->
+        <path id="mPhotonTrail" fill="none" stroke="#1c1814" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" opacity="0"
+              pathLength="1"/>
+        <circle id="mPhotonHalo" r="12" fill="url(#mPhotonGlow)" opacity="0"/>
+        <circle id="mPhotonCore" r="4.5" fill="#1c1814" opacity="0"/>
+      </svg>
+      <div class="m-stage-caption" id="mStageCaption">A <strong>photonic lattice</strong> — coupled ring resonators in a 2D grid.</div>
+    </div>
+  </div>
+</section>
 
       <h2>Why I find this <em>compelling</em></h2>
       <p>The promise of topological photonics is that the geometry of a chip can do work that previously required exquisite fabrication tolerances. If a device works because of its <em>shape</em> rather than the perfection of its parts, then we can build photonic systems at scale — and that's the door this field opens.</p>
@@ -1863,8 +1938,6 @@
   // ===== scroll listener =====
   let ticking = false;
   function onScroll() {
-    // On mobile, autoplay drives the beats — don't let scroll override them.
-    if (window.matchMedia('(max-width: 1000px)').matches) return;
     if (!ticking) {
       requestAnimationFrame(() => {
         applyBeat(getCurrentBeat());
@@ -1879,38 +1952,293 @@
   // ===== INITIAL STATE =====
   // Force beat 0 visible from the very first paint, regardless of scroll position.
   // ============== MOBILE AUTOPLAY ==============
-  // On mobile, scroll-locked beats don't work well (visual scrolls out of view
-  // before the relevant beat fires). Instead, we detect when the scene enters
-  // the viewport and play the beats on a timer.
+  // On mobile, scroll-locked beats don't work. Instead we loop the beats on a timer
+  // while the scene is in the viewport, and pause when it leaves.
   const IS_MOBILE = window.matchMedia('(max-width: 1000px)').matches;
-  let mobileAutoplayActive = false;
-  let mobileAutoplayDone = false;
   
-  if (IS_MOBILE) {
-    const scene = document.querySelector('.scroll-scene');
-    if (scene) {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && !mobileAutoplayActive && !mobileAutoplayDone) {
-            mobileAutoplayActive = true;
-            // Play beats: 0 immediately, 1 after 3.5s, 2 after 8s
-            applyBeat(0);
-            setTimeout(() => applyBeat(1), 3500);
-            setTimeout(() => {
-              applyBeat(2);
-              mobileAutoplayDone = true;
-              mobileAutoplayActive = false;
-            }, 8000);
-          }
-        });
-      }, { threshold: 0.25 });   // start when 25% of scene is in view
-      observer.observe(scene);
-    }
-  } else {
-    // Desktop: use the original scroll-driven logic
-    applyBeat(getCurrentBeat());
-  }
+  // On both desktop and mobile, apply initial beat from scroll position.
+  // (Mobile uses the standalone .m-lattice-scene below, which has its own scroll logic.)
+  applyBeat(getCurrentBeat());
 })();
 </script>
+
+<script>
+// ============================================================
+// MOBILE-ONLY scroll-driven lattice animation
+// Progress (0..1) is computed from scroll position through .m-lattice-scene.
+// The same progress drives photon position + site removal + path reroute.
+// On desktop, this script does nothing (the original visual-col handles it).
+// ============================================================
+(function() {
+  const NS = 'http://www.w3.org/2000/svg';
+  const scene = document.getElementById('mLatticeScene');
+  if (!scene) return;
+  
+  const sitesG = document.getElementById('mSites');
+  const couplingsG = document.getElementById('mCouplings');
+  const photonHalo = document.getElementById('mPhotonHalo');
+  const photonCore = document.getElementById('mPhotonCore');
+  const captionEl = document.getElementById('mStageCaption');
+  
+  // ===== build lattice =====
+  const NX = 6, NY = 6;
+  const padX = 80, padY = 80;
+  const dx = (400 - 2 * padX) / (NX - 1);
+  const dy = (400 - 2 * padY) / (NY - 1);
+  const removedI = 3, removedJ = 0;
+  
+  // Build couplings (lines between adjacent sites)
+  const couplingElements = [];
+  for (let i = 0; i < NX; i++) {
+    for (let j = 0; j < NY; j++) {
+      const cx = padX + i * dx;
+      const cy = padY + j * dy;
+      // horizontal neighbor
+      if (i < NX - 1) {
+        const ln = document.createElementNS(NS, 'line');
+        ln.setAttribute('x1', cx + 9); ln.setAttribute('y1', cy);
+        ln.setAttribute('x2', cx + dx - 9); ln.setAttribute('y2', cy);
+        couplingsG.appendChild(ln);
+        const touchesRemoved = (i === removedI && j === removedJ) ||
+                               (i + 1 === removedI && j === removedJ);
+        couplingElements.push({ el: ln, touchesRemoved });
+      }
+      // vertical neighbor
+      if (j < NY - 1) {
+        const ln = document.createElementNS(NS, 'line');
+        ln.setAttribute('x1', cx); ln.setAttribute('y1', cy + 9);
+        ln.setAttribute('x2', cx); ln.setAttribute('y2', cy + dy - 9);
+        couplingsG.appendChild(ln);
+        const touchesRemoved = (i === removedI && j === removedJ) ||
+                               (i === removedI && j + 1 === removedJ);
+        couplingElements.push({ el: ln, touchesRemoved });
+      }
+    }
+  }
+  
+  // Build sites (circles)
+  const sites = [];
+  for (let i = 0; i < NX; i++) {
+    for (let j = 0; j < NY; j++) {
+      const cx = padX + i * dx;
+      const cy = padY + j * dy;
+      const isEdge = (i === 0 || i === NX-1 || j === 0 || j === NY-1);
+      const isRemoved = (i === removedI && j === removedJ);
+      const ring = document.createElementNS(NS, 'circle');
+      ring.setAttribute('cx', cx);
+      ring.setAttribute('cy', cy);
+      ring.setAttribute('r', 8);
+      ring.setAttribute('fill', '#fffaf0');
+      ring.setAttribute('stroke', isEdge ? '#a86d1a' : '#7a6a55');
+      ring.setAttribute('stroke-width', isEdge ? 1.5 : 1);
+      sitesG.appendChild(ring);
+      sites.push({ i, j, cx, cy, isEdge, isRemoved, element: ring });
+    }
+  }
+  
+  // ===== build the two paths =====
+  // Intact perimeter: clockwise starting at (padX, padY)
+  const intactPoints = [];
+  for (let i = 0; i < NX; i++) intactPoints.push([padX + i*dx, padY]);
+  for (let j = 1; j < NY; j++) intactPoints.push([padX + (NX-1)*dx, padY + j*dy]);
+  for (let i = NX-2; i >= 0; i--) intactPoints.push([padX + i*dx, padY + (NY-1)*dy]);
+  for (let j = NY-2; j > 0; j--) intactPoints.push([padX, padY + j*dy]);
+  
+  // Rerouted path: same but detour around (3,0) via (2,1)->(4,1)
+  const reroutePoints = [];
+  for (let i = 0; i < NX; i++) {
+    if (i === removedI) {
+      reroutePoints.push([padX + (i-1)*dx, padY + dy]);
+      reroutePoints.push([padX + (i+1)*dx, padY + dy]);
+      continue;
+    }
+    reroutePoints.push([padX + i*dx, padY]);
+  }
+  for (let j = 1; j < NY; j++) reroutePoints.push([padX + (NX-1)*dx, padY + j*dy]);
+  for (let i = NX-2; i >= 0; i--) reroutePoints.push([padX + i*dx, padY + (NY-1)*dy]);
+  for (let j = NY-2; j > 0; j--) reroutePoints.push([padX, padY + j*dy]);
+  
+  // Helper: get position at fractional progress along a polygon path
+  function posAlongPath(points, frac) {
+    frac = ((frac % 1) + 1) % 1;  // wrap into [0,1]
+    // build cumulative lengths
+    let totalLen = 0;
+    const segLens = [];
+    for (let k = 0; k < points.length; k++) {
+      const a = points[k];
+      const b = points[(k + 1) % points.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      segLens.push(len);
+      totalLen += len;
+    }
+    let target = frac * totalLen;
+    for (let k = 0; k < points.length; k++) {
+      if (target <= segLens[k]) {
+        const a = points[k];
+        const b = points[(k + 1) % points.length];
+        const t = segLens[k] === 0 ? 0 : target / segLens[k];
+        return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+      }
+      target -= segLens[k];
+    }
+    return points[0];
+  }
+  
+  function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+  
+  const captions = {
+    intact: 'A <strong>photonic lattice</strong> — coupled ring resonators in a 2D grid.',
+    circulate: 'Inject light at the edge — a <strong>chiral mode</strong> emerges.',
+    removing: '<strong>Remove a site.</strong> What happens?',
+    rerouted: 'The edge mode finds a <strong>new path</strong>. Topology forbids backscattering.'
+  };
+  let lastCaption = '';
+  function setCaption(htmlText) {
+    if (htmlText === lastCaption) return;
+    lastCaption = htmlText;
+    captionEl.style.opacity = 0;
+    setTimeout(() => {
+      captionEl.innerHTML = htmlText;
+      captionEl.style.opacity = 1;
+    }, 200);
+  }
+  
+  // Cache the path d-strings for the trail
+  const intactPathD = 'M ' + intactPoints.map(p => p.join(',')).join(' L ') + ' Z';
+  const reroutePathD = 'M ' + reroutePoints.map(p => p.join(',')).join(' L ') + ' Z';
+  const photonTrail = document.getElementById('mPhotonTrail');
+  
+  // Set up trail length tracking. Using actual path lengths (in user units)
+  // not normalized, so we can do dasharray properly.
+  photonTrail.setAttribute('d', intactPathD);
+  let intactTrailLength = photonTrail.getTotalLength();
+  photonTrail.setAttribute('d', reroutePathD);
+  let reroutedTrailLength = photonTrail.getTotalLength();
+  photonTrail.setAttribute('d', intactPathD);
+  let currentTrailPath = 'intact';
+  
+  function setTrailPath(which) {
+    if (which === currentTrailPath) return;
+    currentTrailPath = which;
+    photonTrail.setAttribute('d', which === 'intact' ? intactPathD : reroutePathD);
+  }
+  
+  function setTrail(lapFrac, totalLength, opacity) {
+    // Draw "lapFrac" portion of the path starting from index 0.
+    // stroke-dasharray: [visible, hidden]. Visible = lapFrac * totalLength.
+    const visible = lapFrac * totalLength;
+    const hidden = totalLength;
+    photonTrail.setAttribute('stroke-dasharray', `${visible} ${hidden}`);
+    photonTrail.setAttribute('opacity', opacity);
+  }
+  
+  function update() {
+    const rect = scene.getBoundingClientRect();
+    const total = rect.height - window.innerHeight;
+    const progress = clamp01(-rect.top / total);
+    
+    // ============= PHASE LOGIC =============
+    // 0.00 - 0.05: photon hidden (intro, lattice settling)
+    // 0.05 - 0.45: photon circulates intact perimeter (one full lap)
+    // 0.45 - 0.55: site fades out, couplings disconnect, trail clears
+    // 0.55 - 1.00: photon circulates rerouted perimeter (one full lap)
+    
+    let photonOpacity = 0;
+    let photonPos = null;
+    let removedSiteOpacity = 1;
+    let touchingCouplingOpacity = 1;
+    let trailFrac = 0;
+    let trailOpacity = 0;
+    let trailWhich = 'intact';
+    
+    if (progress < 0.05) {
+      // intro
+      setCaption(captions.intact);
+      photonOpacity = 0;
+      trailOpacity = 0;
+    }
+    else if (progress < 0.45) {
+      // circulate intact + trail builds up behind photon
+      setCaption(captions.circulate);
+      const lapFrac = (progress - 0.05) / 0.40;
+      photonPos = posAlongPath(intactPoints, lapFrac);
+      photonOpacity = 1;
+      trailWhich = 'intact';
+      trailFrac = lapFrac;
+      trailOpacity = 0.7;
+    }
+    else if (progress < 0.55) {
+      // site removal phase — trail fades out alongside the site
+      setCaption(captions.removing);
+      const t = (progress - 0.45) / 0.10;
+      removedSiteOpacity = 1 - t;
+      touchingCouplingOpacity = 1 - t;
+      photonPos = posAlongPath(reroutePoints, 0);
+      photonOpacity = 1;
+      // Trail from the intact lap fades out as site is removed
+      trailWhich = 'intact';
+      trailFrac = 1;
+      trailOpacity = 0.7 * (1 - t);
+    }
+    else {
+      // circulate rerouted, fresh trail
+      setCaption(captions.rerouted);
+      removedSiteOpacity = 0;
+      touchingCouplingOpacity = 0;
+      const lapFrac = (progress - 0.55) / 0.45;
+      photonPos = posAlongPath(reroutePoints, lapFrac);
+      photonOpacity = 1;
+      trailWhich = 'rerouted';
+      trailFrac = lapFrac;
+      trailOpacity = 0.7;
+    }
+    
+    // Apply trail
+    setTrailPath(trailWhich);
+    const totalLen = trailWhich === 'intact' ? intactTrailLength : reroutedTrailLength;
+    setTrail(trailFrac, totalLen, trailOpacity);
+    
+    // Apply site removal
+    sites.forEach(s => {
+      if (s.isRemoved) {
+        s.element.setAttribute('opacity', removedSiteOpacity);
+      }
+    });
+    couplingElements.forEach(c => {
+      if (c.touchesRemoved) {
+        c.el.setAttribute('opacity', touchingCouplingOpacity);
+      }
+    });
+    
+    // Apply photon
+    if (photonPos) {
+      photonHalo.setAttribute('cx', photonPos[0]);
+      photonHalo.setAttribute('cy', photonPos[1]);
+      photonHalo.setAttribute('opacity', photonOpacity * 0.8);
+      photonCore.setAttribute('cx', photonPos[0]);
+      photonCore.setAttribute('cy', photonPos[1]);
+      photonCore.setAttribute('opacity', photonOpacity);
+    } else {
+      photonHalo.setAttribute('opacity', 0);
+      photonCore.setAttribute('opacity', 0);
+    }
+  }
+  
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();   // initial paint
+})();
+</script>
+
 </body>
 </html>
