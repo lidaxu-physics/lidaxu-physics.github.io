@@ -1198,29 +1198,9 @@
     .hero-figure { max-width: 480px; margin: 0 auto; }
   }
   @media (max-width: 760px) {
-    /* NAV — collapse to logo + lang toggle only on mobile (links are too many) */
-    nav.top { padding: 14px 18px; }
-    nav.top .links { display: none; }                   /* hide all links on phones */
-    nav.top .lang-toggle {
-      display: inline-flex;
-      margin-left: 0;
-      padding-left: 0;
-      border-left: none;
-    }
-    nav.top .logo { font-size: 17px; }
-    body { overflow-x: hidden; }                         /* prevent horizontal scroll */
-    
-    /* HERO — bigger photo on mobile, generous caption space */
-    .hero { padding: 100px 20px 50px; gap: 32px; }
-    .hero-figure { max-width: 100%; margin: 0 auto; }
-    .photo-toggle { max-width: 380px; width: 100%; }
-    .hero-figure .caption { min-height: 84px; padding: 0 8px; }
-    .hero-figure .cap-text { position: relative; min-height: 84px; }
-    .hero-figure .year-tag { font-size: 10.5px; margin-bottom: 10px; }
-    .toggle-pills { gap: 6px; margin-top: 16px; flex-wrap: wrap; }
-    .pill-btn { font-size: 12px; padding: 6px 12px; }
-    
-    /* SECTION padding */
+    nav.top { padding: 16px 20px; }
+    nav.top .links { gap: 14px; }
+    nav.top .links a { font-size: 13px; }
     section.standard { padding: 70px 24px; }
     #beyond { padding: 60px 24px; margin: 40px 16px; }
     #about .about-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -1230,9 +1210,6 @@
     .beyond-grid { grid-template-columns: 1fr; }
     .patents-grid { grid-template-columns: 1fr; }
     .award-item { grid-template-columns: 60px 1fr auto; gap: 14px; }
-    
-    /* SVG max scale on mobile */
-    svg { max-width: 100%; height: auto; }
   }
 </style>
 </head>

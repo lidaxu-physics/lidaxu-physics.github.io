@@ -427,6 +427,32 @@
     }
     .lattice-stage { max-width: 380px; }
   }
+  @media (max-width: 760px) {
+    body { overflow-x: hidden; }
+    nav.top { padding: 14px 18px; }
+    nav.top .lang-toggle {
+      margin-left: 0;
+      padding-left: 0;
+      border-left: none;
+    }
+    /* CRITICAL: on phones, let the stage take its natural aspect-ratio height
+       so the OSA frame and mini-comb at the bottom are not clipped. */
+    .lattice-stage {
+      max-width: 100%;
+      width: 100%;
+      padding: 16px;
+      display: block;          /* drop flex so SVG isn't height-constrained */
+    }
+    .lattice-stage svg {
+      width: 100%;
+      height: auto;            /* natural height from viewBox */
+      flex: none;
+    }
+    .lattice-stage .stage-caption {
+      margin-top: 12px;
+      font-size: 12px;
+    }
+  }
 
 
   /* smooth fades for nonlinear stage elements */
