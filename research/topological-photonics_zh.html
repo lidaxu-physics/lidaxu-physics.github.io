@@ -447,17 +447,42 @@
   @media (max-width: 1000px) {
     .scroll-scene {
       grid-template-columns: 1fr;
-      gap: 30px;
+      gap: 24px;
       padding: 0 24px 40px;
     }
     .scroll-scene .visual-col {
-      position: relative;
-      top: auto;
+      /* keep sticky on mobile so the lattice stays in view while text scrolls past */
+      position: sticky;
+      top: 70px;
       height: auto;
       max-height: none;
       order: -1;
+      align-self: start;        /* required for sticky inside grid */
+      z-index: 2;
+      background: var(--warm-bg);  /* hide content scrolling behind */
     }
-    .lattice-stage { max-width: 380px; }
+    .lattice-stage {
+      max-width: 100%;
+      max-height: 56vh;          /* cap height so text below is reachable */
+      aspect-ratio: 1 / 1;
+      width: min(100%, 56vh);    /* keep square; never wider than viewport */
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .lattice-stage svg { flex: none; height: auto; max-height: 100%; }
+    .lattice-stage .stage-caption { font-size: 12px; }
+  }
+  
+  @media (max-width: 760px) {
+    body { overflow-x: hidden; }
+    nav.top { padding: 14px 18px; }
+    nav.top .lang-toggle {
+      margin-left: 0;
+      padding-left: 0;
+      border-left: none;
+    }
+    /* Hide progress dots on phones - too cramped */
+    .scene-progress { display: none; }
   }
 
 
@@ -613,17 +638,17 @@
   <div class="text-col">
 
     <div data-beat="0">
-      <p>把这些概念<strong>引入光子学</strong>,我们设计的光学结构会让能带继承同样的拓扑不变量。在合适的极限下,我们用光搭起来的晶格,就是蝴蝶图所对应的那个晶格。</p>
+      <p>把这些概念<strong>翻译进光子学</strong>,我们设计的光学结构会让能带继承同样的拓扑不变量。在合适的极限下,我们用光搭起来的晶格,就是蝴蝶图所对应的那个晶格。</p>
     </div>
 
     <div data-beat="1">
-      <p class="pullquote">最具代表性的标志是手性边缘模式 —— 光只沿一个方向沿边界传播,从不向后散射地携带信息。传播损耗大大降低。</p>
+      <p class="pullquote">最具代表性的标志是手性边缘模式 —— 光只沿一个方向沿边界传播,从不向后散射地携带信息。</p>
 
       <p>把一个光子注入拓扑光子晶格的边缘。无论从哪儿放入,它都只沿着边界、朝一个方向运动。体内一片漆黑;所有的活,都由边缘完成。</p>
     </div>
 
     <div data-beat="2">
-      <h2><em>关键 </em>所在</h2>
+      <h2><em>关键</em>所在</h2>
 
       <p>现在把晶格弄坏一点。从边缘上拿掉一个位点。在普通系统里,这是一个缺陷 —— 一个让光散射、被困、漏走的地方。</p>
 
@@ -677,7 +702,7 @@
 </section>
 
 <section class="related-work">
-  <h2>相关<em>论文</em></h2>
+  <h2>相关<em>论文。</em></h2>
   <div class="related-list">
     <article class="related-item">
       <div class="year">2024</div>
@@ -1465,7 +1490,7 @@
     settled:    '自相似的结构。物理学家第一次在能谱里看见<strong>拓扑</strong>。',
     morphing:   '霍夫施塔特把它叫蝴蝶,只因为它<em>看起来</em>就是。',
     flapping:   '那就给它一对翅膀吧。',
-    flying:     '现在,把这个概念引入<strong>光子学</strong>……'
+    flying:     '现在,把它翻译进<strong>光子学</strong>……'
   };
   let lastCap = '';
   function setCaption(key) {

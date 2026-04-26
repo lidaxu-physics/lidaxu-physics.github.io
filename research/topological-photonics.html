@@ -447,17 +447,42 @@
   @media (max-width: 1000px) {
     .scroll-scene {
       grid-template-columns: 1fr;
-      gap: 30px;
+      gap: 24px;
       padding: 0 24px 40px;
     }
     .scroll-scene .visual-col {
-      position: relative;
-      top: auto;
+      /* keep sticky on mobile so the lattice stays in view while text scrolls past */
+      position: sticky;
+      top: 70px;
       height: auto;
       max-height: none;
       order: -1;
+      align-self: start;        /* required for sticky inside grid */
+      z-index: 2;
+      background: var(--warm-bg);  /* hide content scrolling behind */
     }
-    .lattice-stage { max-width: 380px; }
+    .lattice-stage {
+      max-width: 100%;
+      max-height: 56vh;          /* cap height so text below is reachable */
+      aspect-ratio: 1 / 1;
+      width: min(100%, 56vh);    /* keep square; never wider than viewport */
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .lattice-stage svg { flex: none; height: auto; max-height: 100%; }
+    .lattice-stage .stage-caption { font-size: 12px; }
+  }
+  
+  @media (max-width: 760px) {
+    body { overflow-x: hidden; }
+    nav.top { padding: 14px 18px; }
+    nav.top .lang-toggle {
+      margin-left: 0;
+      padding-left: 0;
+      border-left: none;
+    }
+    /* Hide progress dots on phones - too cramped */
+    .scene-progress { display: none; }
   }
 
 
