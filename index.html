@@ -8,10 +8,10 @@
   
   Sections in order:
     [SECTION: HERO]          Greeting, name, photo toggle, hero CTAs
+    [SECTION: PUBLICATIONS]  Featured papers + "see full list" CTA
     [SECTION: ABOUT]         "A little about me" — basics + prose
     [SECTION: EXPERIENCE]    Education timeline (PhD, gap, BS, HS)
     [SECTION: RESEARCH]      Three research direction cards
-    [SECTION: PUBLICATIONS]  Featured papers + "see full list" CTA
     [SECTION: PATENTS]       Patents grid
     [SECTION: TALKS]         Talks cards (CLEO, PQE, etc.)
     [SECTION: AWARDS]        Awards & honors
@@ -1221,10 +1221,10 @@
     <span>Lida Xu</span>
   </a>
   <div class="links">
+    <a href="#work">Publications</a>
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
     <a href="#research">Research</a>
-    <a href="#work">Publications</a>
     <a href="#patents">Patents</a>
     <a href="#talks">Talks</a>
     <a href="#awards">Awards</a>
@@ -1292,6 +1292,89 @@
 </section>
 
 <!-- ABOUT -->
+<!-- ============================================================
+     [SECTION: PUBLICATIONS]
+     Selected publications — three featured paper cards + see-full link
+     ============================================================ -->
+<section class="standard" id="work">
+  <div class="eyebrow">Publications</div>
+  <h2 class="section-title">Selected <em>papers.</em></h2>
+  <p class="section-intro">
+    Three papers that mark where I've spent the most time. The full list — preprints, in-prep work, and media coverage — lives on the publications page.
+  </p>
+
+  <div class="card-grid">
+
+    <a class="img-card" href="https://www.science.org/doi/abs/10.1126/science.adu6368" target="_blank">
+      <div class="image-wrap">
+        <img src="images/science2025_nestedfpm.png"
+             alt="Multi-timescale frequency-phase matching"
+             loading="lazy"/>
+              </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">Science</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">Nov 2025</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--ink-mute); font-size:13px;">Co-first author</span>
+        </div>
+        <h3>Multi-timescale frequency-phase matching for high-yield <em>nonlinear photonics</em></h3>
+        <p>Helping nonlinear photonic chips work the same way twice — a step toward wafer-scale reliability.</p>
+        <span class="read-more">Read the paper <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+    <a class="img-card" href="https://www.science.org/doi/full/10.1126/sciadv.adw7696" target="_blank">
+      <div class="image-wrap">
+        <img src="images/sciadv2025_modelocking.png"
+             alt="Science Advances cover, September 2025"
+             loading="lazy"/>
+              </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">Science Advances</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">Jun 2025</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--ink-mute); font-size:13px;">First author</span>
+        </div>
+        <h3>On-chip multi-timescale spatiotemporal <em>optical synchronization</em></h3>
+        <p>Two frequency combs locking together across wildly different timescales (1 THz and 4 GHz) on the same topological chip.</p>
+        <span class="read-more">Read the paper <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+    <a class="img-card" href="https://www.science.org/doi/full/10.1126/science.ado0053" target="_blank">
+      <div class="image-wrap">
+        <img src="images/science2024_observation.png"
+             alt="Observation of topological frequency combs"
+             loading="lazy"/>
+              </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">Science</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">Jun 2024</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--ink-mute); font-size:13px;">Co-first author</span>
+        </div>
+        <h3>Observation of <em>topological frequency combs</em></h3>
+        <p>The first experimental demo of frequency combs that inherit topological protection and nested structure from their lattice. Where a lot of my current work begins.</p>
+        <span class="read-more">Read the paper <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="see-full">
+    <a href="publications.html">
+      See the full publication list <span class="arrow">→</span>
+    </a>
+  </p>
+
+</section>
+
 <!-- ============================================================
      [SECTION: ABOUT]
      A little about me — basics card + prose
@@ -1453,88 +1536,7 @@
 </section>
 
 <!-- ============= FEATURED WORK — image cards ============= -->
-<!-- ============================================================
-     [SECTION: PUBLICATIONS]
-     Selected publications — three featured paper cards + see-full link
-     ============================================================ -->
-<section class="standard" id="work">
-  <div class="eyebrow">Selected publications</div>
-  <h2 class="section-title">A few things I'm <em>proud of.</em></h2>
-  <p class="section-intro">
-    The greatest hits from my PhD so far. Each was a team effort, and I had the privilege of leading or co-leading the work.
-  </p>
 
-  <div class="card-grid">
-
-    <a class="img-card" href="https://www.science.org/doi/abs/10.1126/science.adu6368" target="_blank">
-      <div class="image-wrap">
-        <img src="images/science2025_nestedfpm.png"
-             alt="Multi-timescale frequency-phase matching"
-             loading="lazy"/>
-              </div>
-      <div class="body">
-        <div class="meta-row">
-          <span class="venue">Science</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span class="date">Nov 2025</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">Co-first author</span>
-        </div>
-        <h3>Multi-timescale frequency-phase matching for high-yield <em>nonlinear photonics</em></h3>
-        <p>Helping nonlinear photonic chips work definitely — a step toward wafer-scale reliability.</p>
-        <span class="read-more">Read the paper <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="img-card" href="https://www.science.org/doi/full/10.1126/sciadv.adw7696" target="_blank">
-      <div class="image-wrap">
-        <img src="images/sciadv2025_modelocking.png"
-             alt="Science Advances cover, September 2025"
-             loading="lazy"/>
-              </div>
-      <div class="body">
-        <div class="meta-row">
-          <span class="venue">Science Advances</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span class="date">Jun 2025</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">First author</span>
-        </div>
-        <h3>On-chip multi-timescale spatiotemporal <em>optical synchronization</em></h3>
-        <p>Two frequency combs locking together across wildly different timescales (1 THz and 4 GHz) on the same topological chip.</p>
-        <span class="read-more">Read the paper <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="img-card" href="https://www.science.org/doi/full/10.1126/science.ado0053" target="_blank">
-      <div class="image-wrap">
-        <img src="images/science2024_observation.png"
-             alt="Observation of topological frequency combs"
-             loading="lazy"/>
-              </div>
-      <div class="body">
-        <div class="meta-row">
-          <span class="venue">Science</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span class="date">Jun 2024</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">Co-first author</span>
-        </div>
-        <h3>Observation of <em>topological frequency combs</em></h3>
-        <p>The first experimental demo of frequency combs that inherit topological protection and nested structure from their lattice. Where a lot of my current work begins.</p>
-        <span class="read-more">Read the paper <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-  </div>
-
-  <p class="see-full">
-    <a href="publications.html">
-      See the full publication list <span class="arrow">→</span>
-    </a>
-  </p>
-
-</section>
 
 <!-- ============= PATENTS ============= -->
 <!-- ============================================================
@@ -1613,7 +1615,7 @@
           <span style="color:var(--ink-mute)">·</span>
           <span class="date">Jan 5, 2026</span>
           <span style="color:var(--ink-mute)">·</span>
-          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">Invited</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--ink-mute); font-size:13px;">Invited</span>
         </div>
         <h3>Integrated nonlinear topological <em>photonics</em></h3>
         <p>Recent works on integrated nonlinear topological photonics.</p>

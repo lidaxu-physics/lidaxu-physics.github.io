@@ -8,10 +8,10 @@
   
   Sections in order:
     [SECTION: HERO]          Greeting, name, photo toggle, hero CTAs
+    [SECTION: PUBLICATIONS]  Featured papers + "see full list" CTA
     [SECTION: ABOUT]         "A little about me" — basics + prose
     [SECTION: EXPERIENCE]    Education timeline (PhD, gap, BS, HS)
     [SECTION: RESEARCH]      Three research direction cards
-    [SECTION: PUBLICATIONS]  Featured papers + "see full list" CTA
     [SECTION: PATENTS]       Patents grid
     [SECTION: TALKS]         Talks cards (CLEO, PQE, etc.)
     [SECTION: AWARDS]        Awards & honors
@@ -1221,10 +1221,10 @@
     <span>徐李达</span>
   </a>
   <div class="links">
+    <a href="#work">论文</a>
     <a href="#about">关于</a>
     <a href="#experience">经历</a>
     <a href="#research">研究</a>
-    <a href="#work">论文</a>
     <a href="#patents">专利</a>
     <a href="#talks">报告</a>
     <a href="#awards">荣誉</a>
@@ -1291,6 +1291,89 @@
 </section>
 
 <!-- ABOUT -->
+<!-- ============================================================
+     [SECTION: PUBLICATIONS]
+     Selected publications — three featured paper cards + see-full link
+     ============================================================ -->
+<section class="standard" id="work">
+  <div class="eyebrow">论文</div>
+  <h2 class="section-title"><em>代表性</em> 论文</h2>
+  <p class="section-intro">
+    我花时间最多的三篇论文。完整列表—— 包括预印本、撰写中的稿件、和媒体报道—— 见论文页面。
+  </p>
+
+  <div class="card-grid">
+
+    <a class="img-card" href="https://www.science.org/doi/abs/10.1126/science.adu6368" target="_blank">
+      <div class="image-wrap">
+        <img src="images/science2025_nestedfpm.png"
+             alt="Multi-timescale frequency-phase matching"
+             loading="lazy"/>
+              </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">Science</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">2025 年 11 月</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--ink-mute); font-size:13px;">共同一作</span>
+        </div>
+        <h3>多时间尺度的频率-相位匹配,实现高良率<em>非线性光子学</em></h3>
+        <p>让非线性光子芯片每次都按同样的方式工作—— 向晶圆级可靠性迈出的一步。</p>
+        <span class="read-more">阅读论文 <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+    <a class="img-card" href="https://www.science.org/doi/full/10.1126/sciadv.adw7696" target="_blank">
+      <div class="image-wrap">
+        <img src="images/sciadv2025_modelocking.png"
+             alt="Science Advances cover, September 2025"
+             loading="lazy"/>
+              </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">Science Advances</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">2025 年 6 月</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--ink-mute); font-size:13px;">第一作者</span>
+        </div>
+        <h3>片上多时间尺度时空<em>光同步</em></h3>
+        <p>在同一个拓扑芯片上,两组频梳跨越完全不同的时间尺度(1 THz 与 4 GHz)互相锁定。</p>
+        <span class="read-more">阅读论文 <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+    <a class="img-card" href="https://www.science.org/doi/full/10.1126/science.ado0053" target="_blank">
+      <div class="image-wrap">
+        <img src="images/science2024_observation.png"
+             alt="Observation of topological frequency combs"
+             loading="lazy"/>
+              </div>
+      <div class="body">
+        <div class="meta-row">
+          <span class="venue">Science</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span class="date">2024 年 6 月</span>
+          <span style="color:var(--ink-mute)">·</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--ink-mute); font-size:13px;">共同一作</span>
+        </div>
+        <h3>拓扑<em>频率梳</em>的观测</h3>
+        <p>首次实验演示了从晶格中继承拓扑保护的频率梳。很多研究都从这里出发。</p>
+        <span class="read-more">阅读论文 <span class="arrow">→</span></span>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="see-full">
+    <a href="publications_zh.html">
+      完整论文列表 <span class="arrow">→</span>
+    </a>
+  </p>
+
+</section>
+
 <!-- ============================================================
      [SECTION: ABOUT]
      A little about me — basics card + prose
@@ -1452,88 +1535,7 @@
 </section>
 
 <!-- ============= FEATURED WORK — image cards ============= -->
-<!-- ============================================================
-     [SECTION: PUBLICATIONS]
-     Selected publications — three featured paper cards + see-full link
-     ============================================================ -->
-<section class="standard" id="work">
-  <div class="eyebrow">代表论文</div>
-  <h2 class="section-title">几篇<em>引以为傲</em> 的工作</h2>
-  <p class="section-intro">
-    博士期间到目前为止的几篇代表作。每一篇都是团队协作的成果,我有幸主持或共同主持了其中的工作。
-  </p>
 
-  <div class="card-grid">
-
-    <a class="img-card" href="https://www.science.org/doi/abs/10.1126/science.adu6368" target="_blank">
-      <div class="image-wrap">
-        <img src="images/science2025_nestedfpm.png"
-             alt="Multi-timescale frequency-phase matching"
-             loading="lazy"/>
-              </div>
-      <div class="body">
-        <div class="meta-row">
-          <span class="venue">Science</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span class="date">2025 年 11 月</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">共同一作</span>
-        </div>
-        <h3>多时间尺度的频率-相位匹配,实现高良率<em>非线性光子学</em></h3>
-        <p>让非线性光子芯片每次都按同样的方式工作—— 向晶圆级可靠性迈出的一步。</p>
-        <span class="read-more">阅读论文 <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="img-card" href="https://www.science.org/doi/full/10.1126/sciadv.adw7696" target="_blank">
-      <div class="image-wrap">
-        <img src="images/sciadv2025_modelocking.png"
-             alt="Science Advances cover, September 2025"
-             loading="lazy"/>
-              </div>
-      <div class="body">
-        <div class="meta-row">
-          <span class="venue">Science Advances</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span class="date">2025 年 6 月</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">第一作者</span>
-        </div>
-        <h3>片上多时间尺度时空<em>光同步</em></h3>
-        <p>在同一个拓扑芯片上,两组频梳跨越完全不同的时间尺度(1 THz 与 4 GHz)互相锁定。</p>
-        <span class="read-more">阅读论文 <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="img-card" href="https://www.science.org/doi/full/10.1126/science.ado0053" target="_blank">
-      <div class="image-wrap">
-        <img src="images/science2024_observation.png"
-             alt="Observation of topological frequency combs"
-             loading="lazy"/>
-              </div>
-      <div class="body">
-        <div class="meta-row">
-          <span class="venue">Science</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span class="date">2024 年 6 月</span>
-          <span style="color:var(--ink-mute)">·</span>
-          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">共同一作</span>
-        </div>
-        <h3>拓扑<em>频率梳</em>的观测</h3>
-        <p>首次实验演示了从晶格中继承拓扑保护的频率梳。很多研究都从这里出发。</p>
-        <span class="read-more">阅读论文 <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-  </div>
-
-  <p class="see-full">
-    <a href="publications_zh.html">
-      完整论文列表 <span class="arrow">→</span>
-    </a>
-  </p>
-
-</section>
 
 <!-- ============= PATENTS ============= -->
 <!-- ============================================================
@@ -1612,7 +1614,7 @@
           <span style="color:var(--ink-mute)">·</span>
           <span class="date">2026 年 1 月 5 日</span>
           <span style="color:var(--ink-mute)">·</span>
-          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--gold-deep); font-size:13px;">受邀</span>
+          <span style="font-family:'Fraunces',serif; font-style:italic; color:var(--ink-mute); font-size:13px;">受邀</span>
         </div>
         <h3>集成非线性拓扑<em>光子学</em></h3>
         <p>近期在集成非线性拓扑光子学方向的工作。</p>
