@@ -711,6 +711,22 @@
     color: var(--ink-mute);
     margin-top: 4px;
   }
+  .award-item .org .cert-link {
+    color: var(--gold-deep);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color .25s ease;
+    margin-left: 8px;
+  }
+  .award-item .org .cert-link:hover {
+    border-bottom-color: var(--gold-deep);
+  }
+  .award-item .org .cert-link .arrow {
+    display: inline-block;
+    transition: transform .25s ease;
+    margin-left: 2px;
+  }
+  .award-item .org .cert-link:hover .arrow { transform: translate(2px, -2px); }
   .award-item .icon {
     font-size: 22px;
     color: var(--gold);
@@ -1769,7 +1785,7 @@
       <div class="year">2026</div>
       <div>
         <div class="name">NSF I-Corps™ Teams Award · <em>Entrepreneurial Lead</em></div>
-        <div class="org">National Science Foundation</div>
+        <div class="org">National Science Foundation · <a class="cert-link" href="certificate/Lida%20Xu_I-Corp.pdf" target="_blank" rel="noopener">View certificate<span class="arrow">↗</span></a></div>
       </div>
       <div class="icon">🏆</div>
     </div>
