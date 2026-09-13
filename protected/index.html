@@ -711,22 +711,6 @@
     color: var(--ink-mute);
     margin-top: 4px;
   }
-  .award-item .org .cert-link {
-    color: var(--gold-deep);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color .25s ease;
-    margin-left: 8px;
-  }
-  .award-item .org .cert-link:hover {
-    border-bottom-color: var(--gold-deep);
-  }
-  .award-item .org .cert-link .arrow {
-    display: inline-block;
-    transition: transform .25s ease;
-    margin-left: 2px;
-  }
-  .award-item .org .cert-link:hover .arrow { transform: translate(2px, -2px); }
   .award-item .icon {
     font-size: 22px;
     color: var(--gold);
@@ -1213,110 +1197,10 @@
     }
     .hero-figure { max-width: 480px; margin: 0 auto; }
   }
-  /* HAMBURGER button — hidden on desktop, visible on mobile */
-  .nav-burger {
-    display: none;
-    background: none;
-    border: 1px solid var(--line);
-    border-radius: 100px;
-    padding: 8px 12px;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    color: var(--ink);
-    transition: all .2s ease;
-  }
-  .nav-burger:hover { border-color: var(--gold); color: var(--gold-deep); }
-  .nav-burger svg { width: 18px; height: 18px; display: block; }
-  
-  /* MOBILE PANEL — fixed sheet that slides down */
-  .mobile-panel {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    background: var(--cream);
-    box-shadow: 0 8px 30px -8px rgba(28,24,20,0.25);
-    border-bottom: 1px solid var(--line);
-    z-index: 49;
-    padding: 80px 24px 32px;
-    transform: translateY(-100%);
-    transition: transform .3s ease;
-  }
-  .mobile-panel.open { transform: translateY(0); }
-  .mobile-panel a {
-    display: block;
-    padding: 14px 4px;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
-    transition: color .2s ease;
-  }
-  .mobile-panel a:hover { color: var(--gold-deep); }
-  .mobile-panel a:last-of-type { border-bottom: none; }
-  .mobile-panel .mobile-lang {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-top: 24px;
-    margin-top: 12px;
-    border-top: 1px solid var(--line);
-    justify-content: center;
-  }
-  .mobile-panel .mobile-lang a {
-    border-bottom: none;
-    padding: 6px 14px;
-    border-radius: 100px;
-    font-size: 14px;
-    color: var(--ink-mute);
-    background: transparent;
-  }
-  .mobile-panel .mobile-lang a.active {
-    color: var(--ink);
-    background: rgba(245,201,122,0.18);
-    font-weight: 600;
-  }
-  .mobile-panel .mobile-lang .mobile-lang-sep { color: var(--line); }
-  
-  /* BACKDROP behind the mobile panel */
-  .mobile-backdrop {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(28,24,20,0.4);
-    z-index: 48;
-    opacity: 0;
-    transition: opacity .3s ease;
-  }
-  .mobile-backdrop.open {
-    display: block;
-    opacity: 1;
-  }
-  
   @media (max-width: 760px) {
-    /* NAV — show hamburger, hide desktop links + lang toggle */
-    nav.top { padding: 14px 18px; }
-    nav.top .links { display: none; }
-    nav.top > .lang-toggle { display: none; }
-    nav.top .nav-burger { display: inline-flex; }
-    nav.top .logo { font-size: 17px; }
-    
-    /* mobile panel becomes available */
-    .mobile-panel { display: block; }
-    
-    body { overflow-x: hidden; }
-    body.menu-open { overflow: hidden; }
-    
-    /* HERO */
-    .hero { padding: 100px 20px 50px; gap: 32px; }
-    .hero-figure { max-width: 100%; margin: 0 auto; }
-    .photo-toggle { max-width: 380px; width: 100%; }
-    .hero-figure .caption { min-height: 84px; padding: 0 8px; }
-    .hero-figure .cap-text { position: relative; min-height: 84px; }
-    .hero-figure .year-tag { font-size: 10.5px; margin-bottom: 10px; }
-    .toggle-pills { gap: 6px; margin-top: 16px; flex-wrap: wrap; }
-    .pill-btn { font-size: 12px; padding: 6px 12px; }
-    
+    nav.top { padding: 16px 20px; }
+    nav.top .links { gap: 14px; }
+    nav.top .links a { font-size: 13px; }
     section.standard { padding: 70px 24px; }
     #beyond { padding: 60px 24px; margin: 40px 16px; }
     #about .about-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -1326,8 +1210,6 @@
     .beyond-grid { grid-template-columns: 1fr; }
     .patents-grid { grid-template-columns: 1fr; }
     .award-item { grid-template-columns: 60px 1fr auto; gap: 14px; }
-    
-    svg { max-width: 100%; height: auto; }
   }
 </style>
 </head>
@@ -1354,33 +1236,7 @@
       <a href="index_zh.html">中</a>
     </span>
   </div>
-    <button class="nav-burger" aria-label="Open menu" id="navBurger">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="4" y1="6" x2="20" y2="6"/>
-        <line x1="4" y1="12" x2="20" y2="12"/>
-        <line x1="4" y1="18" x2="20" y2="18"/>
-      </svg>
-    </button>
 </nav>
-
-<!-- Mobile menu panel + backdrop (only used at <=760px) -->
-<div class="mobile-backdrop" id="mobileBackdrop"></div>
-<aside class="mobile-panel" id="mobilePanel" aria-hidden="true">
-    <a href="#work" class="m-link">Publications</a>
-    <a href="#about" class="m-link">About</a>
-    <a href="#experience" class="m-link">Experience</a>
-    <a href="#research" class="m-link">Research</a>
-    <a href="#patents" class="m-link">Patents</a>
-    <a href="#talks" class="m-link">Talks</a>
-    <a href="#awards" class="m-link">Awards</a>
-    <a href="videos.html" class="m-link">Videos</a>
-    <a href="#contact" class="m-link">Say hi</a>
-    <div class="mobile-lang">
-      <a href="index.html" class="active">EN</a>
-      <span class="mobile-lang-sep">·</span>
-      <a href="index_zh.html">中</a>
-    </div>
-</aside>
 
 <!-- HERO -->
 <!-- ============================================================
@@ -1395,7 +1251,7 @@
       <span class="accent">curious about light.</span>
     </h1>
     <p class="lead">
-      A physics PhD candidate at the <strong>Joint Quantum Institute</strong>, UMD. I build photonic chips that bend light in unusual ways — and try to make those tricks robust enough to be actually useful. Most recently that meant coupling <strong>280 microrings</strong> into a single coherent lattice — not by making the fabrication tighter, but by designing the topology so the errors stop mattering.
+      A physics PhD candidate at the <strong>Joint Quantum Institute</strong>, UMD. I build photonic chips that bend light in unusual ways — and try to make those tricks robust enough to be actually useful.
     </p>
     <div class="meta-line">
       <span class="pill"><span class="dot"></span>Hafezi Lab · UMD</span>
@@ -1691,30 +1547,29 @@
   <div class="eyebrow">Inventions</div>
   <h2 class="section-title">Patents <em>filed.</em></h2>
   <p class="section-intro">
-    Four provisional US patents (filed 2025–2026), all with equal share among co-inventors. These come out of joint work with the Hafezi Lab and collaborators at NIST.
+    Four provisional US patents (filed 2025), all with equal share among co-inventors. These come out of joint work with the Hafezi Lab and collaborators at NIST.
   </p>
 
   <div class="patents-grid">
     <div class="patent-card">
-      <span class="pbadge">Provisional · Jan 2026 · No. 63/964,690</span>
-      <h3>TOPAI: Topological photonics architectures for optical computing and AI</h3>
-      <div class="meta"><strong>Inventors:</strong> M. J. Mehrabad, L. Xu, S. Sarkar, Z. Y. Wei, M. Hafezi</div>
-      <div class="meta">🏆 <strong>UMD Invention of the Year 2026</strong></div>
+      <span class="pbadge">Provisional · 2025</span>
+      <h3>Systems of ultrabroadband multimodal artificial gauge fields</h3>
+      <div class="meta"><strong>Inventors:</strong> L. Xu, M. J. Mehrabad, S. Sarkar, A. Padhye, M. Hafezi</div>
     </div>
     <div class="patent-card">
-      <span class="pbadge">Provisional · Dec 2025 · No. 63/944,606</span>
+      <span class="pbadge">Provisional · 2025</span>
       <h3>Nested frequency and phase matching</h3>
       <div class="meta"><strong>Inventors:</strong> M. J. Mehrabad, L. Xu, G. Moille, K. Srinivasan, M. Hafezi</div>
     </div>
     <div class="patent-card">
-      <span class="pbadge">Provisional · Aug 2025</span>
+      <span class="pbadge">Provisional · 2025</span>
       <h3>Quantum optical metamorphosis</h3>
       <div class="meta"><strong>Inventors:</strong> M. J. Mehrabad, A. Parhizkar, L. Xu, M. Hafezi</div>
     </div>
     <div class="patent-card">
-      <span class="pbadge">Provisional · Aug 2025</span>
-      <h3>Systems of ultrabroadband multimodal artificial gauge fields</h3>
-      <div class="meta"><strong>Inventors:</strong> L. Xu, M. J. Mehrabad, S. Sarkar, A. Padhye, M. Hafezi</div>
+      <span class="pbadge">Provisional · 2025</span>
+      <h3>TOPAI: Topological photonics architectures for optical computing and AI</h3>
+      <div class="meta"><strong>Inventors:</strong> M. J. Mehrabad, L. Xu, S. Sarkar, Z. Y. Wei, M. Hafezi</div>
     </div>
   </div>
 </section>
@@ -1785,24 +1640,16 @@
     <div class="award-item">
       <div class="year">2026</div>
       <div>
-        <div class="name">MPower Early Scholars Investment Fund · <em>Recipient</em></div>
-        <div class="org">University of Maryland Graduate School · Track 2 doctoral bridge fellowship (Fall 2026 / Spring 2027)</div>
-      </div>
-      <div class="icon">🎓</div>
-    </div>
-    <div class="award-item">
-      <div class="year">2026</div>
-      <div>
         <div class="name">NSF I-Corps™ Teams Award · <em>Entrepreneurial Lead</em></div>
-        <div class="org">National Science Foundation · <a class="cert-link" href="certificate/Lida%20Xu_I-Corp.pdf" target="_blank" rel="noopener">View certificate<span class="arrow">↗</span></a></div>
+        <div class="org">National Science Foundation</div>
       </div>
       <div class="icon">🏆</div>
     </div>
     <div class="award-item">
       <div class="year">2026</div>
       <div>
-        <div class="name">UMD Invention of the Year · <em>Winner</em></div>
-        <div class="org">University of Maryland · TOPAI: Topological Photonics Architecture for Optical Computing & AI · <a class="cert-link" href="certificate/InventionOfTheYear2026UMD.jpg" target="_blank" rel="noopener">View plaque<span class="arrow">↗</span></a></div>
+        <div class="name">UMD Invention of the Year · <em>Finalist</em></div>
+        <div class="org">University of Maryland · winner announced May 2026</div>
       </div>
       <div class="icon">💡</div>
     </div>
@@ -1925,39 +1772,6 @@
     }, 5000);
     toggle.addEventListener('mouseenter', () => clearInterval(timer));
   })();
-</script>
-
-
-<script>
-// Mobile hamburger menu
-(function() {
-  const burger = document.getElementById('navBurger');
-  const panel = document.getElementById('mobilePanel');
-  const backdrop = document.getElementById('mobileBackdrop');
-  if (!burger || !panel || !backdrop) return;
-  
-  function openMenu() {
-    panel.classList.add('open');
-    backdrop.classList.add('open');
-    document.body.classList.add('menu-open');
-    panel.setAttribute('aria-hidden', 'false');
-  }
-  function closeMenu() {
-    panel.classList.remove('open');
-    backdrop.classList.remove('open');
-    document.body.classList.remove('menu-open');
-    panel.setAttribute('aria-hidden', 'true');
-  }
-  burger.addEventListener('click', () => {
-    if (panel.classList.contains('open')) closeMenu();
-    else openMenu();
-  });
-  backdrop.addEventListener('click', closeMenu);
-  // Close menu when a link is tapped
-  panel.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', closeMenu);
-  });
-})();
 </script>
 
 </body>
