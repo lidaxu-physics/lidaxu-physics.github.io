@@ -5,650 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Topological photonics — Lida Xu</title>
 <link rel="icon" type="image/png" href="../images/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  
-  :root {
-    --warm-bg:     #fbf6ed;
-    --warm-bg-2:   #f5ecda;
-    --cream:       #fffaf0;
-    --ink:         #1c1814;
-    --ink-soft:    #45382c;
-    --ink-mute:    #7a6a55;
-    --gold:        #d4953a;
-    --gold-deep:   #a86d1a;
-    --gold-glow:   #f5c97a;
-    --rose:        #c54f3f;
-    --teal:        #2d6e6a;
-    --line:        #e8dcc4;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--warm-bg);
-    color: var(--ink);
-    font-family: 'Inter Tight', -apple-system, sans-serif;
-    font-size: 17px;
-    line-height: 1.65;
-    background-image:
-      radial-gradient(ellipse 1200px 800px at 80% -100px, rgba(245,201,122,0.35), transparent 60%),
-      radial-gradient(ellipse 900px 600px at -10% 600px, rgba(212,149,58,0.10), transparent 60%);
-    background-attachment: fixed;
-  }
-
-  body::before {
-    content: "";
-    position: fixed; inset: 0;
-    pointer-events: none;
-    opacity: 0.4;
-    z-index: 1;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.30  0 0 0 0 0.10  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  }
-
-  /* nav */
-  nav.top {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    padding: 22px 56px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 50;
-    background: linear-gradient(to bottom, rgba(251,246,237,0.92), rgba(251,246,237,0));
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  nav.top .logo {
-    display: flex; align-items: center; gap: 10px;
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 18px;
-    color: var(--ink);
-    text-decoration: none;
-  }
-  nav.top .logo .sun {
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, var(--gold-glow), var(--gold) 60%, var(--gold-deep));
-    box-shadow: 0 0 16px var(--gold-glow);
-  }
-  nav.top .links { display: flex; gap: 24px; flex-wrap: wrap; }
-  nav.top .links a {
-    color: var(--ink-soft);
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    position: relative;
-    transition: color .2s ease;
-  }
-  nav.top .links a:hover { color: var(--gold-deep); }
-
-  /* breadcrumb / back link */
-  .breadcrumb {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 120px 56px 0;
-    position: relative;
-    z-index: 4;
-  }
-  .breadcrumb a {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--ink-mute);
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 8px 14px;
-    background: var(--cream);
-    border: 1px solid var(--line);
-    border-radius: 100px;
-    transition: all .25s ease;
-  }
-  .breadcrumb a:hover {
-    border-color: var(--accent);
-    color: var(--accent-deep);
-    transform: translateX(-3px);
-  }
-
-  /* page header */
-  header.page-header {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 56px 60px;
-    position: relative;
-    z-index: 4;
-  }
-  .page-header .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent-deep);
-    margin-bottom: 18px;
-  }
-  .page-header .eyebrow::before {
-    content: "";
-    width: 24px; height: 1.5px;
-    background: var(--accent);
-  }
-  .page-header h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: clamp(48px, 7vw, 80px);
-    line-height: 1.0;
-    letter-spacing: -0.025em;
-    color: var(--ink);
-    margin-bottom: 24px;
-  }
-  .page-header h1 em {
-    font-style: italic;
-    color: var(--accent-deep);
-  }
-  .page-header .lede {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 22px;
-    line-height: 1.5;
-    color: var(--ink-soft);
-    max-width: 640px;
-  }
-
-  /* page content */
-  article.page-content {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 0 56px 80px;
-    position: relative;
-    z-index: 4;
-  }
-  article.page-content h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 32px;
-    line-height: 1.15;
-    margin-top: 60px;
-    margin-bottom: 20px;
-    color: var(--ink);
-  }
-  article.page-content h2 em { font-style: italic; color: var(--accent-deep); }
-  article.page-content p {
-    font-size: 18px;
-    line-height: 1.75;
-    color: var(--ink-soft);
-    margin-bottom: 22px;
-  }
-  article.page-content p strong { color: var(--ink); font-weight: 600; }
-  article.page-content a {
-    color: var(--accent-deep);
-    text-decoration: none;
-    border-bottom: 1.5px solid transparent;
-    transition: border-color .2s ease;
-  }
-  article.page-content a:hover { border-bottom-color: var(--accent); }
-  article.page-content .pullquote {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 24px;
-    line-height: 1.4;
-    color: var(--ink);
-    border-left: 3px solid var(--accent);
-    padding: 4px 0 4px 28px;
-    margin: 36px 0;
-  }
-
-  /* nobel chip */
-  .nobel-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--gold-deep);
-    background: rgba(245,201,122,0.18);
-    padding: 2px 10px;
-    border-radius: 100px;
-    text-decoration: none;
-    border-bottom: none !important;
-    margin: 0 2px;
-    white-space: nowrap;
-    transition: all .2s ease;
-  }
-  .nobel-chip::before { content: "🏅"; font-size: 11px; }
-  .nobel-chip:hover {
-    background: rgba(245,201,122,0.35);
-    color: var(--ink);
-  }
-
-  /* related work section */
-  section.related-work {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 60px 56px 100px;
-    position: relative;
-    z-index: 4;
-  }
-  section.related-work h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 36px;
-    line-height: 1.1;
-    color: var(--ink);
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  section.related-work h2 em { font-style: italic; color: var(--accent-deep); }
-
-  .related-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .related-item {
-    display: grid;
-    grid-template-columns: 90px 1fr auto;
-    gap: 24px;
-    padding: 24px 0;
-    border-top: 1px solid var(--line);
-    align-items: baseline;
-    transition: padding .3s ease;
-  }
-  .related-item:last-child { border-bottom: 1px solid var(--line); }
-  .related-item:hover { padding-left: 12px; }
-  .related-item .year {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 18px;
-    color: var(--accent-deep);
-    font-weight: 500;
-  }
-  .related-item h3 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 19px;
-    line-height: 1.3;
-    color: var(--ink);
-    margin-bottom: 4px;
-  }
-  .related-item h3 a {
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1.5px solid transparent;
-    transition: border-color .2s ease;
-  }
-  .related-item h3 a:hover { border-bottom-color: var(--accent); }
-  .related-item .meta {
-    font-size: 14px;
-    color: var(--ink-mute);
-  }
-  .related-item .meta .venue {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    color: var(--accent-deep);
-  }
-  .related-item .role {
-    font-size: 12px;
-    color: var(--ink-mute);
-    text-align: right;
-    font-style: italic;
-    font-family: 'Fraunces', serif;
-    white-space: nowrap;
-  }
-
-  /* footer */
-  footer {
-    padding: 40px 56px 60px;
-    text-align: center;
-    color: var(--ink-mute);
-    font-size: 13px;
-    position: relative; z-index: 4;
-    border-top: 1px solid var(--line);
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  footer a {
-    color: var(--ink-mute);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
-  }
-
-
-  /* ===== SCROLL SCENE LAYOUT ===== */
-  .scroll-scene {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 56px 60px;
-    position: relative;
-    z-index: 4;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-  }
-  .scroll-scene .text-col {
-    /* article styling preserved */
-  }
-  .scroll-scene .text-col p,
-  .scroll-scene .text-col h2,
-  .scroll-scene .text-col .pullquote {
-    max-width: none;
-  }
-  .scroll-scene .text-col p {
-    font-size: 18px;
-    line-height: 1.75;
-    color: var(--ink-soft);
-    margin-bottom: 22px;
-  }
-  .scroll-scene .text-col p strong { color: var(--ink); font-weight: 600; }
-  .scroll-scene .text-col a {
-    color: var(--accent-deep);
-    text-decoration: none;
-    border-bottom: 1.5px solid transparent;
-    transition: border-color .2s ease;
-  }
-  .scroll-scene .text-col a:hover { border-bottom-color: var(--accent); }
-  .scroll-scene .text-col h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 32px;
-    line-height: 1.15;
-    margin-top: 60px;
-    margin-bottom: 20px;
-    color: var(--ink);
-  }
-  .scroll-scene .text-col h2 em { font-style: italic; color: var(--accent-deep); }
-  .scroll-scene .text-col .pullquote {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 24px;
-    line-height: 1.4;
-    color: var(--ink);
-    border-left: 3px solid var(--accent);
-    padding: 4px 0 4px 28px;
-    margin: 36px 0;
-  }
-
-  /* sticky visual column */
-  .scroll-scene .visual-col {
-    position: sticky;
-    top: 100px;
-    height: calc(100vh - 140px);
-    max-height: 640px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .lattice-stage {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    max-width: 520px;
-    background:
-      radial-gradient(ellipse at 50% 40%, rgba(245,201,122,0.12), transparent 70%),
-      var(--cream);
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: 0 30px 60px -30px rgba(168,109,26,0.25);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .lattice-stage svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    flex: 1;
-  }
-  .lattice-stage .stage-caption {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 13px;
-    color: var(--ink-mute);
-    text-align: center;
-    min-height: 18px;
-    transition: opacity 0.4s ease;
-  }
-  .lattice-stage .stage-caption strong {
-    font-style: normal;
-    color: var(--accent-deep);
-    font-weight: 600;
-  }
-
-  /* progress dots */
-  .scene-progress {
-    position: sticky;
-    top: 110px;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-left: -30px;
-  }
-  .scene-progress .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--line);
-    transition: all .3s ease;
-  }
-  .scene-progress .dot.active {
-    background: var(--accent-deep);
-    transform: scale(1.4);
-  }
-
-  @media (max-width: 1000px) {
-    .scroll-scene {
-      grid-template-columns: 1fr;
-      gap: 24px;
-      padding: 0 24px 40px;
-    }
-    /* On mobile: hide original visual column — replaced by .m-lattice-scene below */
-    .scroll-scene .visual-col {
-      display: none;
-    }
-  }
-  
-  @media (max-width: 760px) {
-    body { overflow-x: hidden; }
-    nav.top { padding: 14px 18px; }
-    nav.top .lang-toggle {
-      margin-left: 0;
-      padding-left: 0;
-      border-left: none;
-    }
-    /* Hide progress dots on phones - too cramped */
-    .scene-progress { display: none; }
-  }
-
-
-
-  /* intro paragraph above butterfly */
-  .topo-intro {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 20px 56px 8px;
-    position: relative;
-    z-index: 4;
-  }
-  .topo-intro p {
-    font-size: 18px;
-    line-height: 1.75;
-    color: var(--ink-soft);
-  }
-  .topo-intro p strong { color: var(--ink); font-weight: 600; }
-  @media (max-width: 760px) {
-    .topo-intro { padding: 0 24px 30px; }
-  }
-
-  /* HOFSTADTER BUTTERFLY — Apple-style scroll-pinned section */
-  .butterfly-scene {
-    position: relative;
-    height: 250vh;             /* tall outer = scroll runway */
-    margin: 0 0 40px;
-  }
-  .butterfly-scene .pin {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 40px 40px;
-  }
-  .butterfly-scene .stage {
-    width: min(760px, 92vw);
-    aspect-ratio: 1 / 1;
-    position: relative;
-  }
-  .butterfly-scene svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-  .butterfly-scene .b-caption {
-    margin-top: 32px;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 18px;
-    color: var(--ink-soft);
-    text-align: center;
-    max-width: 640px;
-    line-height: 1.5;
-    transition: opacity 0.4s ease;
-  }
-  .butterfly-scene .b-caption strong {
-    font-style: normal;
-    color: var(--accent-deep);
-    font-weight: 600;
-  }
-
-
-  /* language toggle */
-  nav.top .lang-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  nav.top .lang-toggle a {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ink-mute);
-    text-decoration: none;
-    transition: color .2s ease;
-    padding: 2px 4px;
-  }
-  nav.top .lang-toggle a:hover { color: var(--gold-deep); }
-  nav.top .lang-toggle a.active { color: var(--ink); font-weight: 600; }
-  nav.top .lang-toggle .lang-sep { color: var(--line); font-size: 14px; }
-
-
-  /* MOBILE-ONLY auto-playing lattice scene (hidden on desktop) */
-  .m-lattice-scene { display: none; }
-  
-  @media (max-width: 1000px) {
-    .m-lattice-scene {
-      display: block;
-      margin: 32px 0;
-    }
-    .m-lattice-scene .m-pin {
-      display: flex;
-      justify-content: center;
-      padding: 0 4px;
-    }
-    .m-lattice-scene .m-stage {
-      width: 100%;
-      max-width: 420px;
-      background:
-        radial-gradient(ellipse at 50% 40%, rgba(245,201,122,0.12), transparent 70%),
-        var(--cream);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 16px 16px 14px;
-      box-shadow: 0 30px 60px -30px rgba(168,109,26,0.25);
-    }
-    .m-lattice-scene .m-stage svg {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 1 / 1;
-      display: block;
-    }
-    .m-lattice-scene .m-stage-caption {
-      font-family: 'Fraunces', serif;
-      font-style: italic;
-      font-size: 12px;
-      color: var(--ink-mute);
-      text-align: center;
-      min-height: 32px;
-      margin-top: 8px;
-      transition: opacity 0.4s ease;
-    }
-    .m-lattice-scene .m-stage-caption strong {
-      font-style: normal;
-      color: var(--accent-deep);
-      font-weight: 600;
-    }
-    /* Hide the original side-panel lattice on mobile (this one replaces it) */
-    .scroll-scene .visual-col { display: none; }
-  }
-
-  /* responsive */
-  @media (max-width: 760px) {
-    nav.top { padding: 16px 20px; }
-    nav.top .links { gap: 14px; }
-    nav.top .links a { font-size: 13px; }
-    .breadcrumb { padding: 100px 24px 0; }
-    header.page-header { padding: 32px 24px 50px; }
-    article.page-content { padding: 0 24px 60px; }
-    section.related-work { padding: 50px 24px 80px; }
-    .related-item { grid-template-columns: 60px 1fr; gap: 14px; }
-    .related-item .role { grid-column: 1 / -1; text-align: left; }
-  }
-
-  body {
-    --accent: #d4953a;
-    --accent-deep: #a86d1a;
-  }
-</style>
+<link rel="stylesheet" href="../assets/site.css?v=1">
+<link rel="stylesheet" href="../assets/research.css?v=1">
 </head>
-<body>
+<body class="page-topo">
 
-
-<nav class="top">
-  <a href="../index.html" class="logo">
-    <span class="sun"></span>
-    <span>Lida Xu</span>
-  </a>
-    <span class="lang-toggle">
-      <a href="topological-photonics.html" class="active" aria-current="true">EN</a>
-      <span class="lang-sep">·</span>
-      <a href="topological-photonics_zh.html">中</a>
-    </span>
-</nav>
-
-
-<div class="breadcrumb">
-  <a href="../index.html#research">← All research directions</a>
-</div>
-
-<header class="page-header">
-  <div class="eyebrow">Research direction · 01</div>
-  <h1>Topological <em>photonics.</em></h1>
-  <p class="lede">Building optical chips whose physics is dictated by geometry, so light flows along boundaries that disorder can't disrupt.</p>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html">Lida Xu</a>
+    <div class="nav-right">
+      <nav class="menu" id="siteMenu" aria-label="Main">
+        <a href="../index.html">Home</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../index.html#research" class="active" aria-current="true">Research</a>
+        <a href="../videos.html">Videos</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <div class="lang" aria-label="Language">
+        <a href="topological-photonics.html" class="active" aria-current="true" hreflang="en">EN</a>
+        <a href="topological-photonics_zh.html" hreflang="zh">中文</a>
+      </div>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="siteMenu">
+        <span class="menu-toggle-icon" aria-hidden="true"></span>Menu
+      </button>
+    </div>
+  </div>
 </header>
+
+<main>
+
+<section class="hero page-hero">
+  <div class="wrap">
+    <p class="crumb"><a href="../index.html#research">← All research directions</a></p>
+    <div class="hero-card">
+      <p class="kicker">Research direction · 01</p>
+      <h1>Topological photonics</h1>
+      <p class="lead">Building optical chips whose physics is dictated by geometry, so light flows along boundaries that disorder can't disrupt.</p>
+    </div>
+  </div>
+</section>
 
 <!-- Intro paragraph above the butterfly -->
 <section class="topo-intro">
-  <p>The discoveries of the integer quantum Hall effect (<a class="nobel-chip" href="https://www.nobelprize.org/prizes/physics/1985/summary/" target="_blank">1985 Nobel</a>), the fractional quantum Hall effect (<a class="nobel-chip" href="https://www.nobelprize.org/prizes/physics/1998/summary/" target="_blank">1998 Nobel</a>), and the modern framework of topological phases (<a class="nobel-chip" href="https://www.nobelprize.org/prizes/physics/2016/summary/" target="_blank">2016 Nobel</a>) all built on what's hiding in this picture: <strong>topology as a real, physical invariant</strong> — not a mathematical curiosity.</p>
+  <p>The discoveries of the integer quantum Hall effect (<a class="nobel-chip" href="https://www.nobelprize.org/prizes/physics/1985/summary/" target="_blank" rel="noopener">1985 Nobel</a>), the fractional quantum Hall effect (<a class="nobel-chip" href="https://www.nobelprize.org/prizes/physics/1998/summary/" target="_blank" rel="noopener">1998 Nobel</a>), and the modern framework of topological phases (<a class="nobel-chip" href="https://www.nobelprize.org/prizes/physics/2016/summary/" target="_blank" rel="noopener">2016 Nobel</a>) all built on what's hiding in this picture: <strong>topology as a real, physical invariant</strong> — not a mathematical curiosity.</p>
 </section>
 
 <!-- HOFSTADTER BUTTERFLY — scroll-pinned scene -->
@@ -697,18 +96,18 @@
       <svg id="mLatticeSvg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <radialGradient id="mPhotonGlow">
-            <stop offset="0%" stop-color="#1c1814" stop-opacity="0.6"/>
-            <stop offset="100%" stop-color="#1c1814" stop-opacity="0"/>
+            <stop offset="0%" stop-color="#111111" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#111111" stop-opacity="0"/>
           </radialGradient>
         </defs>
-        <g id="mCouplings" stroke="#a86d1a" stroke-width="1.5" stroke-linecap="round"></g>
+        <g id="mCouplings" stroke="#9a9a93" stroke-width="1.5" stroke-linecap="round"></g>
         <g id="mSites"></g>
         <!-- photon trail — drawn below the photon, on top of the lattice -->
-        <path id="mPhotonTrail" fill="none" stroke="#1c1814" stroke-width="2.5"
+        <path id="mPhotonTrail" fill="none" stroke="#111111" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round" opacity="0"
               pathLength="1"/>
         <circle id="mPhotonHalo" r="12" fill="url(#mPhotonGlow)" opacity="0"/>
-        <circle id="mPhotonCore" r="4.5" fill="#1c1814" opacity="0"/>
+        <circle id="mPhotonCore" r="4.5" fill="#111111" opacity="0"/>
       </svg>
       <div class="m-stage-caption" id="mStageCaption">A <strong>photonic lattice</strong> — coupled ring resonators in a 2D grid.</div>
     </div>
@@ -726,13 +125,13 @@
       <svg id="latticeSvg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="trailGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#3a342a"/>
-            <stop offset="50%" stop-color="#7a6a55"/>
-            <stop offset="100%" stop-color="#3a342a"/>
+            <stop offset="0%" stop-color="#111111"/>
+            <stop offset="50%" stop-color="#9a9a93"/>
+            <stop offset="100%" stop-color="#111111"/>
           </linearGradient>
           <radialGradient id="photonGlow">
-            <stop offset="0%" stop-color="#3a342a" stop-opacity="0.7"/>
-            <stop offset="100%" stop-color="#3a342a" stop-opacity="0"/>
+            <stop offset="0%" stop-color="#111111" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#111111" stop-opacity="0"/>
           </radialGradient>
           <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="4"/>
@@ -740,7 +139,7 @@
         </defs>
 
         <!-- LATTICE -->
-        <g id="couplings" stroke="#c5b491" stroke-width="1.2" opacity="0"></g>
+        <g id="couplings" stroke="#b9b9b2" stroke-width="1.2" opacity="0"></g>
         <g id="sites" opacity="0"></g>
 
         <!-- edge trail and photon (beats 3+) -->
@@ -751,7 +150,7 @@
               opacity="0"/>
         <g id="photonGroup" opacity="0">
           <circle id="photonHalo" r="14" fill="url(#photonGlow)" filter="url(#softBlur)"/>
-          <circle id="photonCore" r="4.5" fill="#1c1814"/>
+          <circle id="photonCore" r="4.5" fill="#111111"/>
         </g>
       </svg>
       <div class="stage-caption" id="stageCaption">
@@ -762,40 +161,54 @@
 
 </section>
 
-<section class="related-work">
-  <h2>Related <em>work.</em></h2>
-  <div class="related-list">
-    <article class="related-item">
-      <div class="year">2024</div>
-      <div>
-        <h3><a href="https://www.science.org/doi/full/10.1126/science.ado0053" target="_blank">Observation of topological frequency combs</a></h3>
-        <div class="meta"><span class="venue">Science</span> · C. J. Flower, M. J. Mehrabad, L. Xu, et al.</div>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Related work</h2>
+    </div>
+    <div class="list">
+
+      <div class="list-item">
+        <div class="date">2024</div>
+        <div class="entry">
+          <h3><a href="https://www.science.org/doi/full/10.1126/science.ado0053" target="_blank" rel="noopener">Observation of topological frequency combs</a></h3>
+          <p class="detail"><span class="venue">Science</span> · C. J. Flower, M. J. Mehrabad, L. Xu, et al.</p>
+          <p class="extra">Co-first author</p>
+        </div>
       </div>
-      <div class="role">Co-first author</div>
-    </article>
-    <article class="related-item">
-      <div class="year">2025</div>
-      <div>
-        <h3>Single-shot realization of 10000-mode octave-spanning artificial gauge fields</h3>
-        <div class="meta"><span class="venue">Submitted</span> · L. Xu, A. Padhye, et al.</div>
+
+      <div class="list-item">
+        <div class="date">2025</div>
+        <div class="entry">
+          <h3>Single-shot realization of 10000-mode octave-spanning artificial gauge fields</h3>
+          <p class="detail"><span class="venue">Submitted</span> · L. Xu, A. Padhye, et al.</p>
+          <p class="extra">Lead / corresponding</p>
+        </div>
       </div>
-      <div class="role">Lead / corresponding</div>
-    </article>
-    <article class="related-item">
-      <div class="year">2025</div>
-      <div>
-        <h3>Quantum metamorphosis: emergence and the breakdown of bulk-edge dichotomy in multiscale systems</h3>
-        <div class="meta"><span class="venue">Preprint</span> · M. J. Mehrabad, A. Parhizkar, L. Xu, et al.</div>
+
+      <div class="list-item">
+        <div class="date">2025</div>
+        <div class="entry">
+          <h3>Quantum metamorphosis: emergence and the breakdown of bulk-edge dichotomy in multiscale systems</h3>
+          <p class="detail"><span class="venue">Preprint</span> · M. J. Mehrabad, A. Parhizkar, L. Xu, et al.</p>
+          <p class="extra">Co-first author</p>
+        </div>
       </div>
-      <div class="role">Co-first author</div>
-    </article>
+
+    </div>
   </div>
 </section>
 
+</main>
 
-<footer>© 2026 Lida Xu · <a href="../index.html">Back to home</a></footer>
+<footer class="footer">
+  <div class="wrap row">
+    <div>Joint Quantum Institute · University of Maryland, College Park</div>
+    <div>© 2026 Lida Xu · <a href="../index.html">Back to home</a></div>
+  </div>
+</footer>
 
-
+<script src="../assets/site.js?v=1" defer></script>
 <script>
 (function() {
   const HOFSTADTER_PTS = [
@@ -1511,7 +924,7 @@
     dot.setAttribute('cx', sx);
     dot.setAttribute('cy', sy);
     dot.setAttribute('r', 0.7);
-    dot.setAttribute('fill', '#3a342a');
+    dot.setAttribute('fill', '#111111');
     dot.setAttribute('opacity', 0);
     dotsG.appendChild(dot);
     
@@ -1761,8 +1174,8 @@
     ring.setAttribute('cx', s.cx);
     ring.setAttribute('cy', s.cy);
     ring.setAttribute('r', 9);
-    ring.setAttribute('fill', '#fffaf0');
-    ring.setAttribute('stroke', s.isEdge ? '#a86d1a' : '#7a6a55');
+    ring.setAttribute('fill', '#ffffff');
+    ring.setAttribute('stroke', s.isEdge ? '#111111' : '#9a9a93');
     ring.setAttribute('stroke-width', s.isEdge ? 1.5 : 1);
     ring.setAttribute('opacity', 0);  // start hidden
     s.element = ring;
@@ -2018,8 +1431,8 @@
       ring.setAttribute('cx', cx);
       ring.setAttribute('cy', cy);
       ring.setAttribute('r', 8);
-      ring.setAttribute('fill', '#fffaf0');
-      ring.setAttribute('stroke', isEdge ? '#a86d1a' : '#7a6a55');
+      ring.setAttribute('fill', '#ffffff');
+      ring.setAttribute('stroke', isEdge ? '#111111' : '#9a9a93');
       ring.setAttribute('stroke-width', isEdge ? 1.5 : 1);
       sitesG.appendChild(ring);
       sites.push({ i, j, cx, cy, isEdge, isRemoved, element: ring });
@@ -2251,6 +1664,5 @@
   applyState(0)
 })();
 </script>
-
 </body>
 </html>

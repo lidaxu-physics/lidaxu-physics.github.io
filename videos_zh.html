@@ -5,525 +5,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>科普视频 — 徐李达</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-
-  :root {
-    --warm-bg:     #fbf6ed;
-    --warm-bg-2:   #f5ecda;
-    --cream:       #fffaf0;
-    --ink:         #1c1814;
-    --ink-soft:    #45382c;
-    --ink-mute:    #7a6a55;
-    --gold:        #d4953a;
-    --gold-deep:   #a86d1a;
-    --gold-glow:   #f5c97a;
-    --rose:        #c54f3f;
-    --teal:        #2d6e6a;
-    --line:        #e8dcc4;
-    --accent:      var(--gold);
-    --accent-deep: var(--gold-deep);
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--warm-bg);
-    color: var(--ink);
-    font-family: 'Inter Tight', -apple-system, sans-serif;
-    font-size: 17px;
-    line-height: 1.65;
-    background-image:
-      radial-gradient(ellipse 1200px 800px at 80% -100px, rgba(245,201,122,0.35), transparent 60%),
-      radial-gradient(ellipse 900px 600px at -10% 600px, rgba(212,149,58,0.10), transparent 60%);
-    background-attachment: fixed;
-  }
-
-  body::before {
-    content: "";
-    position: fixed; inset: 0;
-    pointer-events: none;
-    opacity: 0.4;
-    z-index: 1;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.30  0 0 0 0 0.10  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  }
-
-  /* nav */
-  nav.top {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    padding: 22px 56px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 50;
-    background: linear-gradient(to bottom, rgba(251,246,237,0.92), rgba(251,246,237,0));
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  nav.top .logo {
-    display: flex; align-items: center; gap: 10px;
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 18px;
-    color: var(--ink);
-    text-decoration: none;
-  }
-  nav.top .logo .sun {
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, var(--gold-glow), var(--gold) 60%, var(--gold-deep));
-    box-shadow: 0 0 16px var(--gold-glow);
-  }
-  nav.top .lang-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  nav.top .lang-toggle a {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ink-mute);
-    text-decoration: none;
-    transition: color .2s ease;
-    padding: 2px 4px;
-  }
-  nav.top .lang-toggle a:hover { color: var(--gold-deep); }
-  nav.top .lang-toggle a.active { color: var(--ink); font-weight: 600; }
-  nav.top .lang-toggle .lang-sep { color: var(--line); font-size: 14px; }
-
-  /* breadcrumb */
-  .breadcrumb {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 120px 56px 0;
-    position: relative;
-    z-index: 4;
-  }
-  .breadcrumb a {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--ink-mute);
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 8px 14px;
-    background: var(--cream);
-    border: 1px solid var(--line);
-    border-radius: 100px;
-    transition: all .25s ease;
-  }
-  .breadcrumb a:hover {
-    border-color: var(--gold);
-    color: var(--gold-deep);
-    transform: translateX(-3px);
-  }
-
-  /* page header */
-  header.page-header {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 56px 40px;
-    position: relative;
-    z-index: 4;
-  }
-  .page-header .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold-deep);
-    margin-bottom: 18px;
-  }
-  .page-header .eyebrow::before {
-    content: "";
-    width: 24px; height: 1.5px;
-    background: var(--gold);
-  }
-  .page-header h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: clamp(48px, 7vw, 80px);
-    line-height: 1.0;
-    letter-spacing: -0.025em;
-    color: var(--ink);
-    margin-bottom: 24px;
-  }
-  .page-header h1 em { font-style: italic; color: var(--gold-deep); }
-  .page-header .lede {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 22px;
-    line-height: 1.5;
-    color: var(--ink-soft);
-    max-width: 720px;
-  }
-  .page-header .meta-pills {
-    margin-top: 28px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .page-header .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    background: var(--cream);
-    border: 1px solid var(--line);
-    border-radius: 100px;
-    color: var(--ink-soft);
-    font-size: 13.5px;
-    font-weight: 500;
-  }
-  .page-header .pill.ghost { background: transparent; }
-  .page-header .pill.ghost.lang-note {
-    color: var(--ink-mute);
-    font-style: italic;
-    font-family: 'Fraunces', serif;
-    font-size: 14px;
-  }
-  .page-header .pill .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--rose);
-  }
-
-  /* main listing */
-  main.videos {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px 56px 80px;
-    position: relative;
-    z-index: 4;
-  }
-
-  .episode {
-    margin-bottom: 56px;
-  }
-  .episode .ep-head {
-    display: flex;
-    align-items: baseline;
-    gap: 18px;
-    margin-bottom: 14px;
-  }
-  .episode .ep-num {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 22px;
-    color: var(--gold-deep);
-    font-weight: 500;
-    flex-shrink: 0;
-    min-width: 70px;
-  }
-  .episode h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 26px;
-    line-height: 1.25;
-    color: var(--ink);
-    flex: 1;
-  }
-  .episode h2 em { font-style: italic; color: var(--gold-deep); }
-  .episode .ep-subtitle {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 15px;
-    color: var(--ink-mute);
-    margin-left: 88px;
-    margin-top: -8px;
-    margin-bottom: 14px;
-  }
-  .episode .video-wrap {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;   /* 16:9 */
-    background: var(--ink);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 12px 40px -16px rgba(28,24,20,0.3);
-  }
-  .episode .video-wrap iframe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    border: 0;
-  }
-
-
-  /* video placeholder — click to load */
-  .episode .video-wrap {
-    cursor: pointer;
-    background: linear-gradient(135deg, #2d2620 0%, #1c1814 100%);
-    transition: transform .25s ease, box-shadow .25s ease;
-  }
-  .episode .video-wrap:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 50px -16px rgba(28,24,20,0.45);
-  }
-  .episode .video-wrap.loaded {
-    cursor: default;
-  }
-  .episode .video-wrap.loaded:hover {
-    transform: none;
-    box-shadow: 0 12px 40px -16px rgba(28,24,20,0.3);
-  }
-  .video-placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 24px;
-    text-align: center;
-    background-image:
-      radial-gradient(ellipse 600px 400px at 50% 50%, rgba(245,201,122,0.08), transparent 70%);
-  }
-  .video-placeholder .play-icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: rgba(255,250,240,0.95);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-    transition: all .25s ease;
-  }
-  .video-wrap:hover .play-icon {
-    background: var(--gold-glow);
-    transform: scale(1.08);
-  }
-  .video-placeholder .play-icon::before {
-    content: "";
-    width: 0; height: 0;
-    border-left: 22px solid var(--ink);
-    border-top: 14px solid transparent;
-    border-bottom: 14px solid transparent;
-    margin-left: 6px;
-  }
-  .video-placeholder .ph-title {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: rgba(255,250,240,0.78);
-    max-width: 400px;
-    line-height: 1.4;
-  }
-  .video-placeholder .ph-source {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(245,201,122,0.7);
-  }
-
-  /* "to be continued" placeholder */
-  .tbc {
-    margin-top: 80px;
-    padding: 32px;
-    text-align: center;
-    border: 1.5px dashed var(--line);
-    border-radius: 12px;
-    background: rgba(255,250,240,0.4);
-  }
-  .tbc-text {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 18px;
-    color: var(--ink-mute);
-  }
-  .tbc-sub {
-    font-size: 13.5px;
-    color: var(--ink-mute);
-    margin-top: 8px;
-    font-family: 'Inter Tight', sans-serif;
-  }
-
-  footer {
-    padding: 40px 56px 60px;
-    text-align: center;
-    color: var(--ink-mute);
-    font-size: 13px;
-    position: relative; z-index: 4;
-    border-top: 1px solid var(--line);
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  footer a {
-    color: var(--ink-mute);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
-  }
-
-  @media (max-width: 760px) {
-    nav.top { padding: 16px 20px; }
-    .breadcrumb { padding: 100px 24px 0; }
-    header.page-header { padding: 32px 24px 30px; }
-    main.videos { padding: 20px 24px 60px; }
-    .episode { margin-bottom: 40px; }
-    .episode .ep-head { gap: 12px; }
-    .episode .ep-num { font-size: 18px; min-width: 50px; }
-    .episode h2 { font-size: 20px; }
-    .episode .ep-subtitle { margin-left: 62px; font-size: 14px; }
-  }
-
-</style>
+<link rel="stylesheet" href="assets/site.css?v=1">
 </head>
 <body>
 
-<nav class="top">
-  <a href="index_zh.html" class="logo">
-    <span class="sun"></span>
-    <span>徐李达</span>
-  </a>
-  <span class="lang-toggle">
-    <a href="videos.html">EN</a>
-    <span class="lang-sep">·</span>
-    <a href="videos_zh.html" class="active" aria-current="true">中</a>
-  </span>
-</nav>
-
-<div class="breadcrumb">
-  <a href="index_zh.html">← 返回首页</a>
-</div>
-
-<header class="page-header">
-  <div class="eyebrow">科普视频</div>
-  <h1>物理学小故事<em></em></h1>
-  <p class="lede">我在 B 站做了一系列物理学的科普视频。实验室之外的我,更愿意用讲故事的方式聊物理 —— 而不是写论文。</p>
-  <div class="meta-pills">
-    <span class="pill"><span class="dot"></span>哔哩哔哩</span>
-    <span class="pill ghost lang-note">物理学科普 · 物理学史</span>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index_zh.html">徐李达</a>
+    <div class="nav-right">
+      <nav class="menu" id="siteMenu" aria-label="主导航">
+        <a href="index_zh.html">首页</a>
+        <a href="publications_zh.html">论文</a>
+        <a href="index_zh.html#research">研究</a>
+        <a href="videos_zh.html" class="active" aria-current="page">视频</a>
+        <a href="index_zh.html#contact">联系</a>
+      </nav>
+      <div class="lang" aria-label="语言">
+        <a href="videos.html" hreflang="en">EN</a>
+        <a href="videos_zh.html" class="active" aria-current="true" hreflang="zh">中文</a>
+      </div>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="siteMenu">
+        <span class="menu-toggle-icon" aria-hidden="true"></span>菜单
+      </button>
+    </div>
   </div>
 </header>
 
-<main class="videos">
+<main>
 
-  <p style="font-family:'Fraunces',serif; font-style:italic; font-size:18px; color:var(--ink-soft); margin-bottom:48px; max-width:720px; line-height:1.55;">
-    现在更新的这一系列,是关于 <strong>保罗·狄拉克</strong> 的五集故事 —— 古怪的天才、反物质的发明者、量子场论的意外奠基人。素材主要来自他的传记 <em>The Strangest Man</em>(中文译为《量子怪杰》)。
-  </p>
-
-
-  <article class="episode">
-    <div class="ep-head">
-      <div class="ep-num">第1期</div>
-      <h2>横空出世的卷王狄拉克</h2>
-    </div>
-    <div class="video-wrap" data-bvid="BV17S4y1m7kL" role="button" tabindex="0" aria-label="播放第1期">
-      <div class="video-placeholder">
-        <div class="ph-source">哔哩哔哩 · 第1期</div>
-        <div class="play-icon"></div>
-        <div class="ph-title">横空出世的卷王狄拉克</div>
+<section class="hero page-hero">
+  <div class="wrap">
+    <p class="crumb"><a href="index_zh.html">← 返回首页</a></p>
+    <div class="hero-card">
+      <p class="kicker">科普视频</p>
+      <h1>物理学小故事</h1>
+      <p class="lead">我在 B 站做了一系列物理学的科普视频。实验室之外的我,更愿意用讲故事的方式聊物理 —— 而不是写论文。</p>
+      <div class="pills">
+        <span class="pill">哔哩哔哩</span>
+        <span class="pill">物理学科普 · 物理学史</span>
       </div>
     </div>
-  </article>
-
-  <article class="episode">
-    <div class="ep-head">
-      <div class="ep-num">第2期</div>
-      <h2>狄拉克是什么物理单位</h2>
-    </div>
-    <div class="video-wrap" data-bvid="BV15t4y1s7tS" role="button" tabindex="0" aria-label="播放第2期">
-      <div class="video-placeholder">
-        <div class="ph-source">哔哩哔哩 · 第2期</div>
-        <div class="play-icon"></div>
-        <div class="ph-title">狄拉克是什么物理单位</div>
-      </div>
-    </div>
-  </article>
-
-  <article class="episode">
-    <div class="ep-head">
-      <div class="ep-num">第3期</div>
-      <h2>狄拉克之海诞生的前夜</h2>
-    </div>
-    <div class="video-wrap" data-bvid="BV1jc411Z7je" role="button" tabindex="0" aria-label="播放第3期">
-      <div class="video-placeholder">
-        <div class="ph-source">哔哩哔哩 · 第3期</div>
-        <div class="play-icon"></div>
-        <div class="ph-title">狄拉克之海诞生的前夜</div>
-      </div>
-    </div>
-  </article>
-
-  <article class="episode">
-    <div class="ep-head">
-      <div class="ep-num">第4期</div>
-      <h2>海森堡为何担心狄拉克</h2>
-    </div>
-    <div class="video-wrap" data-bvid="BV1yH4y1z7ic" role="button" tabindex="0" aria-label="播放第4期">
-      <div class="video-placeholder">
-        <div class="ph-source">哔哩哔哩 · 第4期</div>
-        <div class="play-icon"></div>
-        <div class="ph-title">海森堡为何担心狄拉克</div>
-      </div>
-    </div>
-  </article>
-
-  <article class="episode">
-    <div class="ep-head">
-      <div class="ep-num">第5期</div>
-      <h2>狄拉克之海是弄啥嘞</h2>
-    </div>
-    <div class="video-wrap" data-bvid="BV1ob4y1g7Tw" role="button" tabindex="0" aria-label="播放第5期">
-      <div class="video-placeholder">
-        <div class="ph-source">哔哩哔哩 · 第5期</div>
-        <div class="play-icon"></div>
-        <div class="ph-title">狄拉克之海是弄啥嘞</div>
-      </div>
-    </div>
-  </article>
-
-
-  <div class="tbc">
-    <div class="tbc-text">未完待续 ——</div>
-    <div class="tbc-sub">后续剧集正在制作中。</div>
   </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="section-intro">
+      现在更新的这一系列,是关于 <strong>保罗·狄拉克</strong> 的五集故事 —— 古怪的天才、反物质的发明者、量子场论的意外奠基人。素材主要来自他的传记 <em>The Strangest Man</em>(中文译为《量子怪杰》)。
+    </p>
+
+    <div class="list">
+
+      <article class="list-item">
+        <div class="date">第1期</div>
+        <div class="entry">
+          <h3>横空出世的卷王狄拉克</h3>
+          <div class="video" data-bvid="BV17S4y1m7kL" role="button" tabindex="0" aria-label="播放第1期">
+            <div class="video-placeholder">
+              <span class="kicker">哔哩哔哩 · 第1期</span>
+              <span class="play" aria-hidden="true"></span>
+              <span class="ph-title">横空出世的卷王狄拉克</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="list-item">
+        <div class="date">第2期</div>
+        <div class="entry">
+          <h3>狄拉克是什么物理单位</h3>
+          <div class="video" data-bvid="BV15t4y1s7tS" role="button" tabindex="0" aria-label="播放第2期">
+            <div class="video-placeholder">
+              <span class="kicker">哔哩哔哩 · 第2期</span>
+              <span class="play" aria-hidden="true"></span>
+              <span class="ph-title">狄拉克是什么物理单位</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="list-item">
+        <div class="date">第3期</div>
+        <div class="entry">
+          <h3>狄拉克之海诞生的前夜</h3>
+          <div class="video" data-bvid="BV1jc411Z7je" role="button" tabindex="0" aria-label="播放第3期">
+            <div class="video-placeholder">
+              <span class="kicker">哔哩哔哩 · 第3期</span>
+              <span class="play" aria-hidden="true"></span>
+              <span class="ph-title">狄拉克之海诞生的前夜</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="list-item">
+        <div class="date">第4期</div>
+        <div class="entry">
+          <h3>海森堡为何担心狄拉克</h3>
+          <div class="video" data-bvid="BV1yH4y1z7ic" role="button" tabindex="0" aria-label="播放第4期">
+            <div class="video-placeholder">
+              <span class="kicker">哔哩哔哩 · 第4期</span>
+              <span class="play" aria-hidden="true"></span>
+              <span class="ph-title">海森堡为何担心狄拉克</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="list-item">
+        <div class="date">第5期</div>
+        <div class="entry">
+          <h3>狄拉克之海是弄啥嘞</h3>
+          <div class="video" data-bvid="BV1ob4y1g7Tw" role="button" tabindex="0" aria-label="播放第5期">
+            <div class="video-placeholder">
+              <span class="kicker">哔哩哔哩 · 第5期</span>
+              <span class="play" aria-hidden="true"></span>
+              <span class="ph-title">狄拉克之海是弄啥嘞</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="end-note">未完待续 —— 后续剧集正在制作中。</p>
+  </div>
+</section>
 
 </main>
 
-<footer>© 2026 徐李达 · <a href="index_zh.html">返回首页</a></footer>
+<footer class="footer">
+  <div class="wrap row">
+    <div>联合量子研究所 · 马里兰大学帕克分校</div>
+    <div>© 2026 徐李达 · <a href="index_zh.html">返回首页</a></div>
+  </div>
+</footer>
 
-
-<script>
-(function() {
-  document.querySelectorAll('.video-wrap').forEach(wrap => {
-    wrap.addEventListener('click', function() {
-      if (this.classList.contains('loaded')) return;
-      const bvid = this.dataset.bvid;
-      if (!bvid) return;
-      const iframe = document.createElement('iframe');
-      iframe.src = '//player.bilibili.com/player.html?bvid=' + bvid +
-                   '&page=1&high_quality=1&danmaku=0&autoplay=1';
-      iframe.setAttribute('scrolling', 'no');
-      iframe.setAttribute('frameborder', 'no');
-      iframe.setAttribute('framespacing', '0');
-      iframe.setAttribute('allowfullscreen', 'true');
-      iframe.style.position = 'absolute';
-      iframe.style.top = '0';
-      iframe.style.left = '0';
-      iframe.style.width = '100%';
-      iframe.style.height = '100%';
-      iframe.style.border = '0';
-      // Clear placeholder, append iframe
-      this.innerHTML = '';
-      this.appendChild(iframe);
-      this.classList.add('loaded');
-    });
-  });
-})();
-</script>
-
+<script src="assets/site.js?v=1" defer></script>
 </body>
 </html>

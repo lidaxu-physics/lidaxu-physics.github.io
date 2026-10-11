@@ -1,0 +1,248 @@
+/* ==========================================================================
+   Research subpages: running text, scroll-driven scenes and figure frames.
+   Loaded after site.css by research/*.html. Per-page variants hang off the
+   body class: .page-topo, .page-nonlin, .page-comp.
+   ========================================================================== */
+
+/* ---------- running text ---------- */
+.topo-intro,
+.pc-text{
+  width:min(100%, var(--max));
+  margin:0 auto;
+  padding:40px 24px 8px;
+}
+
+.topo-intro p,
+.pc-text p,
+.scroll-scene .text-col p{
+  max-width:720px;
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.82;
+}
+
+.topo-intro p strong,
+.pc-text p strong,
+.scroll-scene .text-col p strong{color:var(--ink);font-weight:600}
+
+.pc-text h2,
+.scroll-scene .text-col h2{
+  margin:48px 0 16px;
+  font-size:31px;
+  line-height:1.15;
+  letter-spacing:-.02em;
+}
+
+.pc-text h2 em,
+.scroll-scene .text-col h2 em{font-style:normal}
+
+html:lang(zh) .pc-text h2,
+html:lang(zh) .scroll-scene .text-col h2{letter-spacing:0}
+
+.pc-text p.pullquote,
+.scroll-scene .text-col p.pullquote{
+  max-width:680px;
+  margin:32px 0;
+  padding:2px 0 2px 20px;
+  color:var(--ink);
+  border-left:2px solid var(--ink);
+  font-family:var(--serif);
+  font-size:23px;
+  line-height:1.4;
+}
+
+/* small "1985 Nobel" tags linking to the prize pages */
+.nobel-chip{
+  display:inline-block;
+  margin:0 2px;
+  padding:1px 6px;
+  color:var(--ink);
+  border:1px solid var(--line-strong);
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:700;
+  line-height:1.5;
+  letter-spacing:.04em;
+  text-decoration:none;
+  white-space:nowrap;
+  vertical-align:1px;
+  transition:background-color .16s ease, color .16s ease;
+}
+
+.nobel-chip:hover{color:#fff;background:var(--ink)}
+
+/* ---------- figure frames ---------- */
+.lattice-stage,
+.m-lattice-scene .m-stage,
+.pc-stage{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-top:2px solid var(--line-strong);
+  border-radius:2px;
+}
+
+.stage-caption,
+.m-stage-caption,
+.pc-caption{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+  text-align:center;
+  transition:opacity .4s ease;
+}
+
+.stage-caption strong,
+.m-stage-caption strong,
+.pc-caption strong{color:var(--ink);font-weight:600}
+
+/* ---------- Hofstadter butterfly: pinned while its runway scrolls past ---------- */
+.butterfly-scene{position:relative;height:250vh;margin:0 0 40px}
+
+.butterfly-scene .pin{
+  position:sticky;
+  top:var(--nav-h);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:calc(100vh - var(--nav-h));
+  padding:16px 24px 24px;
+  overflow:hidden;
+}
+
+.butterfly-scene .stage{
+  position:relative;
+  width:min(680px, 92vw, calc(100vh - var(--nav-h) - 170px));
+  aspect-ratio:1 / 1;
+}
+
+.butterfly-scene svg{display:block;width:100%;height:100%}
+
+.butterfly-scene .b-caption{
+  max-width:640px;
+  margin-top:20px;
+  color:var(--muted);
+  font-family:var(--serif);
+  font-size:19px;
+  line-height:1.5;
+  text-align:center;
+  transition:opacity .4s ease;
+}
+
+.butterfly-scene .b-caption strong{color:var(--ink);font-weight:600}
+
+/* ---------- text on the left, sticky figure on the right ---------- */
+.scroll-scene{
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);
+  gap:56px;
+  align-items:start;
+  width:min(100%, var(--max));
+  margin:0 auto;
+  padding:24px 24px 40px;
+}
+
+.scroll-scene .visual-col{
+  position:sticky;
+  top:calc(var(--nav-h) + 28px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:calc(100vh - var(--nav-h) - 56px);
+  max-height:640px;
+}
+
+.lattice-stage{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  width:100%;
+  max-width:520px;
+  aspect-ratio:1 / 1;
+  padding:22px;
+}
+
+.lattice-stage svg{display:block;flex:1;width:100%;height:100%;min-height:0}
+.lattice-stage .stage-caption{min-height:18px}
+
+.page-nonlin .scroll-scene .visual-col{max-height:720px}
+.page-nonlin .lattice-stage{max-width:380px;aspect-ratio:4 / 7.6}
+
+/* nonlinear stage: fades between beats */
+#latticeGroup, #combGroup, #miniComb, #zoomFrame, #zoomLines,
+#combTeeth line, #miniComb line, #waveguide, #pumpWaveguide{transition:opacity .7s ease}
+
+#combTeeth line,
+#miniComb line{transition:opacity .7s ease, y2 .9s cubic-bezier(.2, .7, .2, 1)}
+
+/* ---------- photonic computing: full-width interactive figure ---------- */
+.pc-stage-wrap{
+  width:min(100%, var(--max));
+  margin:8px auto 40px;
+  padding:0 24px;
+}
+
+.pc-stage{padding:24px 24px 14px}
+.pc-stage svg{display:block;width:100%;height:auto}
+.pc-caption{min-height:22px;margin-top:14px;padding-bottom:6px;font-size:14px}
+
+#catImg, #dogImg{transition:opacity .6s ease}
+#catChoice:hover #catFrame,
+#dogChoice:hover #dogFrame{stroke:#2d6e6a}
+
+/* ---------- phones and tablets ---------- */
+.m-lattice-scene,
+.m-nonlin-scene{display:none}
+
+@media (max-width:1000px){
+  .scroll-scene{grid-template-columns:1fr;gap:24px;padding:16px 18px 32px}
+  .scroll-scene > .visual-col{display:none}
+
+  /* topological: an inline, auto-playing copy of the lattice */
+  .m-lattice-scene{display:block;margin:28px 0}
+  .m-lattice-scene .m-pin{display:flex;justify-content:center}
+  .m-lattice-scene .m-stage{width:100%;max-width:420px;padding:16px 16px 14px}
+  .m-lattice-scene .m-stage svg{display:block;width:100%;height:auto;aspect-ratio:1 / 1}
+  .m-lattice-scene .m-stage-caption{min-height:32px;margin-top:8px;font-size:12px}
+
+  /* nonlinear: the script moves the stage into this pinned slot */
+  .m-nonlin-scene{display:block;position:relative;height:540vh;margin:24px 0 32px}
+
+  .m-nonlin-scene .m-nonlin-pin{
+    position:sticky;
+    top:calc(var(--nav-h) + 8px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:calc(100vh - var(--nav-h) - 24px);
+    padding:0 8px;
+  }
+
+  .m-nonlin-scene .m-nonlin-slot{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    max-width:min(92vw, 60vh);
+  }
+
+  .m-nonlin-scene .m-nonlin-slot .lattice-stage{
+    width:100%;
+    max-width:100%;
+    max-height:calc(100vh - var(--nav-h) - 24px);
+    margin:0;
+    padding:14px;
+  }
+
+  .m-nonlin-scene .m-nonlin-slot .lattice-stage .stage-caption{font-size:12px}
+}
+
+@media (max-width:860px){
+  .topo-intro,
+  .pc-text{padding:28px 18px 4px}
+  .pc-stage-wrap{padding:0 18px}
+  .pc-stage{padding:16px 12px 10px}
+  .scroll-scene .text-col p.pullquote,
+  .pc-text p.pullquote{font-size:20px}
+}
