@@ -57,6 +57,25 @@ body::before{
 }
 
 body > *{position:relative;z-index:1}
+
+/* leaves in the wind behind every page (added by site.js). Above opacity .25 the grey body text starts to lose contrast */
+body > .page-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  max-width:none;
+  object-fit:cover;
+  object-position:82% 100%;
+  opacity:.25;
+  pointer-events:none;
+}
+/* on a wide screen: the wide picture, its trunk and reader kept in view */
+@media (min-aspect-ratio:1/1){
+  body > .page-bg{object-position:100% 100%;opacity:.22}
+}
+@media print{body > .page-bg{display:none}}
 body > main{flex:1 0 auto}
 
 h1,h2,h3{margin:0;color:var(--ink);font-family:var(--serif);font-weight:400}

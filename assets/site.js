@@ -1,5 +1,28 @@
-// Shared page behaviour: mobile menu and the homepage portrait year switch.
+// Shared page behaviour: leaves behind the page, mobile menu and the homepage portrait year switch.
 (function () {
+  // Leaves in the wind behind every page: the wide picture on a wide screen, the tall one on a tall screen.
+  // A still picture for visitors who ask for less motion or less data.
+  var assets = document.currentScript.src;
+  var picture = '../images/leaves_bg' + (window.matchMedia('(min-aspect-ratio: 1/1)').matches ? '_wide' : '');
+  var still = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
+              (navigator.connection && navigator.connection.saveData);
+  var bg = document.createElement(still ? 'img' : 'video');
+  bg.className = 'page-bg';
+  bg.setAttribute('aria-hidden', 'true');
+  if (still) {
+    bg.alt = '';
+    bg.src = new URL(picture + '.jpg', assets).href;
+  } else {
+    bg.muted = true;
+    bg.loop = true;
+    bg.autoplay = true;
+    bg.playsInline = true;
+    bg.setAttribute('playsinline', '');
+    bg.poster = new URL(picture + '.jpg', assets).href;
+    bg.src = new URL(picture + '.mp4', assets).href;
+  }
+  document.body.insertBefore(bg, document.body.firstChild);
+
   // Mobile menu: the same .menu element becomes a drop-down below 860px.
   var nav = document.querySelector('.nav');
   var toggle = nav && nav.querySelector('.menu-toggle');
