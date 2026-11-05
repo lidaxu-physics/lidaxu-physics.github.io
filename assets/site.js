@@ -5,7 +5,7 @@
   var assets = document.currentScript.src;
   var wide = window.matchMedia('(min-aspect-ratio: 1/1)').matches;
   var zh = (document.documentElement.lang || '').indexOf('zh') === 0;
-  var seasons = [['spring', 'Spring', '春'], ['summer', 'Summer', '夏'], ['autumn', 'Autumn', '秋'], ['winter', 'Winter', '冬']];
+  var seasons = [['summer', 'Summer', '夏'], ['autumn', 'Autumn', '秋'], ['winter', 'Winter', '冬']];
   var season = 'summer';
   try {
     var saved = localStorage.getItem('bg-season');
