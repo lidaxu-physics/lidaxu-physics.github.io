@@ -76,8 +76,12 @@ body > .page-bg{
   body > .page-bg{object-position:100% 100%;opacity:.22}
 }
 body > .page-bg[data-season="autumn"]{opacity:.16}      /* autumn is darker: fainter, for the same contrast */
+body > .page-bg[data-season="spring"]{opacity:.16}      /* spring and winter too: their meadow, trunk and needles are dark */
+body > .page-bg[data-season="winter"]{opacity:.15}
 @media (min-aspect-ratio:1/1){
   body > .page-bg[data-season="autumn"]{opacity:.18}
+  body > .page-bg[data-season="spring"]{opacity:.17}
+  body > .page-bg[data-season="winter"]{opacity:.16}
 }
 @media print{body > .page-bg{display:none}}
 

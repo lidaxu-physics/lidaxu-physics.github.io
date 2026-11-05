@@ -1,11 +1,11 @@
 // Shared page behaviour: leaves behind the page, mobile menu and the homepage portrait year switch.
 (function () {
-  // Leaves in the wind behind every page: the wide picture on a wide screen, the tall one on a tall screen,
+  // Leaves in the wind (snow in winter) behind every page: the wide picture on a wide screen, the tall one on a tall screen,
   // in the season the visitor picked (summer unless they chose another). A still picture for less motion or less data.
   var assets = document.currentScript.src;
   var wide = window.matchMedia('(min-aspect-ratio: 1/1)').matches;
   var zh = (document.documentElement.lang || '').indexOf('zh') === 0;
-  var seasons = [['summer', 'Summer', '夏'], ['autumn', 'Autumn', '秋']];
+  var seasons = [['spring', 'Spring', '春'], ['summer', 'Summer', '夏'], ['autumn', 'Autumn', '秋'], ['winter', 'Winter', '冬']];
   var season = 'summer';
   try {
     var saved = localStorage.getItem('bg-season');
