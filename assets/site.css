@@ -61,10 +61,10 @@ body > *{position:relative;z-index:1}
 /* leaves in the wind behind every page (added by site.js). Above opacity .25 the grey body text starts to lose contrast */
 body > .page-bg{
   position:fixed;
-  inset:0;
+  inset:var(--nav-h) 0 0 0;      /* (below the top bar, which would hide the picture's top) */
   z-index:0;
   width:100%;
-  height:100%;
+  height:calc(100% - var(--nav-h));
   max-width:none;
   object-fit:cover;
   object-position:82% 100%;
@@ -80,23 +80,27 @@ body > .page-bg[data-season="spring"]{opacity:.16}      /* spring and winter too
 body > .page-bg[data-season="winter"]{opacity:.15}
 @media (min-aspect-ratio:1/1){
   body > .page-bg[data-season="autumn"]{opacity:.18}
-  body > .page-bg[data-season="spring"]{opacity:.17}
+  body > .page-bg[data-season="spring"]{opacity:.17;object-position:100% 0%}      /* (its blossom is at the top: a window wider than the picture loses the meadow below, not the flowers) */
   body > .page-bg[data-season="winter"]{opacity:.16}
 }
 @media print{body > .page-bg{display:none}}
 
-/* the background's season, bottom right (added by site.js), like the EN | 中文 switch */
+/* the background's season (added by site.js): in the top bar beside EN | 中文 and like it; below 961 px, where the top bar is full, at the bottom right */
+.season{
+  display:inline-flex;
+  flex:0 0 auto;
+  border:1px solid var(--line-strong);
+}
+.nav-right > .season{margin-right:-10px}      /* (nearer EN | 中文 than the menu: the two switches go together) */
 body > .season{
   position:fixed;
   right:16px;
   bottom:16px;
   z-index:25;
-  display:inline-flex;
-  border:1px solid var(--line-strong);
   background:rgba(255,255,255,.94);
 }
 .season button{
-  padding:5px 10px 4px;
+  padding:5px 8px 4px;
   border:0;
   border-radius:0;
   color:var(--ink);
@@ -107,8 +111,14 @@ body > .season{
 .season button + button{border-left:1px solid var(--line-strong)}
 .season button.active{color:#fff;background:var(--ink)}
 .season button:not(.active):hover{background:var(--surface-soft)}
-@media (max-width:860px){body{padding-bottom:48px}}      /* (room under the footer, so the switch never covers it) */
-@media print{body > .season{display:none}}
+.season .short{display:none}
+@media (max-width:1100px){      /* 春 夏 秋 冬, one character each, where the full names do not fit the top bar */
+  .season .long{display:none}
+  .season .short{display:inline}
+}
+@media (max-width:960px){.season button{padding:5px 9px 4px}}
+@media (max-width:960px){body{padding-bottom:48px}}      /* (room under the footer, so the switch at the bottom never covers it) */
+@media print{.season{display:none}}
 body > main{flex:1 0 auto}
 
 h1,h2,h3{margin:0;color:var(--ink);font-family:var(--serif);font-weight:400}

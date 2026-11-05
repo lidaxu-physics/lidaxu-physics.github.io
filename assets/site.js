@@ -42,7 +42,7 @@
   showSeason(season);
   document.body.insertBefore(bg, document.body.firstChild);
 
-  // The season switch, bottom right, like the EN | 中文 switch.
+  // The season switch: in the top bar beside EN | 中文 and like it; below 961 px, where the top bar is full (the home page's menu is long), at the bottom right (site.css).
   var pick = document.createElement('div');
   pick.className = 'season';
   pick.setAttribute('role', 'group');
@@ -50,7 +50,16 @@
   seasons.forEach(function (s) {
     var b = document.createElement('button');
     b.type = 'button';
-    b.textContent = zh ? s[2] : s[1];
+    var full = document.createElement('span');
+    full.className = 'long';
+    full.textContent = zh ? s[2] : s[1];
+    var one = document.createElement('span');
+    one.className = 'short';
+    one.textContent = s[2];
+    b.appendChild(full);
+    b.appendChild(one);
+    b.setAttribute('aria-label', full.textContent);
+    b.title = full.textContent;
     b.dataset.season = s[0];
     pick.appendChild(b);
   });
@@ -70,7 +79,15 @@
     showSeason(season);
   });
   mark();
-  document.body.appendChild(pick);
+  var lang = document.querySelector('.nav-right > .lang');
+  var narrow = window.matchMedia('(max-width: 960px)');
+  var place = function () {
+    if (lang && !narrow.matches) lang.parentNode.insertBefore(pick, lang);
+    else document.body.appendChild(pick);
+  };
+  place();
+  if (narrow.addEventListener) narrow.addEventListener('change', place);
+  else if (narrow.addListener) narrow.addListener(place);
 
   // Mobile menu: the same .menu element becomes a drop-down below 860px.
   var nav = document.querySelector('.nav');
