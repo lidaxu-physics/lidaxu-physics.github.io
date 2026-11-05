@@ -1,9 +1,19 @@
 // Shared page behaviour: leaves behind the page, mobile menu and the homepage portrait year switch.
 (function () {
-  // Leaves in the wind behind every page: the wide picture on a wide screen, the tall one on a tall screen.
-  // A still picture for visitors who ask for less motion or less data.
+  // Leaves in the wind behind every page: the wide picture on a wide screen, the tall one on a tall screen,
+  // in the season the visitor picked (summer unless they chose another). A still picture for less motion or less data.
   var assets = document.currentScript.src;
-  var picture = '../images/leaves_bg' + (window.matchMedia('(min-aspect-ratio: 1/1)').matches ? '_wide' : '');
+  var wide = window.matchMedia('(min-aspect-ratio: 1/1)').matches;
+  var zh = (document.documentElement.lang || '').indexOf('zh') === 0;
+  var seasons = [['summer', 'Summer', '夏'], ['autumn', 'Autumn', '秋']];
+  var season = 'summer';
+  try {
+    var saved = localStorage.getItem('bg-season');
+    if (seasons.some(function (s) { return s[0] === saved; })) season = saved;
+  } catch (e) {}
+  var picture = function (s) {
+    return new URL('../images/leaves_bg' + (s === 'summer' ? '' : '_' + s) + (wide ? '_wide' : ''), assets).href;
+  };
   var still = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
               (navigator.connection && navigator.connection.saveData);
   var bg = document.createElement(still ? 'img' : 'video');
@@ -11,17 +21,56 @@
   bg.setAttribute('aria-hidden', 'true');
   if (still) {
     bg.alt = '';
-    bg.src = new URL(picture + '.jpg', assets).href;
   } else {
     bg.muted = true;
     bg.loop = true;
     bg.autoplay = true;
     bg.playsInline = true;
     bg.setAttribute('playsinline', '');
-    bg.poster = new URL(picture + '.jpg', assets).href;
-    bg.src = new URL(picture + '.mp4', assets).href;
   }
+  var showSeason = function (s) {
+    bg.setAttribute('data-season', s);
+    if (still) {
+      bg.src = picture(s) + '.jpg';
+      return;
+    }
+    bg.poster = picture(s) + '.jpg';
+    bg.src = picture(s) + '.mp4';
+    var playing = bg.play();
+    if (playing && playing.catch) playing.catch(function () {});
+  };
+  showSeason(season);
   document.body.insertBefore(bg, document.body.firstChild);
+
+  // The season switch, bottom right, like the EN | 中文 switch.
+  var pick = document.createElement('div');
+  pick.className = 'season';
+  pick.setAttribute('role', 'group');
+  pick.setAttribute('aria-label', zh ? '背景季节' : 'Background season');
+  seasons.forEach(function (s) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = zh ? s[2] : s[1];
+    b.dataset.season = s[0];
+    pick.appendChild(b);
+  });
+  var mark = function () {
+    pick.querySelectorAll('button').forEach(function (b) {
+      var on = b.dataset.season === season;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  };
+  pick.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b || b.dataset.season === season) return;
+    season = b.dataset.season;
+    try { localStorage.setItem('bg-season', season); } catch (err) {}
+    mark();
+    showSeason(season);
+  });
+  mark();
+  document.body.appendChild(pick);
 
   // Mobile menu: the same .menu element becomes a drop-down below 860px.
   var nav = document.querySelector('.nav');

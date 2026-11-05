@@ -75,7 +75,36 @@ body > .page-bg{
 @media (min-aspect-ratio:1/1){
   body > .page-bg{object-position:100% 100%;opacity:.22}
 }
+body > .page-bg[data-season="autumn"]{opacity:.16}      /* autumn is darker: fainter, for the same contrast */
+@media (min-aspect-ratio:1/1){
+  body > .page-bg[data-season="autumn"]{opacity:.18}
+}
 @media print{body > .page-bg{display:none}}
+
+/* the background's season, bottom right (added by site.js), like the EN | 中文 switch */
+body > .season{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:25;
+  display:inline-flex;
+  border:1px solid var(--line-strong);
+  background:rgba(255,255,255,.94);
+}
+.season button{
+  padding:5px 10px 4px;
+  border:0;
+  border-radius:0;
+  color:var(--ink);
+  background:transparent;
+  font:600 12px/1.2 var(--sans);
+  cursor:pointer;
+}
+.season button + button{border-left:1px solid var(--line-strong)}
+.season button.active{color:#fff;background:var(--ink)}
+.season button:not(.active):hover{background:var(--surface-soft)}
+@media (max-width:860px){body{padding-bottom:48px}}      /* (room under the footer, so the switch never covers it) */
+@media print{body > .season{display:none}}
 body > main{flex:1 0 auto}
 
 h1,h2,h3{margin:0;color:var(--ink);font-family:var(--serif);font-weight:400}
