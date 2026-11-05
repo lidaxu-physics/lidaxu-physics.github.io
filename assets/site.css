@@ -110,10 +110,11 @@ body > .season{
 .season button.active{color:#fff;background:var(--ink)}
 .season button:not(.active):hover{background:var(--surface-soft)}
 .season .short{display:none}
-@media (max-width:1100px){      /* 春 夏 秋 冬, one character each, where the full names do not fit the top bar */
+@media (min-width:861px) and (max-width:979px), (max-width:359px){      /* where the full names do not fit the top bar: Sum Aut Win (Chinese pages: 夏 秋 冬 always) */
   .season .long{display:none}
   .season .short{display:inline}
 }
+@media (min-width:861px) and (max-width:979px){.season button{padding:5px 5px 4px;font-size:11px}}      /* (beside the home page's long menu) */
 @media print{.season{display:none}}
 body > main{flex:1 0 auto}
 
@@ -888,10 +889,13 @@ html:lang(zh) .section-head h2{letter-spacing:0}
   :root{--nav-h:64px}
   .wrap{padding-inline:18px}
   .brand{font-size:17px}
-  .nav-right{gap:12px}
+  .nav-inner{gap:12px}
+  .nav-right{gap:8px}
   .menu-toggle{display:inline-flex}
   .nav-right > .season{margin-right:0}
   .menu-toggle{width:34px;height:34px;padding:0;gap:0;justify-content:center;font-size:0}      /* (the ☰ alone, so the season switch fits beside EN | 中文; its name stays for screen readers) */
+  .season button,
+  .lang a{padding:5px 5px 4px;font-size:11px}      /* (the two switches a little smaller, so the seasons fit in English) */
 
   .menu{
     position:absolute;
@@ -942,9 +946,10 @@ html:lang(zh) .section-head h2{letter-spacing:0}
   .footer .row{flex-direction:column;align-items:flex-start}
 }
 
-@media (max-width:359px){      /* the narrowest phones: smaller gaps in the top bar */
-  .nav-inner{gap:12px}
-  .nav-right{gap:8px}
+@media (max-width:389px){      /* narrow phones: smaller gaps in the top bar */
+  .nav-inner{gap:10px}
+  .nav-right{gap:6px}
+  .season button{padding:5px 4px 4px}
 }
 
 @media (max-width:700px){

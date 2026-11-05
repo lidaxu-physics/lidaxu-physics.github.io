@@ -5,7 +5,7 @@
   var assets = document.currentScript.src;
   var wide = window.matchMedia('(min-aspect-ratio: 1/1)').matches;
   var zh = (document.documentElement.lang || '').indexOf('zh') === 0;
-  var seasons = [['summer', 'Summer', '夏'], ['autumn', 'Autumn', '秋'], ['winter', 'Winter', '冬']];
+  var seasons = [['summer', 'Summer', '夏', 'Sum'], ['autumn', 'Autumn', '秋', 'Aut'], ['winter', 'Winter', '冬', 'Win']];
   var season = 'summer';
   try {
     var saved = localStorage.getItem('bg-season');
@@ -55,7 +55,7 @@
     full.textContent = zh ? s[2] : s[1];
     var one = document.createElement('span');
     one.className = 'short';
-    one.textContent = s[2];
+    one.textContent = zh ? s[2] : s[3];      // (where the full name does not fit)
     b.appendChild(full);
     b.appendChild(one);
     b.setAttribute('aria-label', full.textContent);
