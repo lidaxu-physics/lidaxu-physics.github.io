@@ -42,7 +42,7 @@
   showSeason(season);
   document.body.insertBefore(bg, document.body.firstChild);
 
-  // The season switch: in the top bar beside EN | 中文 and like it; below 961 px, where the top bar is full (the home page's menu is long), at the bottom right (site.css).
+  // The season switch: in the top bar beside EN | 中文 and like it, on computers and phones (site.css).
   var pick = document.createElement('div');
   pick.className = 'season';
   pick.setAttribute('role', 'group');
@@ -80,14 +80,8 @@
   });
   mark();
   var lang = document.querySelector('.nav-right > .lang');
-  var narrow = window.matchMedia('(max-width: 960px)');
-  var place = function () {
-    if (lang && !narrow.matches) lang.parentNode.insertBefore(pick, lang);
-    else document.body.appendChild(pick);
-  };
-  place();
-  if (narrow.addEventListener) narrow.addEventListener('change', place);
-  else if (narrow.addListener) narrow.addListener(place);
+  if (lang) lang.parentNode.insertBefore(pick, lang);
+  else document.body.appendChild(pick);      // (a page without the top bar: bottom right)
 
   // Mobile menu: the same .menu element becomes a drop-down below 860px.
   var nav = document.querySelector('.nav');

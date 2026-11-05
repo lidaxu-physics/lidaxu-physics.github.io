@@ -83,7 +83,7 @@ body > .page-bg[data-season="winter"]{opacity:.15}      /* winter too: its needl
 }
 @media print{body > .page-bg{display:none}}
 
-/* the background's season (added by site.js): in the top bar beside EN | 中文 and like it; below 961 px, where the top bar is full, at the bottom right */
+/* the background's season (added by site.js): in the top bar beside EN | 中文 and like it; on a page without the top bar, at the bottom right */
 .season{
   display:inline-flex;
   flex:0 0 auto;
@@ -114,8 +114,6 @@ body > .season{
   .season .long{display:none}
   .season .short{display:inline}
 }
-@media (max-width:960px){.season button{padding:5px 9px 4px}}
-@media (max-width:960px){body{padding-bottom:48px}}      /* (room under the footer, so the switch at the bottom never covers it) */
 @media print{.season{display:none}}
 body > main{flex:1 0 auto}
 
@@ -880,6 +878,7 @@ html:lang(zh) .section-head h2{letter-spacing:0}
 
 /* ---------- responsive ---------- */
 @media (max-width:1000px){
+  .nav-right{gap:14px}      /* (the home page's long menu beside the two switches) */
   .hero-grid{grid-template-columns:minmax(0, 1fr) minmax(220px, .62fr);gap:36px}
   .cards{grid-template-columns:1fr}
   .about-grid{grid-template-columns:1fr;gap:32px}
@@ -891,6 +890,8 @@ html:lang(zh) .section-head h2{letter-spacing:0}
   .brand{font-size:17px}
   .nav-right{gap:12px}
   .menu-toggle{display:inline-flex}
+  .nav-right > .season{margin-right:0}
+  .menu-toggle{width:34px;height:34px;padding:0;gap:0;justify-content:center;font-size:0}      /* (the ☰ alone, so the season switch fits beside EN | 中文; its name stays for screen readers) */
 
   .menu{
     position:absolute;
@@ -939,6 +940,11 @@ html:lang(zh) .section-head h2{letter-spacing:0}
 
   .footer{margin-top:72px}
   .footer .row{flex-direction:column;align-items:flex-start}
+}
+
+@media (max-width:359px){      /* the narrowest phones: smaller gaps in the top bar */
+  .nav-inner{gap:12px}
+  .nav-right{gap:8px}
 }
 
 @media (max-width:700px){
